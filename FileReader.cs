@@ -84,6 +84,7 @@ namespace NACHAParser
                         ProcessFileHeader(line, root);
                         break;
                     case RecordTypes.bh:
+                        ProcessBatchHeader(line, ref cBatch);
                         break;
                     case RecordTypes.ed:
                         ProcessEntryDetail(line, cBatch, lineNumber);
@@ -95,6 +96,7 @@ namespace NACHAParser
                         ProcessBatchControl(line, root, ref cBatch);
                         break;
                     case RecordTypes.fc:
+                        ProcessFileControl(line, root);
                         break;
                     default:
                         throw new Exception($"Record type '{recordType}' is not supported. Line Number: '{lineNumber}' Found on line: '{line}'.");
