@@ -2,12 +2,12 @@ using Newtonsoft.Json;
 
 namespace NACHAParser
 {
-    public class AchFile
+    public class Root
     {
         #region Properties
-        public FileHeaderRecord FHeader { get; set; } = new FileHeaderRecord();
-        public List<Batch> Batches { get; set; } = new List<Batch>();
-        public FileTrailer FTrailer { get; set; } = new FileTrailer();
+
+        [JsonProperty("fileContents")]
+        public FileContents FileContents { get; set; } = new FileContents();
 
         #endregion
     }
@@ -19,6 +19,24 @@ namespace NACHAParser
         public string FileId { get; set; } = string.Empty;
         [JsonProperty("achFile")]
         public AchFile AchFile { get; set; } = new AchFile();
+
+        #endregion
+
+        #region Constructors
+        public FileContents()
+        {
+            FileId = Guid.NewGuid().ToString();
+            AchFile = new AchFile();
+        }
+
+        #endregion
+    }
+    public class AchFile
+    {
+        #region Properties
+        public FileHeaderRecord FHeader { get; set; } = new FileHeaderRecord();
+        public List<Batch> Batches { get; set; } = new List<Batch>();
+        public FileTrailer FTrailer { get; set; } = new FileTrailer();
 
         #endregion
     }
@@ -55,17 +73,8 @@ namespace NACHAParser
         #region Constructors
         public Batch()
         {
-            Console.WriteLine($"Batch Constructor BchId: {BchId = Guid.NewGuid().ToString()}");
+            BchId = Guid.NewGuid().ToString();
         }
-
-        #endregion
-    }
-    public class Root
-    {
-        #region Properties
-
-        [JsonProperty("fileContents")]
-        public FileContents FileContents { get; set; } = new FileContents();
 
         #endregion
     }

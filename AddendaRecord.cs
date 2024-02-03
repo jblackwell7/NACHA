@@ -13,6 +13,15 @@ namespace NACHAParser
         public Addenda Addenda { get; set; } = new Addenda();
 
         #endregion
+
+        #region Constructors
+        public AddendaRecord()
+        {
+            AddendaRecId = Guid.NewGuid().ToString();
+            Addenda = new Addenda();
+        }
+
+        #endregion
     }
     public class Addenda
     {
@@ -61,6 +70,14 @@ namespace NACHAParser
         public string Reserved1 { get; set; } = string.Empty;
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
+
+        #endregion
+
+        #region Constructors
+        public Addenda()
+        {
+            Addenda05Id = Guid.NewGuid().ToString();
+        }
 
         #endregion
 

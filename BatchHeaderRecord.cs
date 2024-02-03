@@ -50,13 +50,20 @@ namespace NACHAParser
 
         #endregion
 
+        #region Constructors
+        public BatchHeaderRecord()
+        {
+            BchHeaderId = Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
         #region Methods
 
         public static BatchHeaderRecord ParseBatchHeader(string line)
         {
             return new BatchHeaderRecord
             {
-                BchHeaderId = Guid.NewGuid().ToString(),
                 RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
                 ServiceClassCode = (ServiceClass)int.Parse(line.Substring(1, 3)),
                 CoName = line.Substring(4, 16),
