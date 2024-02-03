@@ -11,7 +11,10 @@ namespace NACHAParser
         public static ParseDataResult ParseData(string inputACHFile)
         {
             ValidateFile(inputACHFile);
-            var cBatch = new Batch { EntryRecords = new List<EntryDetailRecord>() };
+            var cBatch = new Batch
+            {
+                EntryRecords = new List<EntryDetailRecord>()
+            };
             int lineNumber = 1;
             var root = new Root
             {
@@ -40,8 +43,18 @@ namespace NACHAParser
                     continue;
                 }
             }
-            return new ParseDataResult { Root = root, LinesProcessed = lineNumber - 1 };
+            return new ParseDataResult
+            {
+                Root = root,
+                LinesProcessed = lineNumber - 1
+            };
         }
+
+        /// <summary>
+        /// Validates the input file.
+        /// </summary>
+        /// <param name="inputACHFile">Path to the ACH file intended for parsing.</param>
+        /// <exception cref="Exception"></exception>
         private static void ValidateFile(string inputACHFile)
         {
             if (!File.Exists(inputACHFile))
@@ -67,12 +80,12 @@ namespace NACHAParser
         }
 
         /// <summary>
-        /// Processes a single line of the input file.
+        /// Processes a each line of the input ACH file.
         /// </summary>
-        /// <param name="recordType">The type of record to process.</param>
-        /// <param name="line">The line to process.</param>
-        /// <param name="root">The root object to populate.</param>
-        /// <param name="cBatch">The current batch to populate.</param>
+        /// <param name="recordType">Enumerated type of the record to be process.</param>
+        /// <param name="line">The current line from the ACH file being processed.</param>
+        /// <param name="root">The root object being populated with parsed data.</param>
+        /// <param name="cBatch">The current batch object being populated.</param>
         /// <param name="lineNumber">The line number currently being processed.</param>
         private static void ProcessLine(RecordTypes recordType, string line, Root root, ref Batch cBatch, int lineNumber)
         {
@@ -108,41 +121,45 @@ namespace NACHAParser
                 throw;
             }
         }
+        /// <summary>
+        /// Parses the file header line of the ACH file
+        /// </summary>
+        /// <param name="line">The file header line from the ACH file.</param>
+        /// <param name="root">The root object where the parsed file header information is stored.</param>
         private static void ProcessFileHeader(string line, Root root)
         {
             root.FileContents.AchFile.FHeader = FileHeaderRecord.ParseFileHeader(line);
-            root.FileContents.FileId = Guid.NewGuid().ToString();
-            Console.WriteLine($"New root.FileHd.FileId at parsing is: '{root.FileContents.FileId}'");
-        }
-        private static void ProcessBatchHeader(string line, ref Batch cBatch)
-        {
-            cBatch = new Batch { BatchHeader = BatchHeaderRecord.ParseBatchHeader(line) };
-            cBatch.BchId = Guid.NewGuid().ToString();
-            Console.WriteLine($"New cBatch.BchId at parsing is: '{cBatch.BchId}'");
         }
         /// <summary>
-        /// Process an entry detail line
+        /// Parses the batch header line
         /// </summary>
-        /// <param name="line">The line from the file being processed</param>
-        /// <param name="cBatch">The current batch</param>
-        /// <param name="lineNumber">The line number of the line being processed</param>
+        /// <param name="line">The batch header line from the ACH file.</param>
+        /// <param name="cBatch">Reference to the current batch object being populated.</param>
+        private static void ProcessBatchHeader(string line, ref Batch cBatch)
+        {
+            cBatch = new Batch
+            {
+                BatchHeader = BatchHeaderRecord.ParseBatchHeader(line)
+            };
+        }
+        /// <summary>
+        /// Parses the entry detail line
+        /// </summary>
+        /// <param name="line">The entry detail line from the ACH file.</param>
+        /// <param name="cBatch">The current batch object to which the entry detail record is added</param>
+        /// <param name="lineNumber">The line number currently being processed.</param>
         private static void ProcessEntryDetail(string line, Batch cBatch, int lineNumber)
         {
             var entryDetail = EntryDetails.ParseEntryDetail(line, cBatch.BatchHeader, lineNumber);
 
-            entryDetail.EntryDetails.EntDetailsId = Guid.NewGuid().ToString();
-
             cBatch.EntryRecords.Add(entryDetail);
-
-            Console.WriteLine($"ProcessEntryDetail entryDetail.EntryRecordId guid: '{entryDetail.EntRecId}' on line '{lineNumber}' added to batch '{cBatch.BchId}'");
-            Console.WriteLine($"ProcessEntryDetail entryDetail.EntryDetails.EntryDetailsId guid: '{entryDetail.EntryDetails.EntDetailsId}' on line '{lineNumber}' added to batch '{cBatch.BchId}'");
         }
         /// <summary>
-        /// This method processes addenda records.
+        /// Parses the addenda line
         /// </summary>
-        /// <param name="line">The line read from the file.</param>
-        /// <param name="cBatch">The current batch.</param>
-        /// <param name="lineNumber">The line number of the line read from the file.</param>
+        /// <param name="line">The addenda record line from the ACH file.</param>
+        /// <param name="cBatch">The current batch containing the entry detail record to which the addenda is added.</param>
+        /// <param name="lineNumber">The line number currently being processed.</param>
         private static void ProcessAddenda(string line, Batch cBatch, int lineNumber)
         {
             var addendaRecord = Addenda.ParseAddenda(line, lineNumber);
@@ -151,53 +168,29 @@ namespace NACHAParser
 
             if (lastEntryDetail.EntryDetails.aDRecIndicator == AddendaRecordIndicator.Addenda)
             {
-                addendaRecord.Addenda.Addenda05Id = Guid.NewGuid().ToString();
-
                 lastEntryDetail.EntryDetails.AddendaRecords.Add(addendaRecord);
             }
-            Console.WriteLine($"ProcessAddenda addendaRecord.AddendaRecordId  guid: '{addendaRecord.AddendaRecId}'");
         }
         /// <summary>
-        /// Processes the batch control record.
+        /// Parses the batch control line.
         /// </summary>
-        /// <param name="line">The line.</param>
-        /// <param name="root">The root.</param>
-        /// <param name="cBatch">The c batch.</param>
+        /// <param name="line">The batch control line from the ACH file.</param>
+        /// <param name="root">The root object to which the completed batch is added.</param>
+        /// <param name="cBatch">TReference to the current batch, which will be reset after addition to the root object.</param>
         private static void ProcessBatchControl(string line, Root root, ref Batch cBatch)
         {
             cBatch.BatchTrailer.BControl = BatchControlRecord.ParseBatchControl(line);
             root.FileContents.AchFile.Batches.Add(cBatch);
             cBatch = new Batch();
         }
+        /// <summary>
+        /// Parses the file control line
+        /// </summary>
+        /// <param name="line">The file control line from the ACH file.</param>
+        /// <param name="root">The root object where the parsed file control information is stored.</param>
         private static void ProcessFileControl(string line, Root root)
         {
             root.FileContents.AchFile.FTrailer.FControl = FileControlRecord.ParseFileControl(line);
-            root.FileContents.AchFile.FTrailer.FileTrailerId = Guid.NewGuid().ToString();
-            Console.WriteLine($"New root.FileHd.FTrailer.FileTrailerId at parsing is: '{root.FileContents.AchFile.FTrailer.FileTrailerId}'");
-        }
-        /// <summary>
-        /// AssociateIds
-        /// </summary>
-        /// <param name="root">The root.</param>
-        public static void AssociateIds(Root root)
-        {
-            foreach (Batch batch in root.FileContents.AchFile.Batches)
-            {
-                batch.BchId = Guid.NewGuid().ToString();
-                Console.WriteLine($"AssociateIds batch.bchid guid: '{batch.BchId}'");
-
-                foreach (EntryDetailRecord entryRecord in batch.EntryRecords)
-                {
-                    entryRecord.EntRecId = batch.BchId;
-                    Console.WriteLine($"AssociateIds entryrecord.entrecid guid: '{entryRecord.EntRecId}'");
-
-                    foreach (AddendaRecord addendaRecord in entryRecord.EntryDetails.AddendaRecords)
-                    {
-                        addendaRecord.AddendaRecId = entryRecord.EntRecId;
-                        Console.WriteLine($"AssociateIds addendarecord.addendarecid guid: '{addendaRecord.AddendaRecId}'");
-                    }
-                }
-            }
         }
     }
 }

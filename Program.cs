@@ -1,5 +1,7 @@
 ﻿
 
+using NachaFileParser;
+
 namespace NACHAParser
 {
     class Program
@@ -14,12 +16,11 @@ namespace NACHAParser
             ParseDataResult result = FileReader.ParseData(inputACHFile);
 
             Root root = result.Root;
-            FileWriter.WriteJsonFile(root, outputJSONFile);
-            FileWriter.WriteCsvFile(root, outputCSVFile);
+            JsonFileWriter.WriteJsonFile(root, outputJSONFile);
+            CSVFileWriter.WriteCsvFile(root, outputCSVFile);
 
             Console.WriteLine($"Line Count: '{result.LinesProcessed}'");
 
-            FileReader.AssociateIds(root);
 
             foreach (var batch in root.FileContents.AchFile.Batches)
             {

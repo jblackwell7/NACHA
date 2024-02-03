@@ -13,6 +13,16 @@ namespace NACHAParser
         public EntryDetails EntryDetails { get; set; } = new EntryDetails();
 
         #endregion
+
+        #region Constructors
+
+        public EntryDetailRecord()
+        {
+            EntRecId = Guid.NewGuid().ToString();
+            EntryDetails = new EntryDetails();
+        }
+
+        #endregion
     }
     public class EntryDetails
     {
@@ -65,6 +75,16 @@ namespace NACHAParser
 
         #endregion
 
+        #region Constructors
+
+        public EntryDetails()
+        {
+            EntDetailsId = Guid.NewGuid().ToString();
+            AddendaRecords = new List<AddendaRecord>();
+        }
+
+        #endregion
+
         #region Methods
         public static EntryDetailRecord ParseEntryDetail(string line, BatchHeaderRecord batchHeader, int lineNumber)
         {
@@ -102,7 +122,6 @@ namespace NACHAParser
             }
             return entry;
         }
-
         public static int CountEntryDetailRecords(Batch batch)
         {
             int eDcount = batch.EntryRecords.Count;

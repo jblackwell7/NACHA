@@ -12,6 +12,15 @@ namespace NACHAParser
         public BatchControlRecord BControl { get; set; } = new BatchControlRecord();
 
         #endregion
+
+        #region Constructors
+        public BatchTrailer()
+        {
+            BchTrailerId = Guid.NewGuid().ToString();
+            BControl = new BatchControlRecord();
+        }
+
+        #endregion
     }
     public class BatchControlRecord
     {
@@ -53,13 +62,20 @@ namespace NACHAParser
 
         #endregion
 
+        #region Constructors
+        public BatchControlRecord()
+        {
+            BchControlId = Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
         #region Methods
 
         public static BatchControlRecord ParseBatchControl(string line)
         {
             return new BatchControlRecord
             {
-                BchControlId = Guid.NewGuid().ToString(),
                 RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
                 ServiceClass = (ServiceClass)int.Parse(line.Substring(1, 3)),
                 EntAddendaCnt = line.Substring(4, 6),
