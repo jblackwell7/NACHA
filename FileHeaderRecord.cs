@@ -51,6 +51,15 @@ namespace NACHAParser
 
         #endregion
 
+        #region Constructors
+
+        public FileHeaderRecord()
+        {
+            FilehdrId = Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -62,7 +71,6 @@ namespace NACHAParser
         {
             return new FileHeaderRecord
             {
-                FilehdrId = Guid.NewGuid().ToString(),
                 RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
                 PriorityCode = line.Substring(1, 2),
                 ImmedDestination = line.Substring(3, 10),

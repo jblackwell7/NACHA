@@ -12,6 +12,16 @@ namespace NACHAParser
         public FileControlRecord FControl { get; set; } = new FileControlRecord();
 
         #endregion
+
+        #region Constructors
+
+        public FileTrailer()
+        {
+            FileTrailerId = Guid.NewGuid().ToString();
+            FControl = new FileControlRecord();
+        }
+
+        #endregion
     }
     public class FileControlRecord
     {
@@ -46,13 +56,21 @@ namespace NACHAParser
 
         #endregion
 
+        #region Constructors
+
+        public FileControlRecord()
+        {
+            FileControlId = Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
         #region Methods
 
         public static FileControlRecord ParseFileControl(string line)
         {
             return new FileControlRecord
             {
-                FileControlId = Guid.NewGuid().ToString(),
                 RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
                 BchCnt = line.Substring(1, 6),
                 BlockCnt = line.Substring(7, 6),
