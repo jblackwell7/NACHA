@@ -6,8 +6,8 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("bchHeaderId")]
-        public string BchHeaderId { get; set; } = string.Empty;
+        [JsonProperty("iatBchHeaderId")]
+        public string IatBchHeaderId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
         public int RecType { get; set; }

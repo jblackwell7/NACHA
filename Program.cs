@@ -8,7 +8,6 @@ namespace NACHAParser
     {
         static void Main(string[] args)
         {
-
             string inputACHFile = @"";
             string outputJSONFile = @"";
             string outputCSVFile = @"";
@@ -20,7 +19,6 @@ namespace NACHAParser
             CSVFileWriter.WriteCsvFile(root, outputCSVFile);
 
             Console.WriteLine($"Line Count: '{result.LinesProcessed}'");
-
 
             foreach (var batch in root.FileContents.AchFile.Batches)
             {

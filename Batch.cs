@@ -17,6 +17,7 @@ namespace NACHAParser
 
         [JsonProperty("fileId")]
         public string FileId { get; set; } = string.Empty;
+
         [JsonProperty("achFile")]
         public AchFile AchFile { get; set; } = new AchFile();
 
@@ -34,8 +35,14 @@ namespace NACHAParser
     public class AchFile
     {
         #region Properties
+
+        [JsonProperty("fHeader")]
         public FileHeaderRecord FHeader { get; set; } = new FileHeaderRecord();
+
+        [JsonProperty("batches")]
         public List<Batch> Batches { get; set; } = new List<Batch>();
+
+        [JsonProperty("fTrailer")]
         public FileTrailer FTrailer { get; set; } = new FileTrailer();
 
         #endregion
@@ -44,7 +51,7 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("BchIdchId")]
+        [JsonProperty("bchId")]
         public string BchId { get; set; } = string.Empty;
 
         [JsonProperty("BatchHeader")]
@@ -55,9 +62,6 @@ namespace NACHAParser
 
         [JsonProperty("batchTrailer")]
         public BatchTrailer BatchTrailer { get; set; } = new BatchTrailer();
-
-        [JsonProperty("iatBchId")]
-        public string IatBchId { get; set; } = string.Empty;
 
         [JsonProperty("iatBatchHeader")]
         public IatBatchHeader IatBatchHeader { get; set; } = new IatBatchHeader();
