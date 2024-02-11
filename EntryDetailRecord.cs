@@ -92,22 +92,38 @@ namespace NACHAParser
                 aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                 TraceNum = line.Substring(79, 15)
             };
-
-            if (batchHeader.StandardEntryClass == StandardEntryClassCode.WEB || batchHeader.StandardEntryClass == StandardEntryClassCode.TEL)
-            {
-                entry.PaymtTypeCode = line.Substring(76, 2);
-                entry.DiscretionaryData = null;
-            }
-            else if (batchHeader.StandardEntryClass == StandardEntryClassCode.CCD || batchHeader.StandardEntryClass == StandardEntryClassCode.PPD || batchHeader.StandardEntryClass == StandardEntryClassCode.COR)
-            {
-                entry.DiscretionaryData = line.Substring(76, 2);
-                entry.PaymtTypeCode = null;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Standard Entry Class {batchHeader.StandardEntryClass} is not supported.");
-            }
+            ProcessEntryDetailSEC(batchHeader.SECCode, entry, line);
             return entry;
+        }
+        private static void ProcessEntryDetailSEC(StandardEntryClassCode sec, EntryDetailRecord details, string line)
+        {
+            switch (sec)
+            {
+                case StandardEntryClassCode.WEB:
+                    details.IndivIdNum = line.Substring(39, 15);
+                    details.IndivName = line.Substring(54, 22);
+                    details.PaymtTypeCode = line.Substring(76, 2);
+                    break;
+                case StandardEntryClassCode.PPD:
+                    details.IndivIdNum = line.Substring(39, 15);
+                    details.IndivName = line.Substring(54, 22);
+                    details.DiscretionaryData = line.Substring(76, 2);
+                    break;
+                case StandardEntryClassCode.POS:
+                    details.CheckSerialNum = line.Substring(39, 15);
+                    details.TerminalCity = line.Substring(48, 4);
+                    details.TerminalState = line.Substring(52, 2);
+                    details.CardTransTypeCode = line.Substring(76, 2);
+                    break;
+                case StandardEntryClassCode.POP:
+                    details.CheckSerialNum = line.Substring(39, 9);
+                    details.TerminalCity = line.Substring(48, 4);
+                    details.TerminalState = line.Substring(52, 2);
+                    details.DiscretionaryData = line.Substring(76, 2);
+                    break;
+                default:
+                    throw new InvalidOperationException($"Standard Entry Class Code '{sec}' is not supported");
+            }
         }
         public static int CountEntryDetailRecords(Batch batch)
         {

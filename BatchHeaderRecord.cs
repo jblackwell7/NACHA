@@ -25,7 +25,7 @@ namespace NACHAParser
         public string CoId { get; set; } = string.Empty;
 
         [JsonProperty("standardEntryClass")]
-        public StandardEntryClassCode StandardEntryClass { get; set; }
+        public StandardEntryClassCode SECCode { get; set; }
 
         [JsonProperty("coEntDescription")]
         public string? CoEntDescription { get; set; }
@@ -69,7 +69,7 @@ namespace NACHAParser
                 CoName = line.Substring(4, 16),
                 CoDiscretionaryData = line.Substring(20, 20),
                 CoId = line.Substring(40, 10),
-                StandardEntryClass = ParseSEC(line.Substring(50, 3)),
+                SECCode = ParseSEC(line.Substring(50, 3)),
                 CoDescriptiveDate = line.Substring(63, 6),
                 EffectiveEntDate = line.Substring(71, 6),
                 SettlementDate = line.Substring(75, 3),
