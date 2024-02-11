@@ -24,7 +24,7 @@ namespace NACHAParser
         [JsonProperty("coId")]
         public string CoId { get; set; } = string.Empty;
 
-        [JsonProperty("standardEntryClass")]
+        [JsonProperty("SECCode")]
         public StandardEntryClassCode SECCode { get; set; }
 
         [JsonProperty("coEntDescription")]

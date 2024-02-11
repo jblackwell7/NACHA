@@ -37,7 +37,7 @@ namespace NachaFileParser
         [JsonProperty("originatorId")]
         public string OriginatorId { get; set; } = string.Empty;
 
-        [JsonProperty("standardEntryClass")]
+        [JsonProperty("SECCode")]
         public string SECCode { get; set; } = string.Empty;
 
         [JsonProperty("coEntryDescription")]
