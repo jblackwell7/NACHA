@@ -125,7 +125,7 @@ namespace NACHAParser
     public class IatAddenda10
     {
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -155,7 +155,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -179,7 +179,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -203,7 +203,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -233,7 +233,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -263,7 +263,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -287,7 +287,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("recordType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AddendaTypeCode { get; set; }
@@ -347,7 +347,7 @@ namespace NACHAParser
         public int RecType { get; set; }
 
         [JsonProperty("serviceClass")]
-        public ServiceClass ServiceClass { get; set; }
+        public ServiceClassCode ServiceClassCode { get; set; }
 
         [JsonProperty("entAddendaCnt")]
         public string EntAddendaCnt { get; set; } = string.Empty;
