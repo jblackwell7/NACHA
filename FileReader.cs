@@ -32,7 +32,7 @@ namespace NACHAParser
                 {
                     continue;
                 }
-                if (Enum.TryParse<RecordTypes>(line.Substring(0, 1), out RecordTypes recordType))
+                if (Enum.TryParse<RecordType>(line.Substring(0, 1), out RecordType recordType))
                 {
                     lineNumber++;
                     ProcessLine(recordType, line, root, ref cBatch, lineNumber);
@@ -87,28 +87,28 @@ namespace NACHAParser
         /// <param name="root">The root object being populated with parsed data.</param>
         /// <param name="cBatch">The current batch object being populated.</param>
         /// <param name="lineNumber">The line number currently being processed.</param>
-        private static void ProcessLine(RecordTypes recordType, string line, Root root, ref Batch cBatch, int lineNumber)
+        private static void ProcessLine(RecordType recordType, string line, Root root, ref Batch cBatch, int lineNumber)
         {
             try
             {
                 switch (recordType)
                 {
-                    case RecordTypes.fh:
+                    case RecordType.fh:
                         ProcessFileHeader(line, root);
                         break;
-                    case RecordTypes.bh:
+                    case RecordType.bh:
                         ProcessBatchHeader(line, ref cBatch);
                         break;
-                    case RecordTypes.ed:
+                    case RecordType.ed:
                         ProcessEntryDetail(line, cBatch, lineNumber);
                         break;
-                    case RecordTypes.ad:
+                    case RecordType.ad:
                         ProcessAddenda(line, cBatch, lineNumber);
                         break;
-                    case RecordTypes.bc:
+                    case RecordType.bc:
                         ProcessBatchControl(line, root, ref cBatch);
                         break;
-                    case RecordTypes.fc:
+                    case RecordType.fc:
                         ProcessFileControl(line, root);
                         break;
                     default:

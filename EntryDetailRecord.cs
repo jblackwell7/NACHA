@@ -35,10 +35,10 @@ namespace NACHAParser
         public int LineNum { get; set; }
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("transCode")]
-        public string TransCode { get; set; } = string.Empty;
+        public TransactionCode TransCode { get; set; }
 
         [JsonProperty("rDFIId")]
         public string RDFIId { get; set; } = string.Empty;
@@ -93,8 +93,8 @@ namespace NACHAParser
             {
                 EntryDetails = new EntryDetails
                 {
-                    RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
-                    TransCode = line.Substring(1, 2),
+                    RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                    TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
                     RDFIId = line.Substring(3, 8),
                     CheckDigit = line[11],
                     DFIAcctNum = line.Substring(12, 17),
