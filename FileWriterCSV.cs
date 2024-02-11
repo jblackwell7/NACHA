@@ -76,7 +76,7 @@ namespace NachaFileParser
                 bH.CoName,
                 bH.CoDiscretionaryData,
                 bH.CoId,
-                (int)bH.StandardEntryClass,
+                (int)bH.SECCode,
                 bH.CoEntDescription,
                 bH.CoDescriptiveDate,
                 bH.EffectiveEntDate,
@@ -89,7 +89,7 @@ namespace NachaFileParser
         public static void CsvWriteEDRecords(StringBuilder sb, BatchHeaderRecord bhSEC, EntryDetailRecord eR)
         {
             var eDetails = eR;
-            if (bhSEC.StandardEntryClass == StandardEntryClassCode.WEB || bhSEC.StandardEntryClass == StandardEntryClassCode.TEL)
+            if (bhSEC.SECCode == StandardEntryClassCode.WEB || bhSEC.SECCode == StandardEntryClassCode.TEL)
             {
                 sb.AppendLine(CSVFileWriter.WEBTELeDHeader);
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
@@ -106,7 +106,7 @@ namespace NachaFileParser
                 eDetails.TraceNum
                 ));
             }
-            else if (bhSEC.StandardEntryClass == StandardEntryClassCode.CCD || bhSEC.StandardEntryClass == StandardEntryClassCode.PPD || bhSEC.StandardEntryClass == StandardEntryClassCode.COR)
+            else if (bhSEC.SECCode == StandardEntryClassCode.CCD || bhSEC.SECCode == StandardEntryClassCode.PPD || bhSEC.SECCode == StandardEntryClassCode.COR)
             {
                 sb.AppendLine(CSVFileWriter.CCDPPDeDHeader);
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
