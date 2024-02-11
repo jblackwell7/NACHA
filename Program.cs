@@ -22,7 +22,7 @@ namespace NACHAParser
 
             foreach (var batch in root.FileContents.AchFile.Batches)
             {
-                int recCount = EntryDetails.CountEntryDetailRecords(batch);
+                int recCount = EntryDetailRecord.CountEntryDetailRecords(batch);
                 Console.WriteLine($"Batch ID: {batch.BchId}, Entry Detail Records: {recCount}");
             }
         }

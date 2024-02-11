@@ -21,7 +21,7 @@ namespace NACHAParser
             Console.WriteLine("JSON file written to {0}", outputFile);
             Console.WriteLine("Number of Serialized Batches: {0}", root.FileContents.AchFile.Batches.Count);
             Console.WriteLine("Number of Serialized Entries: {0}", root.FileContents.AchFile.Batches.Sum(b => b.EntryRecords.Count));
-            Console.WriteLine("Number of Serialized Addenda: {0}", root.FileContents.AchFile.Batches.Sum(b => b.EntryRecords.Sum(e => e.EntryDetails.AddendaRecords.Count)));
+            Console.WriteLine("Number of Serialized Addenda: {0}", root.FileContents.AchFile.Batches.Sum(b => b.EntryRecords.Sum(e => e.AddendaRecords.Count)));
         }
         private static void DetailedBatchInfo(Batch batch)
         {
@@ -29,7 +29,7 @@ namespace NACHAParser
 
             Console.WriteLine("Batch Number: {0}", batch.BatchHeader.BchNum);
             Console.WriteLine("Number of Entries: {0}", batch.EntryRecords.Count);
-            Console.WriteLine("Number of Addenda: {0}", batch.EntryRecords.Sum(e => e.EntryDetails.AddendaRecords.Count));
+            Console.WriteLine("Number of Addenda: {0}", batch.EntryRecords.Sum(e => e.AddendaRecords.Count));
             Console.WriteLine($"Batch Json: {serializedBatch}");
             foreach (var entry in batch.EntryRecords)
             {
@@ -43,7 +43,7 @@ namespace NACHAParser
             Console.WriteLine($"Entry Detail Json: {serializedEntry}");
             Console.WriteLine($"Entry Detail Json: {serializedEntry}");
 
-            foreach (var addenda in entry.EntryDetails.AddendaRecords)
+            foreach (var addenda in entry.AddendaRecords)
             {
                 DetailedAddendaInfo(addenda);
             }
