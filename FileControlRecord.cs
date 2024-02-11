@@ -31,7 +31,7 @@ namespace NACHAParser
         public string FileControlId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("bchCnt")]
         public string BchCnt { get; set; } = string.Empty;
@@ -71,7 +71,7 @@ namespace NACHAParser
         {
             return new FileControlRecord
             {
-                RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
+                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                 BchCnt = line.Substring(1, 6),
                 BlockCnt = line.Substring(7, 6),
                 EntAddendaCnt = line.Substring(13, 8),

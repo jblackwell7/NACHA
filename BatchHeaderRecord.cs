@@ -10,10 +10,10 @@ namespace NACHAParser
         public string BchHeaderId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("serviceClassCode")]
-        public ServiceClass ServiceClassCode { get; set; }
+        public ServiceClassCode ServiceClassCode { get; set; }
 
         [JsonProperty("coName")]
         public string CoName { get; set; } = string.Empty;
@@ -40,7 +40,7 @@ namespace NACHAParser
         public string? SettlementDate { get; set; }
 
         [JsonProperty("originatorStatusCode")]
-        public char OriginatorStatusCode { get; set; }
+        public OriginatorStatusCode OriginatorStatusCode { get; set; }
 
         [JsonProperty("originatingDFIId")]
         public string OriginatingDFIId { get; set; } = string.Empty;
@@ -64,8 +64,8 @@ namespace NACHAParser
         {
             return new BatchHeaderRecord
             {
-                RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
-                ServiceClassCode = (ServiceClass)int.Parse(line.Substring(1, 3)),
+                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
                 CoName = line.Substring(4, 16),
                 CoDiscretionaryData = line.Substring(20, 20),
                 CoId = line.Substring(40, 10),
@@ -73,7 +73,7 @@ namespace NACHAParser
                 CoDescriptiveDate = line.Substring(63, 6),
                 EffectiveEntDate = line.Substring(71, 6),
                 SettlementDate = line.Substring(75, 3),
-                OriginatorStatusCode = line[78],
+                OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
                 OriginatingDFIId = line.Substring(78, 8),
                 BchNum = line.Substring(87, 7)
             };

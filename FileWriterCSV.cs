@@ -173,7 +173,7 @@ namespace NachaFileParser
             sb.AppendLine(CSVFileWriter.BatchControlHeader);
             sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                 (int)bC.RecType,
-                (int)bC.ServiceClass,
+                (int)bC.ServiceClassCode,
                 bC.EntAddendaCnt,
                 bC.EntHash,
                 bC.TotBchDrEntAmt,

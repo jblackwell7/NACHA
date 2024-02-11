@@ -11,7 +11,7 @@ namespace NACHAParser
         public string FilehdrId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("priorityCode")]
         public string PriorityCode { get; set; } = string.Empty;
@@ -71,7 +71,7 @@ namespace NACHAParser
         {
             return new FileHeaderRecord
             {
-                RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
+                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                 PriorityCode = line.Substring(1, 2),
                 ImmedDestination = line.Substring(3, 10),
                 ImmedOrigin = line.Substring(13, 10),

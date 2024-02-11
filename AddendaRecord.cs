@@ -31,7 +31,7 @@ namespace NACHAParser
         public string Addenda05Id { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
         public AddendTypeCode AdTypeCode { get; set; }
@@ -89,7 +89,7 @@ namespace NACHAParser
             {
                 Addenda = new Addenda
                 {
-                    RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
+                    RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                     AdTypeCode = (AddendTypeCode)int.Parse(line.Substring(1, 2)),
                 }
             };
@@ -119,11 +119,6 @@ namespace NACHAParser
                 adEntry.Addenda.AdTraceNum = line.Substring(79, 15);
             }
             return adEntry;
-        }
-
-        public static bool IsReturn(EntryDetails entryDetails)
-        {
-            return entryDetails.TransCode.StartsWith("2");
         }
 
         #endregion
