@@ -63,15 +63,6 @@ namespace NACHAParser
         [JsonProperty("batchTrailer")]
         public BatchTrailer BatchTrailer { get; set; } = new BatchTrailer();
 
-        [JsonProperty("iatBatchHeader")]
-        public IatBatchHeader IatBatchHeader { get; set; } = new IatBatchHeader();
-
-        [JsonProperty("iatntryDetailRecords")]
-        public List<IatntryDetailRecord> IatntryDetailRecords { get; set; } = new List<IatntryDetailRecord>();
-
-        [JsonProperty("iatBatchTrailer")]
-        public IatBatchTrailer IatBatchTrailer { get; set; } = new IatBatchTrailer();
-
         #endregion
 
         #region Constructors

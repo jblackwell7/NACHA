@@ -150,7 +150,7 @@ namespace NACHAParser
         /// <param name="lineNumber">The line number currently being processed.</param>
         private static void ProcessEntryDetail(string line, Batch cBatch, int lineNumber)
         {
-            var entryDetail = EntryDetails.ParseEntryDetail(line, cBatch.BatchHeader, lineNumber);
+            var entryDetail = EntryDetailRecord.ParseEntryDetail(line, cBatch.BatchHeader, lineNumber);
 
             cBatch.EntryRecords.Add(entryDetail);
         }
@@ -166,9 +166,9 @@ namespace NACHAParser
 
             var lastEntryDetail = cBatch.EntryRecords.Last();
 
-            if (lastEntryDetail.EntryDetails.aDRecIndicator == AddendaRecordIndicator.Addenda)
+            if (lastEntryDetail.aDRecIndicator == AddendaRecordIndicator.Addenda)
             {
-                lastEntryDetail.EntryDetails.AddendaRecords.Add(addendaRecord);
+                lastEntryDetail.AddendaRecords.Add(addendaRecord);
             }
         }
         /// <summary>

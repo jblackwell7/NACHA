@@ -35,7 +35,7 @@ namespace NachaFileParser
                 {
                     CsvWriteEDRecords(sb, btH.BatchHeader, etR);
 
-                    foreach (var addenda in etR.EntryDetails.AddendaRecords)
+                    foreach (var addenda in etR.AddendaRecords)
                     {
                         CsvADRecords(sb, addenda);
                     }
@@ -88,7 +88,7 @@ namespace NachaFileParser
         }
         public static void CsvWriteEDRecords(StringBuilder sb, BatchHeaderRecord bhSEC, EntryDetailRecord eR)
         {
-            var eDetails = eR.EntryDetails;
+            var eDetails = eR;
             if (bhSEC.StandardEntryClass == StandardEntryClassCode.WEB || bhSEC.StandardEntryClass == StandardEntryClassCode.TEL)
             {
                 sb.AppendLine(CSVFileWriter.WEBTELeDHeader);
