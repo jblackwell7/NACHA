@@ -30,10 +30,10 @@ namespace NACHAParser
         public string BchControlId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
-        public RecordTypes RecType { get; set; }
+        public RecordType RecType { get; set; }
 
         [JsonProperty("serviceClass")]
-        public ServiceClass ServiceClass { get; set; }
+        public ServiceClassCode ServiceClassCode { get; set; }
 
         [JsonProperty("entAddendaCnt")]
         public string EntAddendaCnt { get; set; } = string.Empty;
@@ -76,8 +76,8 @@ namespace NACHAParser
         {
             return new BatchControlRecord
             {
-                RecType = (RecordTypes)int.Parse(line.Substring(0, 1)),
-                ServiceClass = (ServiceClass)int.Parse(line.Substring(1, 3)),
+                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
                 EntAddendaCnt = line.Substring(4, 6),
                 EntHash = line.Substring(10, 10),
                 TotBchDrEntAmt = line.Substring(20, 12),
