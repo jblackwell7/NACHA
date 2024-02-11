@@ -23,6 +23,21 @@ namespace NACHAParser
         WEB,
         TEL,
         COR,
+        POP,
+        POS,
+        IAT,
+        ADV,
+        ARC,
+        ATX,
+        BOC,
+        CTX,
+        DNE,
+        ENR,
+        SHR,
+        MTE,
+        RCK,
+        TRC,
+        XCK
     }
     public enum ServiceClassCode
     {
