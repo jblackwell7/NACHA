@@ -87,8 +87,6 @@ namespace NACHAParser
                 CheckDigit = line[11],
                 DFIAcctNum = line.Substring(12, 17),
                 Amt = line.Substring(29, 10),
-                IndivIdNum = line.Substring(39, 15),
-                IndivName = line.Substring(54, 22),
                 aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                 TraceNum = line.Substring(79, 15)
             };
