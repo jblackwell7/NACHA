@@ -6,28 +6,6 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("entRecId")]
-        public string EntRecId { get; set; } = string.Empty;
-
-        [JsonProperty("entryDetails")]
-        public EntryDetails EntryDetails { get; set; } = new EntryDetails();
-
-        #endregion
-
-        #region Constructors
-
-        public EntryDetailRecord()
-        {
-            EntRecId = Guid.NewGuid().ToString();
-            EntryDetails = new EntryDetails();
-        }
-
-        #endregion
-    }
-    public class EntryDetails
-    {
-        #region Properties
-
         [JsonProperty("entDetailsId")]
         public string EntDetailsId { get; set; } = string.Empty;
 
@@ -58,6 +36,18 @@ namespace NACHAParser
         [JsonProperty("indivName")]
         public string IndivName { get; set; } = string.Empty;
 
+        [JsonProperty("checkSerialNum")]
+        public string CheckSerialNum { get; set; } = string.Empty;
+
+        [JsonProperty("terminalCity")]
+        public string TerminalCity { get; set; } = string.Empty;
+
+        [JsonProperty("terminalState")]
+        public string TerminalState { get; set; } = string.Empty;
+
+        [JsonProperty("cardTransTypeCode")]
+        public string CardTransTypeCode { get; set; } = string.Empty;
+
         [JsonProperty("discretionaryData")]
         public string? DiscretionaryData { get; set; }
 
@@ -77,7 +67,7 @@ namespace NACHAParser
 
         #region Constructors
 
-        public EntryDetails()
+        public EntryDetailRecord()
         {
             EntDetailsId = Guid.NewGuid().ToString();
             AddendaRecords = new List<AddendaRecord>();
@@ -91,30 +81,27 @@ namespace NACHAParser
 
             EntryDetailRecord entry = new EntryDetailRecord
             {
-                EntryDetails = new EntryDetails
-                {
-                    RecType = (RecordType)int.Parse(line.Substring(0, 1)),
-                    TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
-                    RDFIId = line.Substring(3, 8),
-                    CheckDigit = line[11],
-                    DFIAcctNum = line.Substring(12, 17),
-                    Amt = line.Substring(29, 10),
-                    IndivIdNum = line.Substring(39, 15),
-                    IndivName = line.Substring(54, 22),
-                    aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
-                    TraceNum = line.Substring(79, 15)
-                }
+                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
+                RDFIId = line.Substring(3, 8),
+                CheckDigit = line[11],
+                DFIAcctNum = line.Substring(12, 17),
+                Amt = line.Substring(29, 10),
+                IndivIdNum = line.Substring(39, 15),
+                IndivName = line.Substring(54, 22),
+                aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                TraceNum = line.Substring(79, 15)
             };
 
             if (batchHeader.StandardEntryClass == StandardEntryClassCode.WEB || batchHeader.StandardEntryClass == StandardEntryClassCode.TEL)
             {
-                entry.EntryDetails.PaymtTypeCode = line.Substring(76, 2);
-                entry.EntryDetails.DiscretionaryData = null;
+                entry.PaymtTypeCode = line.Substring(76, 2);
+                entry.DiscretionaryData = null;
             }
             else if (batchHeader.StandardEntryClass == StandardEntryClassCode.CCD || batchHeader.StandardEntryClass == StandardEntryClassCode.PPD || batchHeader.StandardEntryClass == StandardEntryClassCode.COR)
             {
-                entry.EntryDetails.DiscretionaryData = line.Substring(76, 2);
-                entry.EntryDetails.PaymtTypeCode = null;
+                entry.DiscretionaryData = line.Substring(76, 2);
+                entry.PaymtTypeCode = null;
             }
             else
             {
@@ -129,7 +116,7 @@ namespace NACHAParser
 
             foreach (var et in batch.EntryRecords)
             {
-                aDcount += et.EntryDetails.AddendaRecords.Count;
+                aDcount += et.AddendaRecords.Count;
             }
             int eDaDTotal = eDcount + aDcount;
             return eDaDTotal;
