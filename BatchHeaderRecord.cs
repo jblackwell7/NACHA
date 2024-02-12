@@ -60,7 +60,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static BatchHeaderRecord ParseBatchHeader(string line)
+        public static BatchHeaderRecord ParseBatchHeader(string line,int lineNumber)
         {
             return new BatchHeaderRecord
             {
@@ -69,25 +69,13 @@ namespace NACHAParser
                 CoName = line.Substring(4, 16),
                 CoDiscretionaryData = line.Substring(20, 20),
                 CoId = line.Substring(40, 10),
-                SECCode = ParseSEC(line.Substring(50, 3)),
+                SECCode = Batch.ParseSEC(line.Substring(50, 3)),
                 CoDescriptiveDate = line.Substring(63, 6),
                 EffectiveEntDate = line.Substring(71, 6),
                 SettlementDate = line.Substring(75, 3),
                 OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
                 OriginatingDFIId = line.Substring(78, 8),
                 BchNum = line.Substring(87, 7)
-            };
-        }
-        private static StandardEntryClassCode ParseSEC(string value)
-        {
-            return value switch
-            {
-                "CCD" => StandardEntryClassCode.CCD,
-                "PPD" => StandardEntryClassCode.PPD,
-                "WEB" => StandardEntryClassCode.WEB,
-                "TEL" => StandardEntryClassCode.TEL,
-                "COR" => StandardEntryClassCode.COR,
-                _ => throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode."),
             };
         }
 

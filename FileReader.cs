@@ -97,7 +97,7 @@ namespace NACHAParser
                         ProcessFileHeader(line, root);
                         break;
                     case RecordType.bh:
-                        ProcessBatchHeader(line, ref cBatch);
+                        ProcessBatchHeader(line, ref cBatch, lineNumber);
                         break;
                     case RecordType.ed:
                         ProcessEntryDetail(line, cBatch, lineNumber);
@@ -135,12 +135,17 @@ namespace NACHAParser
         /// </summary>
         /// <param name="line">The batch header line from the ACH file.</param>
         /// <param name="cBatch">Reference to the current batch object being populated.</param>
-        private static void ProcessBatchHeader(string line, ref Batch cBatch)
+        private static void ProcessBatchHeader(string line, ref Batch cBatch, int lineNumber)
         {
-            cBatch = new Batch
+            var newBatch = new Batch();
+            var bh = BatchHeaderRecord.ParseBatchHeader(line, lineNumber);
+            newBatch.BatchHeader = bh;
+
+            if (newBatch.ValidateBatch())
             {
-                BatchHeader = BatchHeaderRecord.ParseBatchHeader(line)
-            };
+                cBatch = newBatch;
+            }
+            else { }
         }
         /// <summary>
         /// Parses the entry detail line

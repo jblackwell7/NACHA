@@ -44,7 +44,7 @@ namespace NACHAParser
         [JsonProperty("entDetailSeqNum")]
         public string EntDetailSeqNum { get; set; } = string.Empty;
         [JsonProperty("returnReasonCode")]
-        public string ReturnReasonCode { get; set; } = string.Empty;
+        public ReturnCode ReturnReasonCode { get; set; }
 
         [JsonProperty("origTraceNumber")]
         public string OrigTraceNum { get; set; } = string.Empty;
@@ -61,7 +61,7 @@ namespace NACHAParser
         [JsonProperty("adTraceNum")]
         public string AdTraceNum { get; set; } = string.Empty;
         [JsonProperty("ChangeCode")]
-        public string ChangeCode { get; set; } = string.Empty;
+        public ChangeCode ChangeCode { get; set; }
 
         [JsonProperty("correctedData")]
         public string CorrectedData { get; set; } = string.Empty;
@@ -93,32 +93,78 @@ namespace NACHAParser
                     AdTypeCode = (AddendTypeCode)int.Parse(line.Substring(1, 2)),
                 }
             };
-            if (adEntry.Addenda.AdTypeCode == AddendTypeCode.StandardAddenda)
-            {
-                adEntry.Addenda.PaymtRelatedInfo = line.Substring(3, 80);
-                adEntry.Addenda.AddendaSeqNum = line.Substring(83, 4);
-                adEntry.Addenda.EntDetailSeqNum = line.Substring(87, 7);
-            }
-            else if (adEntry.Addenda.AdTypeCode == AddendTypeCode.ReturnAddenda)
-            {
-                adEntry.Addenda.ReturnReasonCode = line.Substring(3, 3);
-                adEntry.Addenda.OrigTraceNum = line.Substring(6, 15);
-                adEntry.Addenda.DateOfDeath = line.Substring(21, 6);
-                adEntry.Addenda.OrigReceivingDFIId = line.Substring(27, 8);
-                adEntry.Addenda.AddendaInfo = line.Substring(35, 44);
-                adEntry.Addenda.AdTraceNum = line.Substring(79, 15);
-            }
-            else if (adEntry.Addenda.AdTypeCode == AddendTypeCode.NOCAddenda)
-            {
-                adEntry.Addenda.ChangeCode = line.Substring(3, 2);
-                adEntry.Addenda.OrigTraceNum = line.Substring(6, 15);
-                adEntry.Addenda.Reserved1 = line.Substring(21, 6);
-                adEntry.Addenda.OrigReceivingDFIId = line.Substring(27, 8);
-                adEntry.Addenda.CorrectedData = line.Substring(35, 29);
-                adEntry.Addenda.Reserved2 = line.Substring(64, 15);
-                adEntry.Addenda.AdTraceNum = line.Substring(79, 15);
-            }
+
+            ProcessAddendaDetails(adEntry, line);
             return adEntry;
+        }
+
+        private static void ProcessAddendaDetails(AddendaRecord adEntry, string line)
+        {
+            switch (adEntry.Addenda.AdTypeCode)
+            {
+                case AddendTypeCode.StandardAddenda:
+                    adEntry.Addenda.PaymtRelatedInfo = line.Substring(3, 80);
+                    adEntry.Addenda.AddendaSeqNum = line.Substring(83, 4);
+                    adEntry.Addenda.EntDetailSeqNum = line.Substring(87, 7);
+                    break;
+                case AddendTypeCode.ReturnAddenda:
+                    adEntry.Addenda.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
+                    adEntry.Addenda.OrigTraceNum = line.Substring(6, 15);
+                    adEntry.Addenda.DateOfDeath = line.Substring(21, 6);
+                    adEntry.Addenda.OrigReceivingDFIId = line.Substring(27, 8);
+                    adEntry.Addenda.AddendaInfo = line.Substring(35, 44);
+                    adEntry.Addenda.AdTraceNum = line.Substring(79, 15);
+                    break;
+                case AddendTypeCode.NOCAddenda:
+                    adEntry.Addenda.ChangeCode = (ChangeCode)int.Parse(line.Substring(3, 2));
+                    adEntry.Addenda.OrigTraceNum = line.Substring(6, 15);
+                    adEntry.Addenda.Reserved1 = line.Substring(21, 6);
+                    adEntry.Addenda.OrigReceivingDFIId = line.Substring(27, 8);
+                    adEntry.Addenda.CorrectedData = line.Substring(35, 29);
+                    adEntry.Addenda.Reserved2 = line.Substring(64, 15);
+                    adEntry.Addenda.AdTraceNum = line.Substring(79, 15);
+                    break;
+                default:
+                    throw new Exception("Invalid Addenda Record");
+            }
+        }
+        public static bool IsTCReturn(TransactionCode tc)
+        {
+            switch (tc)
+            {
+                case TransactionCode.CheckingReturnNOCCredit:
+                case TransactionCode.CheckingReturnNOCDebit:
+                case TransactionCode.SavingReturnNOCCredit:
+                case TransactionCode.SavingsReturnNOCDebit:
+                case TransactionCode.GLReturnNoCCredit:
+                case TransactionCode.GLReturnNOCDebit:
+                case TransactionCode.LoanReturnNOCredit:
+                case TransactionCode.LoanReturnNOCDebit:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        public static bool IsRCDishonor(ReturnCode rc)
+        {
+            switch (rc)
+            {
+                case ReturnCode.R61:
+                case ReturnCode.R62:
+                case ReturnCode.R67:
+                case ReturnCode.R68:
+                case ReturnCode.R69:
+                case ReturnCode.R70:
+                case ReturnCode.R71:
+                case ReturnCode.R72:
+                case ReturnCode.R73:
+                case ReturnCode.R75:
+                case ReturnCode.R76:
+                case ReturnCode.R77:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         #endregion

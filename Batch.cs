@@ -72,5 +72,99 @@ namespace NACHAParser
         }
 
         #endregion
+
+        #region Methods
+
+                public bool ValidateBatch()
+        {
+            bool sc = IsServiceClassCode(this.BatchHeader.ServiceClassCode);
+            StandardEntryClassCode sec = ParseSEC(this.BatchHeader.SECCode.ToString());
+            try
+            {
+                if (sc == true && sec != StandardEntryClassCode.CCD || sec != StandardEntryClassCode.PPD || sec != StandardEntryClassCode.WEB || sec != StandardEntryClassCode.TEL || sec != StandardEntryClassCode.COR || sec != StandardEntryClassCode.POP || sec != StandardEntryClassCode.POS)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Parses the Standard Entry Class (SEC) code from a string and returns the corresponding <see cref="StandardEntryClassCode"/> enum value.
+        /// </summary>
+        /// <remarks>
+        /// This method maps the provided string value to a specific  enum. If the provided value does not match any known SEC codes, an <see cref="ArgumentException"/> is thrown.
+        /// </remarks>
+        /// <param name="value">The SEC code as a string. Expected to be a three-character code corresponding to valid ACH transaction types.</param>
+        /// <returns>The <see cref="StandardEntryClassCode"/> enum value that matches the provided SEC code.</returns>
+        /// <exception cref="ArgumentException">Thrown when the provided SEC code does not match any known Standard Entry Class Codes.</exception>
+        public static StandardEntryClassCode ParseSEC(string value)
+        {
+            switch (value)
+            {
+                case "CCD":
+                    return StandardEntryClassCode.CCD;
+                case "PPD":
+                    return StandardEntryClassCode.PPD;
+                case "WEB":
+                    return StandardEntryClassCode.WEB;
+                case "TEL":
+                    return StandardEntryClassCode.TEL;
+                case "COR":
+                    return StandardEntryClassCode.COR;
+                case "POP":
+                    return StandardEntryClassCode.POP;
+                case "POS":
+                    return StandardEntryClassCode.POS;
+                case "BOC":
+                    return StandardEntryClassCode.BOC;
+                case "ARC":
+                    return StandardEntryClassCode.ARC;
+                case "RCK":
+                    return StandardEntryClassCode.RCK;
+                case "MTE":
+                    return StandardEntryClassCode.MTE;
+                case "SHR":
+                    return StandardEntryClassCode.SHR;
+                case "CTX":
+                    return StandardEntryClassCode.CTX;
+                case "IAT":
+                    return StandardEntryClassCode.IAT;
+                case "ENR":
+                    return StandardEntryClassCode.ENR;
+                case "TRC":
+                    return StandardEntryClassCode.TRC;
+                case "ADV":
+                    return StandardEntryClassCode.ADV;
+                case "XCK":
+                    return StandardEntryClassCode.XCK;
+                default:
+                    throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode.");
+            }
+        }
+
+        private static bool IsServiceClassCode(ServiceClassCode sc)
+        {
+            switch (sc)
+            {
+                case ServiceClassCode.MixDebitAndCredit:
+                case ServiceClassCode.CreditOnly:
+                case ServiceClassCode.DebitOnly:
+                    return true;
+                case ServiceClassCode.AutomatedAccountingAdvices:
+                    return false;
+                default:
+                    throw new ArgumentException($"'{sc}' is not a valid ServiceClassCode.");
+            }
+        }
+        #endregion 
     }
 }
