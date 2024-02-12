@@ -123,6 +123,24 @@ namespace NACHAParser
                     throw new InvalidOperationException($"Standard Entry Class Code '{sec}' is not supported");
             }
         }
+        public static bool IsTCReturn(TransactionCode tc)
+        {
+            switch (tc)
+            {
+                case TransactionCode.CheckingReturnNOCCredit:
+                case TransactionCode.CheckingReturnNOCDebit:
+                case TransactionCode.SavingReturnNOCCredit:
+                case TransactionCode.SavingsReturnNOCDebit:
+                case TransactionCode.GLReturnNoCCredit:
+                case TransactionCode.GLReturnNOCDebit:
+                case TransactionCode.LoanReturnNOCredit:
+                case TransactionCode.LoanReturnNOCDebit:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static int CountEntryDetailRecords(Batch batch)
         {
             int eDcount = batch.EntryRecords.Count;
