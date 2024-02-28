@@ -46,49 +46,57 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var lastEntry = currentBatch.EntryRecord.LastOrDefault();
-                    var ad = new AddendaRecord();
-                    var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-
-                    switch (typeCode)
+                    if (lastEntry != null && lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
                     {
-                        case AddendaTypeCode.StandardAddenda:
-                            ad.Addenda = new Addenda
-                            {
-                                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
-                                AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2)),
-                                PaymtRelatedInfo = line.Substring(3, 80),
-                                AddendaSeqNum = line.Substring(83, 4),
-                                EntDetailSeqNum = line.Substring(87, 7)
-                            };
-                            lastEntry.AddendaRecords.Add(ad);
-                            break;
-                        case AddendaTypeCode.ReturnAddenda:
-                            var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
-                            bool isDisHonor = ad.Addenda.IsDisHonor(lastEntry, rc);
-                            if (isDisHonor != false)
-                            {
-                                throw new Exception("Invalid Return Addenda");
-                            }
-                            else
-                            {
+                        throw new Exception("No Addenda Record Indicator");
+                    }
+                    else
+                    {
+                        var ad = new AddendaRecord();
+                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+
+                        switch (typeCode)
+                        {
+                            case AddendaTypeCode.StandardAddenda:
                                 ad.Addenda = new Addenda
                                 {
                                     RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                                     AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2)),
-                                    ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3)),
-                                    OrigTraceNum = line.Substring(6, 15),
-                                    DateOfDeath = line.Substring(21, 6),
-                                    OrigReceivingDFIId = line.Substring(27, 8),
-                                    AddendaInfo = line.Substring(35, 44),
-                                    AdTraceNum = line.Substring(79, 15)
+                                    PaymtRelatedInfo = line.Substring(3, 80),
+                                    AddendaSeqNum = line.Substring(83, 4),
+                                    EntDetailSeqNum = line.Substring(87, 7)
                                 };
+                                lastEntry.AddendaRecords.Add(ad);
+                                break;
+                            case AddendaTypeCode.ReturnAddenda:
+                                var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
+                                bool isDisHonor = ad.Addenda.IsDisHonor(lastEntry, rc);
+                                if (isDisHonor != false)
+                                {
+                                    throw new Exception("Invalid Return Addenda");
+                                }
+                                else
+                                {
+                                    ad.Addenda = new Addenda
+                                    {
+                                        RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                                        AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2)),
+                                        ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3)),
+                                        OrigTraceNum = line.Substring(6, 15),
+                                        DateOfDeath = line.Substring(21, 6),
+                                        OrigReceivingDFIId = line.Substring(27, 8),
+                                        AddendaInfo = line.Substring(35, 44),
+                                        AdTraceNum = line.Substring(79, 15)
+                                    };
 
-                            }
-                            lastEntry.AddendaRecords.Add(ad);
-                            break;
-                        default:
-                            throw new Exception("Addenda Type Code '{typeCode}' is not supported");
+                                }
+                                lastEntry.AddendaRecords.Add(ad);
+                                break;
+                            default:
+                                throw new Exception("Addenda Type Code '{typeCode}' is not supported");
+                        }
                     }
+
                 }
                 else
                 {
