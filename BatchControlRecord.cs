@@ -46,6 +46,7 @@ namespace NACHAParser
         public BatchControlRecord()
         {
             BchControlId = Guid.NewGuid().ToString();
+            Console.WriteLine($"BchControlId: '{BchControlId}'");
         }
 
         #endregion

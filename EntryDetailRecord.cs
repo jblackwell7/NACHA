@@ -25,7 +25,7 @@ namespace NACHAParser
         public char CheckDigit { get; set; }
 
         [JsonProperty("dFIAcctNum")]
-        public string DFIAcctNum { get; set; } = string.Empty;
+        public string DFIAcctNum { get; set; }= string.Empty;
 
         [JsonProperty("amt")]
         public string Amt { get; set; } = string.Empty;
@@ -61,7 +61,7 @@ namespace NACHAParser
         public string TraceNum { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecords")]
-        public List<AddendaRecord> AddendaRecords { get; set; } = new List<AddendaRecord>();
+        public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
 
         #endregion
 
@@ -147,7 +147,7 @@ namespace NACHAParser
 
             foreach (var et in batch.EntryRecord)
             {
-                aDcount += et.AddendaRecords.Count;
+                aDcount += et.AddendaRecord.Count;
             }
             int eDaDTotal = eDcount + aDcount;
             return eDaDTotal;
