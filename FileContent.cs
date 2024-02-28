@@ -27,6 +27,7 @@ namespace NACHAParser
         {
             FileId = Guid.NewGuid().ToString();
             AchFile = new AchFile();
+            Console.WriteLine($"FileId: '{FileId}'");
         }
 
         #endregion

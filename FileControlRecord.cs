@@ -40,6 +40,7 @@ namespace NACHAParser
         public FileControlRecord()
         {
             FileControlId = Guid.NewGuid().ToString();
+            Console.WriteLine($"FileControlId: '{FileControlId}'");
         }
 
         #endregion

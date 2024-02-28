@@ -35,7 +35,7 @@ namespace NACHAParser
                 {
                     CsvWriteEDRecords(sb, btH.BatchHeader, etR);
 
-                    foreach (var addenda in etR.AddendaRecords)
+                    foreach (var addenda in etR.AddendaRecord)
                     {
                         CsvADRecords(sb, addenda);
                     }
@@ -124,9 +124,9 @@ namespace NACHAParser
                 ));
             }
         }
-        public static void CsvADRecords(StringBuilder sb, AddendaRecord aD)
+        public static void CsvADRecords(StringBuilder sb, Addenda aD)
         {
-            var adR = aD.Addenda;
+            var adR = aD;
             if (adR.AdTypeCode == AddendaTypeCode.StandardAddenda)
             {
                 sb.AppendLine(CSVFileWriter.AddendaHeader);

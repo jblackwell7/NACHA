@@ -2,27 +2,28 @@ using Newtonsoft.Json;
 
 namespace NACHAParser
 {
-    public class AddendaRecord
-    {
-        #region Properties
+    // public class AddendaRecord
+    // {
+    //     #region Properties
 
-        [JsonProperty("addendaRecId")]
-        public string AddendaRecId { get; set; } = string.Empty;
+    //     [JsonProperty("addendaRecId")]
+    //     public string AddendaRecId { get; set; } = string.Empty;
 
-        [JsonProperty("addenda")]
-        public Addenda Addenda { get; set; } = new Addenda();
+    //     [JsonProperty("addenda")]
+    //     public Addenda Addenda { get; set; } = new Addenda();
 
-        #endregion
+    //     #endregion
 
-        #region Constructors
-        public AddendaRecord()
-        {
-            AddendaRecId = Guid.NewGuid().ToString();
-            Addenda = new Addenda();
-        }
+    //     #region Constructors
+    //     public AddendaRecord()
+    //     {
+    //         AddendaRecId = Guid.NewGuid().ToString();
+    //         Addenda = new Addenda();
+    //         Console.WriteLine($"AddendaRecId: '{AddendaRecId}'");
+    //     }
 
-        #endregion
-    }
+    //     #endregion
+    // }
     public class Addenda
     {
         #region Properties
@@ -77,6 +78,7 @@ namespace NACHAParser
         public Addenda()
         {
             Addenda05Id = Guid.NewGuid().ToString();
+            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
         }
 
         #endregion

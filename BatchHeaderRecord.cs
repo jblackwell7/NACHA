@@ -54,6 +54,7 @@ namespace NACHAParser
         public BatchHeaderRecord()
         {
             BchHeaderId = Guid.NewGuid().ToString();
+            Console.WriteLine($"BchHeaderId: '{BchHeaderId}'");
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace NACHAParser
         public BatchHeaderRecord? BatchHeader { get; set; }
 
         [JsonProperty("entryDetailRecords")]
-        public List<EntryDetailRecord>? EntryRecord { get; set; }= new List<EntryDetailRecord>();
+        public List<EntryDetailRecord>? EntryRecord { get; set; } = new List<EntryDetailRecord>();
 
         [JsonProperty("batchTrailer")]
         public BatchControlRecord? BatchControl { get; set; }
@@ -24,6 +24,7 @@ namespace NACHAParser
         public Batch()
         {
             BchId = Guid.NewGuid().ToString();
+            Console.WriteLine($"BchId: '{BchId}'");
         }
 
         #endregion
