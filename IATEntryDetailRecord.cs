@@ -1,7 +1,7 @@
-using NACHAParser;
+
 using Newtonsoft.Json;
 
-namespace NachaFileParser
+namespace NACHAParser
 {
     public class IATEntryDetailRecord
     {

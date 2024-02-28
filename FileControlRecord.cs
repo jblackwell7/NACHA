@@ -2,27 +2,6 @@ using Newtonsoft.Json;
 
 namespace NACHAParser
 {
-    #region Properties
-    public class FileTrailer
-    {
-        [JsonProperty("fileTrailerId")]
-        public string FileTrailerId { get; set; } = string.Empty;
-
-        [JsonProperty("fileControl")]
-        public FileControlRecord FControl { get; set; } = new FileControlRecord();
-
-        #endregion
-
-        #region Constructors
-
-        public FileTrailer()
-        {
-            FileTrailerId = Guid.NewGuid().ToString();
-            FControl = new FileControlRecord();
-        }
-
-        #endregion
-    }
     public class FileControlRecord
     {
         #region Properties
