@@ -37,7 +37,8 @@ namespace NACHAParser
         MTE,
         RCK,
         TRC,
-        XCK
+        XCK,
+        Unknown
     }
     public enum ServiceClassCode
     {
@@ -46,7 +47,7 @@ namespace NACHAParser
         CreditOnly = 225,
         AutomatedAccountingAdvices = 280
     }
-    public enum AddendTypeCode
+    public enum AddendaTypeCode
     {
         POSAddenda = 02,
         StandardAddenda = 05,

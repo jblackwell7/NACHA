@@ -1,7 +1,7 @@
 using System.Text;
-using NACHAParser;
 
-namespace NachaFileParser
+
+namespace NACHAParser
 {
     public static class CSVFileWriter
     {
@@ -23,7 +23,7 @@ namespace NachaFileParser
         {
             var sb = new StringBuilder();
 
-            var fHead = root.FileContents.AchFile.FHeader;
+            var fHead = root.FileContents.AchFile.FileHeader;
 
             CsvFHRecords(sb, fHead);
 
@@ -31,7 +31,7 @@ namespace NachaFileParser
             {
                 CsvWriteBHRecords(sb, btH);
 
-                foreach (var etR in btH.EntryRecords)
+                foreach (var etR in btH.EntryRecord)
                 {
                     CsvWriteEDRecords(sb, btH.BatchHeader, etR);
 
@@ -40,9 +40,9 @@ namespace NachaFileParser
                         CsvADRecords(sb, addenda);
                     }
                 }
-                CsvBCRecords(sb, btH.BatchTrailer.BControl);
+                CsvBCRecords(sb, btH.BatchControl);
             }
-            CsvWriteFCRecords(sb, root.FileContents.AchFile.FTrailer.FControl);
+            CsvWriteFCRecords(sb, root.FileContents.AchFile.FileControl);
 
             File.WriteAllText(outputFile, sb.ToString());
         }
@@ -127,7 +127,7 @@ namespace NachaFileParser
         public static void CsvADRecords(StringBuilder sb, AddendaRecord aD)
         {
             var adR = aD.Addenda;
-            if (adR.AdTypeCode == AddendTypeCode.StandardAddenda)
+            if (adR.AdTypeCode == AddendaTypeCode.StandardAddenda)
             {
                 sb.AppendLine(CSVFileWriter.AddendaHeader);
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4}",
@@ -138,7 +138,7 @@ namespace NachaFileParser
                 adR.EntDetailSeqNum
                 ));
             }
-            else if (adR.AdTypeCode == AddendTypeCode.ReturnAddenda)
+            else if (adR.AdTypeCode == AddendaTypeCode.ReturnAddenda)
             {
                 sb.AppendLine(CSVFileWriter.ReturnAddendaHeader);
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7}",
@@ -152,7 +152,7 @@ namespace NachaFileParser
                     adR.AdTraceNum
                     ));
             }
-            else if (adR.AdTypeCode == AddendTypeCode.NOCAddenda)
+            else if (adR.AdTypeCode == AddendaTypeCode.NOCAddenda)
             {
                 sb.AppendLine(CSVFileWriter.NOCAddendaHeader);
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
