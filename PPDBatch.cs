@@ -105,7 +105,7 @@ namespace NACHAParser
         {
             if (currentBatch != null)
             {
-                if (currentBatch.BatchControl != null)
+                if (currentBatch.BatchControl == null)
                 {
                     currentBatch.BatchControl = BatchControlRecord.ParseBatchControl(line);
                     root.FileContents.AchFile.Batches.Add(currentBatch);
