@@ -70,7 +70,6 @@ namespace NACHAParser
         public EntryDetailRecord()
         {
             EntDetailsId = Guid.NewGuid().ToString();
-            AddendaRecords = new List<AddendaRecord>();
         }
 
         #endregion
