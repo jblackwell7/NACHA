@@ -17,7 +17,7 @@ namespace NACHAParser
             currentBatch = batch;
         }
         public abstract void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec);
-        public abstract void ProcessEntryDetail(string line);
+        public abstract void ProcessEntryDetail(string line, string nextLine, int lineNumber);
         public abstract void ProcessAddenda(string line);
         public abstract void ProcessBatchControl(string line, Root root);
 
