@@ -10,6 +10,8 @@ namespace NACHAParser
             {
                 case StandardEntryClassCode.PPD:
                     return new PPDBatch();
+                case StandardEntryClassCode.CCD:
+                    return new CCDBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
