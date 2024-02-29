@@ -1,6 +1,6 @@
 namespace NACHAParser
 {
-    public class CCDBatch : BatchBase
+    public class TELBatch : BatchBase
     {
         public override void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
@@ -17,7 +17,11 @@ namespace NACHAParser
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
 
-                    if (adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7")
+                    if (adIndicator == AddendaRecordIndicator.Addenda)
+                    {
+                        throw new Exception($"Standard Entry Class Code '{currentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
+                    }
+                    else
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
                         {
@@ -27,15 +31,11 @@ namespace NACHAParser
                             CheckDigit = line[11],
                             IndivIdNum = line.Substring(39, 15),
                             IndivName = line.Substring(54, 22),
-                            DiscretionaryData = line.Substring(76, 2),
+                            PaymtTypeCode = line.Substring(76, 2),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };
                         currentBatch.EntryRecord.Add(entry);
-                    }
-                    else
-                    {
-                        throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
                     }
                 }
                 else
@@ -50,44 +50,7 @@ namespace NACHAParser
         }
         public override void ProcessAddenda(string line, int lineNumber)
         {
-            if (currentBatch != null)
-            {
-                if (currentBatch.EntryRecord != null)
-                {
-                    var lastEntry = currentBatch.EntryRecord.LastOrDefault();
-
-                    if (lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
-                    {
-                        throw new Exception("No Addenda Record Indicator");
-                    }
-                    else
-                    {
-                        var ad = new Addenda();
-                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                        switch (typeCode)
-                        {
-                            case AddendaTypeCode.StandardAddenda:
-                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                ad.PaymtRelatedInfo = line.Substring(3, 80);
-                                ad.AddendaSeqNum = line.Substring(83, 4);
-                                ad.EntDetailSeqNum = line.Substring(87, 7);
-                                lastEntry.AddendaRecord.Add(ad);
-                                break;
-                            default:
-                                throw new Exception($"Addenda Type Code '{typeCode}' is not supported");
-                        }
-                    }
-                }
-                else
-                {
-                    throw new Exception("EntryDetailRecord is null");
-                }
-            }
-            else
-            {
-                throw new Exception("batch is null");
-            }
+            throw new NotSupportedException($"Addenda records are not supported for TEL entries. Line number '{lineNumber}'");
         }
         public override void ProcessBatchControl(string line, Root root)
         {
@@ -108,5 +71,6 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
+
     }
 }

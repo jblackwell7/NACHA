@@ -82,7 +82,7 @@ namespace NACHAParser
                         iBatch.ProcessEntryDetail(line, nextLine, lineNumber);
                         break;
                     case RecordType.ad:
-                        iBatch.ProcessAddenda(line);
+                        iBatch.ProcessAddenda(line, lineNumber);
                         break;
                     case RecordType.bc:
                         iBatch.ProcessBatchControl(line, root);
