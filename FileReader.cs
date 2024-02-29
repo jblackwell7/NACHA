@@ -8,9 +8,8 @@ namespace NACHAParser
     }
     public class FileReader
     {
-        public static ParseDataResult ParseData(string inputACHFile)
+        public static ParseDataResult ParseData(List<string> lines)
         {
-            ValidateFile(inputACHFile);
             IBatch? iBatch = null;
             int lineNumber = 1;
             var root = new Root
@@ -23,16 +22,18 @@ namespace NACHAParser
                     }
                 }
             };
-            foreach (string line in File.ReadLines(inputACHFile))
+            for (int i = 0; i < lines.Count; i++)
             {
+                string line = lines[i];
                 if (line.All(c => c == '9'))
                 {
                     continue;
                 }
                 if (Enum.TryParse<RecordType>(line.Substring(0, 1), out RecordType recordType))
                 {
+                    string nextLine = lines[i + 1];
                     lineNumber++;
-                    ProcessLine(recordType, line, root, ref iBatch, lineNumber);
+                    ProcessLine(recordType, line, root, ref iBatch, lineNumber, nextLine);
                 }
                 else
                 {
@@ -40,43 +41,30 @@ namespace NACHAParser
                     continue;
                 }
             }
+            // foreach (string line in File.ReadLines(inputACHFile))
+            // {
+            //     if (line.All(c => c == '9'))
+            //     {
+            //         continue;
+            //     }
+            //     if (Enum.TryParse<RecordType>(line.Substring(0, 1), out RecordType recordType))
+            //     {
+            //         lineNumber++;
+            //         ProcessLine(recordType, line, root, ref iBatch, lineNumber);
+            //     }
+            //     else
+            //     {
+            //         Console.WriteLine($"Unsupported record type '{(int)recordType}' found on line {lineNumber}: {line}");
+            //         continue;
+            //     }
+            // }
             return new ParseDataResult
             {
                 Root = root,
                 LinesProcessed = lineNumber - 1
             };
         }
-
-        /// <summary>
-        /// Validates the input file.
-        /// </summary>
-        /// <param name="inputACHFile">Path to the ACH file intended for parsing.</param>
-        /// <exception cref="Exception"></exception>
-        private static void ValidateFile(string inputACHFile)
-        {
-            if (!File.Exists(inputACHFile))
-            {
-                if (Path.HasExtension(inputACHFile))
-                {
-                    throw new Exception($"File '{inputACHFile}' does not have a valid file extension.");
-                }
-                else
-                {
-                    Console.WriteLine($"File has extension'{0}' returns '{1}'.", inputACHFile, Path.HasExtension(inputACHFile));
-                }
-                throw new Exception($"File '{inputACHFile}' does not exist.");
-            }
-            else if (new FileInfo(inputACHFile).Length == 0)
-            {
-                throw new Exception($"File '{inputACHFile}' is empty.");
-            }
-            else if (new FileInfo(inputACHFile).Length > 1000000000)
-            {
-                throw new Exception($"File '{inputACHFile}' is too large.");
-            }
-        }
-
-        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, int lineNumber)
+        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, int lineNumber, string nextLine)
         {
             try
             {
