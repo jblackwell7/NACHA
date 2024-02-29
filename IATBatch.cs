@@ -1,5 +1,3 @@
-
-using NachaFileParser;
 using Newtonsoft.Json;
 namespace NACHAParser
 {
