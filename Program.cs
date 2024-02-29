@@ -8,8 +8,8 @@ namespace NACHAParser
             string inputACHFile = @"";
             string outputJSONFile = @"";
             string outputCSVFile = @"";
-
-            ParseDataResult result = FileReader.ParseData(inputACHFile);
+            List<string> lines=new List<string>(File.ReadLines(inputACHFile));
+            ParseDataResult result = FileReader.ParseData(lines);
 
             if (result.Root != null)
             {
