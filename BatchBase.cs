@@ -18,7 +18,7 @@ namespace NACHAParser
         }
         public abstract void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec);
         public abstract void ProcessEntryDetail(string line, string nextLine, int lineNumber);
-        public abstract void ProcessAddenda(string line);
+        public abstract void ProcessAddenda(string line, int lineNumber);
         public abstract void ProcessBatchControl(string line, Root root);
 
         #endregion
