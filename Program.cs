@@ -1,7 +1,4 @@
 ﻿
-
-using NachaFileParser;
-
 namespace NACHAParser
 {
     class Program

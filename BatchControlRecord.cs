@@ -2,26 +2,6 @@ using Newtonsoft.Json;
 
 namespace NACHAParser
 {
-    #region Properties
-    public class BatchTrailer
-    {
-        [JsonProperty("bchTrailerId")]
-        public string BchTrailerId { get; set; } = string.Empty;
-
-        [JsonProperty("batchControlRecord")]
-        public BatchControlRecord BControl { get; set; } = new BatchControlRecord();
-
-        #endregion
-
-        #region Constructors
-        public BatchTrailer()
-        {
-            BchTrailerId = Guid.NewGuid().ToString();
-            BControl = new BatchControlRecord();
-        }
-
-        #endregion
-    }
     public class BatchControlRecord
     {
         #region Properties
@@ -66,6 +46,7 @@ namespace NACHAParser
         public BatchControlRecord()
         {
             BchControlId = Guid.NewGuid().ToString();
+            Console.WriteLine($"BchControlId: '{BchControlId}'");
         }
 
         #endregion

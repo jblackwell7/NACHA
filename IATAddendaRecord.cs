@@ -1,7 +1,7 @@
-using NACHAParser;
+
 using Newtonsoft.Json;
 
-namespace NachaFileParser
+namespace NACHAParser
 {
     public class IATAddendaRecord
     {
@@ -26,7 +26,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("transcode")]
         public TransactionCode TransCode { get; set; }
@@ -56,7 +56,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("originatorName")]
         public string OriginatorName { get; set; } = string.Empty;
@@ -80,7 +80,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("originatorCityState")]
         public string OriginatorCityState { get; set; } = string.Empty;
@@ -104,7 +104,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("originatorDfiName")]
         public string OriginatorDfiName { get; set; } = string.Empty;
@@ -134,7 +134,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("ReceivingDfiName")]
         public string ReceivingDfiName { get; set; } = string.Empty;
@@ -164,7 +164,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("receiverId")]
         public string ReceiverId { get; set; } = string.Empty;
@@ -188,7 +188,7 @@ namespace NachaFileParser
         public RecordType RecType { get; set; }
 
         [JsonProperty("addendaTypeCode")]
-        public AddendTypeCode AddendaTypeCode { get; set; }
+        public AddendaTypeCode AddendaTypeCode { get; set; }
 
         [JsonProperty("receiverCityState")]
         public string ReceiverCityState { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
-using NACHAParser;
 
-namespace NachaFileParser
+
+namespace NACHAParser
 {
     /// <summary>
     /// Represents a record that can be written to a 'StreamWriter'

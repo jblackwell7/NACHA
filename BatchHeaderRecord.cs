@@ -54,13 +54,14 @@ namespace NACHAParser
         public BatchHeaderRecord()
         {
             BchHeaderId = Guid.NewGuid().ToString();
+            Console.WriteLine($"BchHeaderId: '{BchHeaderId}'");
         }
 
         #endregion
 
         #region Methods
 
-        public static BatchHeaderRecord ParseBatchHeader(string line,int lineNumber)
+        public static BatchHeaderRecord ParseBatchHeader(string line,int lineNumber,StandardEntryClassCode sec)
         {
             return new BatchHeaderRecord
             {
@@ -69,13 +70,57 @@ namespace NACHAParser
                 CoName = line.Substring(4, 16),
                 CoDiscretionaryData = line.Substring(20, 20),
                 CoId = line.Substring(40, 10),
-                SECCode = Batch.ParseSEC(line.Substring(50, 3)),
+                SECCode = sec,
                 CoDescriptiveDate = line.Substring(63, 6),
                 EffectiveEntDate = line.Substring(71, 6),
                 SettlementDate = line.Substring(75, 3),
                 OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
                 OriginatingDFIId = line.Substring(78, 8),
                 BchNum = line.Substring(87, 7)
+            };
+        }
+        public static StandardEntryClassCode ParseSEC(string value)
+        {
+            switch (value)
+            {
+                case "CCD":
+                    return StandardEntryClassCode.CCD;
+                case "PPD":
+                    return StandardEntryClassCode.PPD;
+                case "WEB":
+                    return StandardEntryClassCode.WEB;
+                case "TEL":
+                    return StandardEntryClassCode.TEL;
+                case "COR":
+                    return StandardEntryClassCode.COR;
+                case "POP":
+                    return StandardEntryClassCode.POP;
+                case "POS":
+                    return StandardEntryClassCode.POS;
+                case "BOC":
+                    return StandardEntryClassCode.BOC;
+                case "ARC":
+                    return StandardEntryClassCode.ARC;
+                case "RCK":
+                    return StandardEntryClassCode.RCK;
+                case "MTE":
+                    return StandardEntryClassCode.MTE;
+                case "SHR":
+                    return StandardEntryClassCode.SHR;
+                case "CTX":
+                    return StandardEntryClassCode.CTX;
+                case "IAT":
+                    return StandardEntryClassCode.IAT;
+                case "ENR":
+                    return StandardEntryClassCode.ENR;
+                case "TRC":
+                    return StandardEntryClassCode.TRC;
+                case "ADV":
+                    return StandardEntryClassCode.ADV;
+                case "XCK":
+                    return StandardEntryClassCode.XCK;
+                default:
+                    throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode.");
             };
         }
 
