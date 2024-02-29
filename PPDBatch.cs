@@ -48,7 +48,7 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
-        public override void ProcessAddenda(string line)
+        public override void ProcessAddenda(string line, int lineNumber)
         {
             if (currentBatch != null)
             {
