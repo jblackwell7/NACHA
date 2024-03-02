@@ -26,7 +26,6 @@ namespace NACHAParser
         public FileContents()
         {
             FileId = Guid.NewGuid().ToString();
-//            AchFile = new AchFile();
             Console.WriteLine($"FileId: '{FileId}'");
         }
 
@@ -36,16 +35,15 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("fHeader")]
+        [JsonProperty("FileHeader")]
         public FileHeaderRecord? FileHeader { get; set; }
 
         [JsonProperty("batches")]
         public List<Batch>? Batches { get; set; }
 
-        [JsonProperty("fTrailer")]
+        [JsonProperty("FileControl")]
         public FileControlRecord? FileControl { get; set; }
 
         #endregion
     }
-
 }

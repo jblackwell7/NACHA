@@ -26,7 +26,7 @@ namespace NACHAParser
                             TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
                             RDFIId = line.Substring(3, 8),
                             CheckDigit = line[11],
-                            DFIAcctNum = line.Substring(12, 17),
+                            DFIAcctNum = line.Substring(12, 17).Trim(),
                             Amt = line.Substring(29, 10).Trim(),
                             CheckSerialNum = line.Substring(39, 9).Trim(),
                             TerminalCity = line.Substring(48, 4).Trim(),
