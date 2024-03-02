@@ -82,6 +82,7 @@ namespace NACHAParser
         public Addenda()
         {
             Addenda05Id = Guid.NewGuid().ToString();
+            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
         }
 
         #endregion

@@ -67,13 +67,13 @@ namespace NACHAParser
             {
                 RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                 ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
-                CoName = line.Substring(4, 16),
-                CoDiscretionaryData = line.Substring(20, 20),
+                CoName = line.Substring(4, 16).Trim(),
+                CoDiscretionaryData = line.Substring(20, 20).Trim(),
                 CoId = line.Substring(40, 10),
                 SECCode = sec,
-                CoDescriptiveDate = line.Substring(63, 6),
-                EffectiveEntDate = line.Substring(71, 6),
-                SettlementDate = line.Substring(75, 3),
+                CoDescriptiveDate = line.Substring(63, 6).Trim(),
+                EffectiveEntDate = line.Substring(69, 6),
+                SettlementDate = line.Substring(75, 3).Trim(),
                 OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
                 OriginatingDFIId = line.Substring(78, 8),
                 BchNum = line.Substring(87, 7)
