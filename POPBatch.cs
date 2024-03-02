@@ -54,6 +54,8 @@ namespace NACHAParser
         }
         public override void ProcessAddenda(string line, int lineNumber)
         {
+            // TODO: Handle Returns for POP
+ 
             throw new NotSupportedException($"Addenda records are not supported for TEL entries. Line number '{lineNumber}'");
         }
         public override void ProcessBatchControl(string line, Root root)
