@@ -26,7 +26,7 @@ namespace NACHAParser
         public FileContents()
         {
             FileId = Guid.NewGuid().ToString();
-            AchFile = new AchFile();
+//            AchFile = new AchFile();
             Console.WriteLine($"FileId: '{FileId}'");
         }
 
