@@ -56,7 +56,6 @@ namespace NACHAParser
         public FileHeaderRecord()
         {
             FilehdrId = Guid.NewGuid().ToString();
-            Console.WriteLine($"FilehdrId: '{FilehdrId}'");
         }
 
         #endregion
@@ -74,16 +73,16 @@ namespace NACHAParser
             {
                 RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                 PriorityCode = line.Substring(1, 2),
-                ImmedDestination = line.Substring(3, 10),
-                ImmedOrigin = line.Substring(13, 10),
+                ImmedDestination = line.Substring(3, 10).Trim(),
+                ImmedOrigin = line.Substring(13, 10).Trim(),
                 FileCreationDate = line.Substring(23, 6),
                 FileCreationTime = line.Substring(29, 4),
                 FileIDModifier = line[33],
                 RecSize = line.Substring(34, 3),
                 BlockingFactor = line.Substring(37, 2),
                 FormatCode = line[39],
-                ImmedDestinationName = line.Substring(40, 23),
-                ImmedOriginName = line.Substring(63, 23),
+                ImmedDestinationName = line.Substring(40, 23).Trim(),
+                ImmedOriginName = line.Substring(63, 23).Trim(),
                 RefCode = line.Substring(86, 8)
             };
         }
