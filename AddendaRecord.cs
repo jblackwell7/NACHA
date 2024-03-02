@@ -169,6 +169,7 @@ namespace NACHAParser
                 case ReturnCode.R71:
                 case ReturnCode.R72:
                 case ReturnCode.R73:
+                case ReturnCode.R74:
                 case ReturnCode.R75:
                 case ReturnCode.R76:
                 case ReturnCode.R77:
