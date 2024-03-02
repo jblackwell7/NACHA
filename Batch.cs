@@ -24,7 +24,6 @@ namespace NACHAParser
         public Batch()
         {
             BchId = Guid.NewGuid().ToString();
-            Console.WriteLine($"BchId: '{BchId}'");
         }
 
         #endregion

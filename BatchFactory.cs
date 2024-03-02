@@ -16,6 +16,10 @@ namespace NACHAParser
                     return new TELBatch();
                 case StandardEntryClassCode.WEB:
                     return new WEBBatch();
+                case StandardEntryClassCode.POP:
+                    return new POPBatch();
+                case StandardEntryClassCode.POS:
+                    return new POSBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }

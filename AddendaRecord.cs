@@ -49,6 +49,32 @@ namespace NACHAParser
         public string Reserved1 { get; set; } = string.Empty;
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
+        public string RefInfo1 { get; set; } = string.Empty;
+
+        [JsonProperty("RefInfo2")]
+        public string RefInfo2 { get; set; } = string.Empty;
+
+        [JsonProperty("TerminalIDCode")]
+        public string TerminalIDCode { get; set; } = string.Empty;
+
+        [JsonProperty("TransSerialNum")]
+        public string TransSerialNum { get; set; } = string.Empty;
+
+        [JsonProperty("TransDate")]
+        public string TransDate { get; set; } = string.Empty;
+
+        [JsonProperty("AuthCodeOrExpDate")]
+        public string AuthCodeOrExpDate { get; set; } = string.Empty;
+
+        [JsonProperty("TerminalLoc")]
+        public string TerminalLoc { get; set; } = string.Empty;
+
+        [JsonProperty("TerminalCity")]
+        public string TerminalCity { get; set; } = string.Empty;
+
+        [JsonProperty("TerminalState")]
+        public string TerminalState { get; set; } = string.Empty;
+
 
         #endregion
 
@@ -56,7 +82,6 @@ namespace NACHAParser
         public Addenda()
         {
             Addenda05Id = Guid.NewGuid().ToString();
-            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
         }
 
         #endregion
@@ -66,6 +91,8 @@ namespace NACHAParser
         {
             switch (value)
             {
+                case "02":
+                    return AddendaTypeCode.POSAddenda;
                 case "05":
                     return AddendaTypeCode.StandardAddenda;
                 case "98":
