@@ -36,6 +36,9 @@ namespace NACHAParser
         [JsonProperty("indivName")]
         public string IndivName { get; set; } = string.Empty;
 
+        [JsonProperty("ReceiverCompanyName")]
+        public string ReceiverCoName { get; set; } = string.Empty;
+
         [JsonProperty("checkSerialNum")]
         public string CheckSerialNum { get; set; } = string.Empty;
 
