@@ -1,6 +1,5 @@
 namespace NACHAParser
 {
-
     public class ParseDataResult
     {
         public Root? Root { get; set; }
