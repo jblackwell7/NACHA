@@ -58,7 +58,7 @@ namespace NACHAParser
                 EntHash = line.Substring(21, 10),
                 TotFileDrEntAmt = line.Substring(31, 12),
                 TotFileCrEntAmt = line.Substring(43, 12),
-                Reserved = line.Substring(55, 39)
+                Reserved = line.Substring(55, 39).Trim()
             };
         }
 
