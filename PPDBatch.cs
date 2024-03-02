@@ -25,9 +25,11 @@ namespace NACHAParser
                             TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
                             RDFIId = line.Substring(3, 8),
                             CheckDigit = line[11],
-                            IndivIdNum = line.Substring(39, 15),
-                            IndivName = line.Substring(54, 22),
-                            DiscretionaryData = line.Substring(76, 2),
+                            DFIAcctNum = line.Substring(12, 17),
+                            Amt = line.Substring(29, 10),
+                            IndivIdNum = line.Substring(39, 15).Trim(),
+                            IndivName = line.Substring(54, 22).Trim(),
+                            DiscretionaryData = line.Substring(76, 2).Trim(),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };
@@ -68,7 +70,7 @@ namespace NACHAParser
                             case AddendaTypeCode.StandardAddenda:
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                 ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                ad.PaymtRelatedInfo = line.Substring(3, 80);
+                                ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
                                 ad.AddendaSeqNum = line.Substring(83, 4);
                                 ad.EntDetailSeqNum = line.Substring(87, 7);
                                 lastEntry.AddendaRecord.Add(ad);
@@ -86,9 +88,9 @@ namespace NACHAParser
                                     ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
                                     ad.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
                                     ad.OrigTraceNum = line.Substring(6, 15);
-                                    ad.DateOfDeath = line.Substring(21, 6);
+                                    ad.DateOfDeath = line.Substring(21, 6).Trim();
                                     ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                    ad.AddendaInfo = line.Substring(35, 44);
+                                    ad.AddendaInfo = line.Substring(35, 44).Trim();
                                     ad.AdTraceNum = line.Substring(79, 15);
                                 }
                                 lastEntry.AddendaRecord.Add(ad);
