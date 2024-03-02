@@ -8,8 +8,8 @@ namespace NACHAParser
             string inputACHFile = @"";
             string outputJSONFile = @"";
             string outputCSVFile = @"";
-            
-            List<string> lines=new List<string>(File.ReadLines(inputACHFile));
+
+            List<string> lines = new List<string>(File.ReadLines(inputACHFile));
             ParseDataResult result = FileReader.ParseData(lines);
 
             if (result.Root != null)
@@ -29,7 +29,7 @@ namespace NACHAParser
             else
             {
                 Console.WriteLine("No data was parsed, or data is null");
-            };
+            }
         }
     }
 }
