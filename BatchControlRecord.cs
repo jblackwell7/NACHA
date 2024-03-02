@@ -63,9 +63,9 @@ namespace NACHAParser
                 EntHash = line.Substring(10, 10),
                 TotBchDrEntAmt = line.Substring(20, 12),
                 TotBchCrEntAmt = line.Substring(32, 12),
-                CoId = line.Substring(44, 10),
-                MsgAuthCode = line.Substring(54, 19),
-                Reserved = line.Substring(73, 6),
+                CoId = line.Substring(44, 10).Trim(),
+                MsgAuthCode = line.Substring(54, 19).Trim(),
+                Reserved = line.Substring(73, 6).Trim(),
                 OriginatingDFIId = line.Substring(79, 8),
                 BchNum = line.Substring(87, 7)
             };

@@ -40,23 +40,6 @@ namespace NACHAParser
                     continue;
                 }
             }
-            // foreach (string line in File.ReadLines(inputACHFile))
-            // {
-            //     if (line.All(c => c == '9'))
-            //     {
-            //         continue;
-            //     }
-            //     if (Enum.TryParse<RecordType>(line.Substring(0, 1), out RecordType recordType))
-            //     {
-            //         lineNumber++;
-            //         ProcessLine(recordType, line, root, ref iBatch, lineNumber);
-            //     }
-            //     else
-            //     {
-            //         Console.WriteLine($"Unsupported record type '{(int)recordType}' found on line {lineNumber}: {line}");
-            //         continue;
-            //     }
-            // }
             return new ParseDataResult
             {
                 Root = root,

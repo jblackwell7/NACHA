@@ -25,8 +25,10 @@ namespace NACHAParser
                             TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
                             RDFIId = line.Substring(3, 8),
                             CheckDigit = line[11],
-                            IndivIdNum = line.Substring(39, 15),
-                            IndivName = line.Substring(54, 22),
+                            DFIAcctNum= line.Substring(12, 17),
+                            Amt = line.Substring(29, 10),
+                            IndivIdNum = line.Substring(39, 15).Trim(),
+                            ReceiverCoName = line.Substring(54, 22),
                             DiscretionaryData = line.Substring(76, 2),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
@@ -69,7 +71,7 @@ namespace NACHAParser
                             case AddendaTypeCode.StandardAddenda:
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                 ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                ad.PaymtRelatedInfo = line.Substring(3, 80);
+                                ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
                                 ad.AddendaSeqNum = line.Substring(83, 4);
                                 ad.EntDetailSeqNum = line.Substring(87, 7);
                                 lastEntry.AddendaRecord.Add(ad);
