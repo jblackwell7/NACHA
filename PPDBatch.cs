@@ -59,7 +59,7 @@ namespace NACHAParser
                     var lastEntry = currentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
                     {
-                        throw new Exception("No Addenda Record Indicator");
+                        throw new Exception($"Missing Addenda Record Indicator Record line '{lineNumber}'");
                     }
                     else
                     {
