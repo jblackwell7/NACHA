@@ -72,7 +72,7 @@ namespace NACHAParser
                 CoId = line.Substring(40, 10),
                 SECCode = sec,
                 CoDescriptiveDate = line.Substring(63, 6).Trim(),
-                EffectiveEntDate = line.Substring(71, 6),
+                EffectiveEntDate = line.Substring(69, 6),
                 SettlementDate = line.Substring(75, 3).Trim(),
                 OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
                 OriginatingDFIId = line.Substring(78, 8),
