@@ -60,16 +60,18 @@ namespace NACHAParser
         IAT7Addenda = 16,
         IAT8Addenda = 17,
         IAT9Addenda = 18,
-        ReturnAddenda = 99,
-        NOCAddenda = 98
+        NOCAddenda = 98,
+        ReturnAddenda = 99
+
     }
     public enum ReturnCode : int
     {
         R01, R02, R03, R04, R05, R06, R07, R08, R09, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, R22, R23, R24, R25, R26, R27, R28, R29, R30, R31, R32, R33, R34, R35, R36, R37, R38, R39, R40, R41, R42, R43, R44, R45, R46, R47, R50, R51, R52, R53, R61, R62, R67, R68, R69, R70, R71, R72, R73, R74, R75, R76, R77, R80, R81, R82, R83, R84, R85
 
     }
-    public enum ChangeCode:int{
-        C01,C02,C03,C05,C06,C07,C08,C09,C13,C14,C61,C62,C63,C64,C65,C66,C67,C68,C69
+    public enum ChangeCode : int
+    {
+        C01, C02, C03, C05, C06, C07, C08, C09, C13, C14, C61, C62, C63, C64, C65, C66, C67, C68, C69
     }
     public enum AddendaRecordIndicator
     {
