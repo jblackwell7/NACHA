@@ -5,9 +5,9 @@ namespace NACHAParser
     {
         static void Main(string[] args)
         {
-            string inputACHFile = @"";
-            string outputJSONFile = @"";
-            string outputCSVFile = @"";
+            string inputACHFile = args[0];
+            string outputJSONFile = args[1];
+            string outputCSVFile = args[2];
 
             List<string> lines = new List<string>(File.ReadLines(inputACHFile));
             ParseDataResult result = FileReader.ParseData(lines);
