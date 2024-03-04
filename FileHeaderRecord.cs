@@ -56,6 +56,7 @@ namespace NACHAParser
         public FileHeaderRecord()
         {
             FilehdrId = Guid.NewGuid().ToString();
+            Console.WriteLine($"FilehdrId: '{FilehdrId}'");
         }
 
         #endregion
