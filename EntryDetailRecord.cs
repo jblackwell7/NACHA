@@ -33,10 +33,13 @@ namespace NACHAParser
         [JsonProperty("indivIdNum")]
         public string IndivIdNum { get; set; } = string.Empty;
 
+        [JsonProperty("numOfAddendaRecords")]
+        public int NumOfAddendaRecords { get; set; }
+
         [JsonProperty("indivName")]
         public string IndivName { get; set; } = string.Empty;
 
-        [JsonProperty("ReceiverCompanyName")]
+        [JsonProperty("receiverCompanyName")]
         public string ReceiverCoName { get; set; } = string.Empty;
 
         [JsonProperty("checkSerialNum")]
@@ -56,6 +59,9 @@ namespace NACHAParser
 
         [JsonProperty("paymtTypeCode")]
         public string? PaymtTypeCode { get; set; }
+
+        [JsonProperty("reserved")]
+        public string? Reserved { get; set; }
 
         [JsonProperty("addendaRecordIndicator")]
         public AddendaRecordIndicator aDRecIndicator { get; set; }
