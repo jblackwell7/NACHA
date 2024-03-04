@@ -22,8 +22,39 @@ namespace NACHAParser
         public string AddendaSeqNum { get; set; } = string.Empty;
         [JsonProperty("entDetailSeqNum")]
         public string EntDetailSeqNum { get; set; } = string.Empty;
+
         [JsonProperty("returnReasonCode")]
         public ReturnCode ReturnReasonCode { get; set; }
+
+        [JsonProperty("DisHonrorReturnCode")]
+        public ReturnCode DisHonrorReturnCode { get; set; }
+
+        [JsonProperty("dReturnReasonCode")]
+        public string DReturnReasonCode { get; set; }
+
+        [JsonProperty("ContestedReturnCode")]
+        public string CReturnReasonCode { get; set; }
+
+        [JsonProperty("ContestedDisHonorReturnReasonCode")]
+        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; }
+
+        [JsonProperty("DateOriginalEntryReturned")]
+        public string DateOriginalEntryReturned { get; set; } = string.Empty;
+
+        [JsonProperty("OriginalSettlementDate")]
+        public string OriginalSettlementDate { get; set; } = string.Empty;
+
+        [JsonProperty("DisHonrorReturnTraceNum")]
+        public string DisHonrorReturnTraceNum { get; set; } = string.Empty;
+
+        [JsonProperty("DisHonrorReturnSettlementDate")]
+        public string DisHonrorReturnSettlementDate { get; set; } = string.Empty;
+
+        [JsonProperty("ReturnTraceNum")]
+        public string ReturnTraceNum { get; set; } = string.Empty;
+
+        [JsonProperty("ReturnSettlementDate")]
+        public string ReturnSettlementDate { get; set; } = string.Empty;
 
         [JsonProperty("origTraceNumber")]
         public string OrigTraceNum { get; set; } = string.Empty;
@@ -47,8 +78,11 @@ namespace NACHAParser
 
         [JsonProperty("reserved1")]
         public string Reserved1 { get; set; } = string.Empty;
+
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
+
+        [JsonProperty("RefInfo1")]
         public string RefInfo1 { get; set; } = string.Empty;
 
         [JsonProperty("RefInfo2")]
@@ -82,6 +116,7 @@ namespace NACHAParser
         public Addenda()
         {
             Addenda05Id = Guid.NewGuid().ToString();
+            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
         }
 
         #endregion
@@ -101,6 +136,35 @@ namespace NACHAParser
                     return AddendaTypeCode.NOCAddenda;
                 default:
                     throw new InvalidOperationException($"Addenda Type Code '{value}' is not supported");
+            }
+        }
+        public bool IsContestedDishonor(EntryDetailRecord entry, ReturnCode rc)
+        {
+            bool isDishonorReturnCode = IsRCContestedReturnCode(rc);
+            bool isDishonorTransactionCode = entry.IsTransCodeReturnOrNOC();
+            if (isDishonorReturnCode && isDishonorTransactionCode == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool IsRCContestedReturnCode(ReturnCode rc)
+        {
+            switch (rc)
+            {
+                case ReturnCode.R71:
+                case ReturnCode.R72:
+                case ReturnCode.R73:
+                case ReturnCode.R74:
+                case ReturnCode.R75:
+                case ReturnCode.R76:
+                case ReturnCode.R77:
+                    return true;
+                default:
+                    return false;
             }
         }
         public bool IsDisHonor(EntryDetailRecord entry, ReturnCode rc)
@@ -126,11 +190,6 @@ namespace NACHAParser
                 case ReturnCode.R68:
                 case ReturnCode.R69:
                 case ReturnCode.R70:
-                case ReturnCode.R71:
-                case ReturnCode.R72:
-                case ReturnCode.R73:
-                case ReturnCode.R75:
-                case ReturnCode.R76:
                 case ReturnCode.R77:
                     return true;
                 default:
