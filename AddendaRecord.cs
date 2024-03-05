@@ -5,74 +5,111 @@ namespace NACHAParser
     public class Addenda
     {
         #region Properties
+
         [JsonProperty("addenda05Id")]
         public string Addenda05Id { get; set; } = string.Empty;
+
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
+
         [JsonProperty("addendaTypeCode")]
         public AddendaTypeCode AdTypeCode { get; set; }
+
+        [JsonProperty("returnReasonCode")]
+        public ReturnCode ReturnReasonCode { get; set; } = ReturnCode.Unknown;
+
+        [JsonProperty("disHonorReturnReasonCode")]
+        public ReturnCode DisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+
+        [JsonProperty("contestedDisHonorReturnReasonCode")]
+        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        [JsonProperty("refusedCORCode")]
+        public ChangeCode RefusedCORCode { get; set; }
+
+        [JsonProperty("changeCode")]
+        public ChangeCode ChangeCode { get; set; }
+
+        [JsonProperty("corTraceSeqNum")]
+        public string CorTraceSeqNum { get; set; } = string.Empty;
+
         [JsonProperty("paymtRelatedInfo")]
         public string? PaymtRelatedInfo { get; set; }
         [JsonProperty("addendaSeqNum")]
         public string AddendaSeqNum { get; set; } = string.Empty;
         [JsonProperty("entDetailSeqNum")]
         public string EntDetailSeqNum { get; set; } = string.Empty;
-        [JsonProperty("returnReasonCode")]
-        public ReturnCode ReturnReasonCode { get; set; } = ReturnCode.Unknown;
-        [JsonProperty("DisHonorReturnReasonCode")]
-        public ReturnCode DisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
-        [JsonProperty("ContestedDisHonorReturnReasonCode")]
-        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+
         [JsonProperty("dReturnReasonCode")]
         public string DReturnReasonCode { get; set; } = string.Empty;
-        [JsonProperty("ContestedReturnCode")]
+
+        [JsonProperty("contestedReturnCode")]
         public string CReturnReasonCode { get; set; } = string.Empty;
-        [JsonProperty("DateOriginalEntryReturned")]
+
+        [JsonProperty("dateOriginalEntryReturned")]
         public string DateOriginalEntryReturned { get; set; } = string.Empty;
-        [JsonProperty("OriginalSettlementDate")]
+
+        [JsonProperty("originalSettlementDate")]
         public string OriginalSettlementDate { get; set; } = string.Empty;
-        [JsonProperty("DisHonrorReturnTraceNum")]
+
+        [JsonProperty("disHonrorReturnTraceNum")]
         public string DisHonrorReturnTraceNum { get; set; } = string.Empty;
-        [JsonProperty("DisHonrorReturnSettlementDate")]
+
+        [JsonProperty("disHonrorReturnSettlementDate")]
         public string DisHonrorReturnSettlementDate { get; set; } = string.Empty;
-        [JsonProperty("ReturnTraceNum")]
+
+        [JsonProperty("feturnTraceNum")]
         public string ReturnTraceNum { get; set; } = string.Empty;
-        [JsonProperty("ReturnSettlementDate")]
+
+        [JsonProperty("returnSettlementDate")]
         public string ReturnSettlementDate { get; set; } = string.Empty;
+
         [JsonProperty("origTraceNumber")]
         public string OrigTraceNum { get; set; } = string.Empty;
+
         [JsonProperty("dateOfDeath")]
         public string DateOfDeath { get; set; } = string.Empty;
         [JsonProperty("origReceivingDFIId")]
         public string OrigReceivingDFIId { get; set; } = string.Empty;
+
         [JsonProperty("addendaInfo")]
         public string AddendaInfo { get; set; } = string.Empty;
+
         [JsonProperty("adTraceNum")]
         public string AdTraceNum { get; set; } = string.Empty;
-        [JsonProperty("ChangeCode")]
-        public ChangeCode ChangeCode { get; set; }
+
         [JsonProperty("correctedData")]
         public string CorrectedData { get; set; } = string.Empty;
+
         [JsonProperty("reserved1")]
         public string Reserved1 { get; set; } = string.Empty;
+
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
+
         [JsonProperty("RefInfo1")]
         public string RefInfo1 { get; set; } = string.Empty;
+
         [JsonProperty("RefInfo2")]
         public string RefInfo2 { get; set; } = string.Empty;
+
         [JsonProperty("TerminalIDCode")]
         public string TerminalIDCode { get; set; } = string.Empty;
+
         [JsonProperty("TransSerialNum")]
         public string TransSerialNum { get; set; } = string.Empty;
+
         [JsonProperty("TransDate")]
         public string TransDate { get; set; } = string.Empty;
+
         [JsonProperty("AuthCodeOrExpDate")]
         public string AuthCodeOrExpDate { get; set; } = string.Empty;
+
         [JsonProperty("TerminalLoc")]
         public string TerminalLoc { get; set; } = string.Empty;
+
         [JsonProperty("TerminalCity")]
         public string TerminalCity { get; set; } = string.Empty;
+
         [JsonProperty("TerminalState")]
         public string TerminalState { get; set; } = string.Empty;
         #endregion
@@ -156,6 +193,70 @@ namespace NACHAParser
                     return true;
                 default:
                     return false;
+            }
+        }
+        public bool IsRefusedCORCode(ChangeCode cc)
+        {
+            switch (cc)
+            {
+                case ChangeCode.C61:
+                case ChangeCode.C62:
+                case ChangeCode.C63:
+                case ChangeCode.C64:
+                case ChangeCode.C65:
+                case ChangeCode.C66:
+                case ChangeCode.C67:
+                case ChangeCode.C68:
+                case ChangeCode.C69:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        public static ChangeCode ParseChangeCode(string value)
+        {
+            switch (value)
+            {
+                case "C01":
+                    return ChangeCode.C01;
+                case "C02":
+                    return ChangeCode.C02;
+                case "C03":
+                    return ChangeCode.C03;
+                case "C05":
+                    return ChangeCode.C05;
+                case "C06":
+                    return ChangeCode.C06;
+                case "C07":
+                    return ChangeCode.C07;
+                case "C08":
+                    return ChangeCode.C08;
+                case "C09":
+                    return ChangeCode.C09;
+                case "C13":
+                    return ChangeCode.C13;
+                case "C14":
+                    return ChangeCode.C14;
+                case "C61":
+                    return ChangeCode.C61;
+                case "C62":
+                    return ChangeCode.C62;
+                case "C63":
+                    return ChangeCode.C63;
+                case "C64":
+                    return ChangeCode.C64;
+                case "C65":
+                    return ChangeCode.C65;
+                case "C66":
+                    return ChangeCode.C66;
+                case "C67":
+                    return ChangeCode.C67;
+                case "C68":
+                    return ChangeCode.C68;
+                case "C69":
+                    return ChangeCode.C69;
+                default:
+                    throw new ArgumentException($"'{value}' is not a valid ChangeCode.");
             }
         }
         public static ReturnCode ParseReturnCode(string value)
