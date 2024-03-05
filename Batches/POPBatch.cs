@@ -18,7 +18,7 @@ namespace NACHAParser
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
                     var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
-                    if (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7" || adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" & typeCode == AddendaTypeCode.ReturnAddenda)
+                    if ((adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.ReturnAddenda))
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
                         {
