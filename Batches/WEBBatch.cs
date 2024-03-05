@@ -16,7 +16,6 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-
                     if (adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7")
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
@@ -83,7 +82,7 @@ namespace NACHAParser
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                    ad.DisHonrorReturnCode = rc;
+                                    ad.DisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.Reserved1 = line.Substring(21, 6).Trim();
                                     ad.OrigReceivingDFIId = line.Substring(27, 8);

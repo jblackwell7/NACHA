@@ -18,7 +18,6 @@ namespace NACHAParser
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
                     var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
-
                     if (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7" || adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" & typeCode == AddendaTypeCode.ReturnAddenda)
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
@@ -78,7 +77,7 @@ namespace NACHAParser
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                    ad.DisHonrorReturnCode = rc;
+                                    ad.DisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.Reserved1 = line.Substring(21, 6).Trim();
                                     ad.OrigReceivingDFIId = line.Substring(27, 8);
@@ -132,7 +131,6 @@ namespace NACHAParser
                                 ad.AdTraceNum = line.Substring(79, 15);
                                 lastEntry.AddendaRecord.Add(ad);
                                 break;
-
                             default:
                                 throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
                         }
@@ -150,7 +148,6 @@ namespace NACHAParser
         }
         public override void ProcessBatchControl(string line, Root root)
         {
-            
             if (currentBatch != null)
             {
                 if (currentBatch.BatchControl == null)
@@ -168,7 +165,6 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
-
         #endregion
     }
 }
