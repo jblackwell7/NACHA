@@ -68,7 +68,7 @@ namespace NACHAParser
     }
     public enum ChangeCode : int
     {
-        C01, C02, C03, C05, C06, C07, C08, C09, C13, C14, C61, C62, C63, C64, C65, C66, C67, C68, C69
+        C01, C02, C03, C05, C06, C07, C08, C09, C13, C14, C61, C62, C63, C64, C65, C66, C67, C68, C69, Unknown
     }
     public enum AddendaRecordIndicator
     {

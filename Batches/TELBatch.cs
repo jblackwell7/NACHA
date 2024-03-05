@@ -73,7 +73,7 @@ namespace NACHAParser
                                 if (isDisHonor == true)
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.DisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.Reserved1 = line.Substring(21, 6).Trim();
@@ -88,7 +88,7 @@ namespace NACHAParser
                                 else if (isContestedDisHonor == true)
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.ContestedDisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.DateOriginalEntryReturned = line.Substring(21, 6).Trim();
@@ -106,7 +106,7 @@ namespace NACHAParser
                                 else
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.DateOfDeath = line.Substring(21, 6).Trim();
@@ -118,7 +118,7 @@ namespace NACHAParser
                                 break;
                             case AddendaTypeCode.NOCAddenda:
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                ad.AdTypeCode = typeCode;
                                 ad.ChangeCode = (ChangeCode)int.Parse(line.Substring(3, 3));
                                 ad.OrigTraceNum = line.Substring(6, 15);
                                 ad.Reserved1 = line.Substring(21, 6).Trim();
