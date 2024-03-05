@@ -68,7 +68,7 @@ namespace NACHAParser
                         {
                             case AddendaTypeCode.StandardAddenda:
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                ad.AdTypeCode = typeCode;
                                 ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
                                 ad.AddendaSeqNum = line.Substring(83, 4);
                                 ad.EntDetailSeqNum = line.Substring(87, 7);
@@ -81,7 +81,7 @@ namespace NACHAParser
                                 if (isDisHonor == true)
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.DisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.Reserved1 = line.Substring(21, 6).Trim();
@@ -96,7 +96,7 @@ namespace NACHAParser
                                 else if (isContestedDisHonor == true)
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.ContestedDisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.DateOriginalEntryReturned = line.Substring(21, 6).Trim();
@@ -114,7 +114,7 @@ namespace NACHAParser
                                 else
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                    ad.AdTypeCode = typeCode;
                                     ad.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.DateOfDeath = line.Substring(21, 6).Trim();
@@ -122,18 +122,6 @@ namespace NACHAParser
                                     ad.AddendaInfo = line.Substring(35, 44).Trim();
                                     ad.AdTraceNum = line.Substring(79, 15);
                                 }
-                                lastEntry.AddendaRecord.Add(ad);
-                                break;
-                            case AddendaTypeCode.NOCAddenda:
-                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                ad.ChangeCode = (ChangeCode)int.Parse(line.Substring(3, 3));
-                                ad.OrigTraceNum = line.Substring(6, 15);
-                                ad.Reserved1 = line.Substring(21, 6).Trim();
-                                ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                ad.CorrectedData = line.Substring(35, 29).Trim();
-                                ad.Reserved2 = line.Substring(64, 15).Trim();
-                                ad.AdTraceNum = line.Substring(79, 15);
                                 lastEntry.AddendaRecord.Add(ad);
                                 break;
                             default:
