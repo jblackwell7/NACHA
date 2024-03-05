@@ -5,121 +5,84 @@ namespace NACHAParser
     public class Addenda
     {
         #region Properties
-
         [JsonProperty("addenda05Id")]
         public string Addenda05Id { get; set; } = string.Empty;
-
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
-
         [JsonProperty("addendaTypeCode")]
         public AddendaTypeCode AdTypeCode { get; set; }
-
         [JsonProperty("paymtRelatedInfo")]
         public string? PaymtRelatedInfo { get; set; }
-
         [JsonProperty("addendaSeqNum")]
         public string AddendaSeqNum { get; set; } = string.Empty;
         [JsonProperty("entDetailSeqNum")]
         public string EntDetailSeqNum { get; set; } = string.Empty;
-
         [JsonProperty("returnReasonCode")]
-        public ReturnCode ReturnReasonCode { get; set; }
-
-        [JsonProperty("DisHonrorReturnCode")]
-        public ReturnCode DisHonrorReturnCode { get; set; }
-
-        [JsonProperty("dReturnReasonCode")]
-        public string DReturnReasonCode { get; set; }
-
-        [JsonProperty("ContestedReturnCode")]
-        public string CReturnReasonCode { get; set; }
-
+        public ReturnCode ReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        [JsonProperty("DisHonorReturnReasonCode")]
+        public ReturnCode DisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
         [JsonProperty("ContestedDisHonorReturnReasonCode")]
-        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; }
-
+        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        [JsonProperty("dReturnReasonCode")]
+        public string DReturnReasonCode { get; set; } = string.Empty;
+        [JsonProperty("ContestedReturnCode")]
+        public string CReturnReasonCode { get; set; } = string.Empty;
         [JsonProperty("DateOriginalEntryReturned")]
         public string DateOriginalEntryReturned { get; set; } = string.Empty;
-
         [JsonProperty("OriginalSettlementDate")]
         public string OriginalSettlementDate { get; set; } = string.Empty;
-
         [JsonProperty("DisHonrorReturnTraceNum")]
         public string DisHonrorReturnTraceNum { get; set; } = string.Empty;
-
         [JsonProperty("DisHonrorReturnSettlementDate")]
         public string DisHonrorReturnSettlementDate { get; set; } = string.Empty;
-
         [JsonProperty("ReturnTraceNum")]
         public string ReturnTraceNum { get; set; } = string.Empty;
-
         [JsonProperty("ReturnSettlementDate")]
         public string ReturnSettlementDate { get; set; } = string.Empty;
-
         [JsonProperty("origTraceNumber")]
         public string OrigTraceNum { get; set; } = string.Empty;
-
         [JsonProperty("dateOfDeath")]
         public string DateOfDeath { get; set; } = string.Empty;
-
         [JsonProperty("origReceivingDFIId")]
         public string OrigReceivingDFIId { get; set; } = string.Empty;
-
         [JsonProperty("addendaInfo")]
         public string AddendaInfo { get; set; } = string.Empty;
-
         [JsonProperty("adTraceNum")]
         public string AdTraceNum { get; set; } = string.Empty;
         [JsonProperty("ChangeCode")]
         public ChangeCode ChangeCode { get; set; }
-
         [JsonProperty("correctedData")]
         public string CorrectedData { get; set; } = string.Empty;
-
         [JsonProperty("reserved1")]
         public string Reserved1 { get; set; } = string.Empty;
-
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
-
         [JsonProperty("RefInfo1")]
         public string RefInfo1 { get; set; } = string.Empty;
-
         [JsonProperty("RefInfo2")]
         public string RefInfo2 { get; set; } = string.Empty;
-
         [JsonProperty("TerminalIDCode")]
         public string TerminalIDCode { get; set; } = string.Empty;
-
         [JsonProperty("TransSerialNum")]
         public string TransSerialNum { get; set; } = string.Empty;
-
         [JsonProperty("TransDate")]
         public string TransDate { get; set; } = string.Empty;
-
         [JsonProperty("AuthCodeOrExpDate")]
         public string AuthCodeOrExpDate { get; set; } = string.Empty;
-
         [JsonProperty("TerminalLoc")]
         public string TerminalLoc { get; set; } = string.Empty;
-
         [JsonProperty("TerminalCity")]
         public string TerminalCity { get; set; } = string.Empty;
-
         [JsonProperty("TerminalState")]
         public string TerminalState { get; set; } = string.Empty;
-
         #endregion
-
         #region Constructors
         public Addenda()
         {
             Addenda05Id = Guid.NewGuid().ToString();
             Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
         }
-
         #endregion
-
         #region Methods
         public static AddendaTypeCode ParseAddendaType(string value)
         {
@@ -329,7 +292,6 @@ namespace NACHAParser
                     throw new ArgumentException($"'{value}' is not a valid ReturnCode.");
             }
         }
-
         #endregion
     }
 }
