@@ -11,4 +11,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\jblac\Desktop\VisualStudios\NACHA\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\jblac\Desktop\VisualStudios\NACHA\.editorconfig" />
+  </ItemGroup>
+
 </Project>

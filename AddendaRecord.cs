@@ -109,7 +109,6 @@ namespace NACHAParser
         [JsonProperty("TerminalState")]
         public string TerminalState { get; set; } = string.Empty;
 
-
         #endregion
 
         #region Constructors

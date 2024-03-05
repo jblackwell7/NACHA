@@ -25,7 +25,7 @@ namespace NACHAParser
         public char CheckDigit { get; set; }
 
         [JsonProperty("dFIAcctNum")]
-        public string DFIAcctNum { get; set; }= string.Empty;
+        public string DFIAcctNum { get; set; } = string.Empty;
 
         [JsonProperty("amt")]
         public string Amt { get; set; } = string.Empty;
@@ -33,10 +33,13 @@ namespace NACHAParser
         [JsonProperty("indivIdNum")]
         public string IndivIdNum { get; set; } = string.Empty;
 
+        [JsonProperty("numOfAddendaRecords")]
+        public int NumOfAddendaRecords { get; set; }
+
         [JsonProperty("indivName")]
         public string IndivName { get; set; } = string.Empty;
 
-        [JsonProperty("ReceiverCompanyName")]
+        [JsonProperty("receiverCompanyName")]
         public string ReceiverCoName { get; set; } = string.Empty;
 
         [JsonProperty("checkSerialNum")]
@@ -56,6 +59,9 @@ namespace NACHAParser
 
         [JsonProperty("paymtTypeCode")]
         public string? PaymtTypeCode { get; set; }
+
+        [JsonProperty("reserved")]
+        public string? Reserved { get; set; }
 
         [JsonProperty("addendaRecordIndicator")]
         public AddendaRecordIndicator aDRecIndicator { get; set; }
@@ -79,6 +85,10 @@ namespace NACHAParser
         #endregion
 
         #region Methods
+        public int AddendaCount()
+        {
+            return AddendaRecord.Count;
+        }
         public bool IsTransCodeReturnOrNOC()
         {
             switch (TransCode)
@@ -95,18 +105,6 @@ namespace NACHAParser
                 default:
                     return false;
             }
-        }
-        public static int CountEntryDetailRecords(Batch batch)
-        {
-            int eDcount = batch.EntryRecord.Count;
-            int aDcount = 0;
-
-            foreach (var et in batch.EntryRecord)
-            {
-                aDcount += et.AddendaRecord.Count;
-            }
-            int eDaDTotal = eDcount + aDcount;
-            return eDaDTotal;
         }
 
         #endregion
