@@ -20,6 +20,8 @@ namespace NACHAParser
                     return new POPBatch();
                 case StandardEntryClassCode.POS:
                     return new POSBatch();
+                    case StandardEntryClassCode.CTX:
+                    return new CTXBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
