@@ -63,7 +63,6 @@ namespace NACHAParser
                             {
                                 var ad = new Addenda();
                                 var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-
                                 switch (typeCode)
                                 {
                                     case AddendaTypeCode.StandardAddenda:
@@ -82,7 +81,7 @@ namespace NACHAParser
                                         {
                                             ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                             ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                            ad.DisHonrorReturnCode = rc;
+                                            ad.DisHonorReturnReasonCode = rc;
                                             ad.OrigTraceNum = line.Substring(6, 15);
                                             ad.Reserved1 = line.Substring(21, 6).Trim();
                                             ad.OrigReceivingDFIId = line.Substring(27, 8);
@@ -163,7 +162,6 @@ namespace NACHAParser
         }
         public override void ProcessBatchControl(string line, Root root)
         {
-
             if (currentBatch != null)
             {
                 if (currentBatch.BatchControl == null)

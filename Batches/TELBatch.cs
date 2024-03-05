@@ -16,7 +16,6 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-
                     if (adIndicator == AddendaRecordIndicator.Addenda)
                     {
                         throw new Exception($"Standard Entry Class Code '{currentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
@@ -75,7 +74,7 @@ namespace NACHAParser
                                 {
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
-                                    ad.DisHonrorReturnCode = rc;
+                                    ad.DisHonorReturnReasonCode = rc;
                                     ad.OrigTraceNum = line.Substring(6, 15);
                                     ad.Reserved1 = line.Substring(21, 6).Trim();
                                     ad.OrigReceivingDFIId = line.Substring(27, 8);
@@ -129,7 +128,6 @@ namespace NACHAParser
                                 ad.AdTraceNum = line.Substring(79, 15);
                                 lastEntry.AddendaRecord.Add(ad);
                                 break;
-
                             default:
                                 throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
                         }
@@ -164,6 +162,5 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
-
     }
 }
