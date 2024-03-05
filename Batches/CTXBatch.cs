@@ -80,13 +80,36 @@ namespace NACHAParser
                                         bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
                                         if (isDisHonor == true)
                                         {
-                                            //TODO: Dishonor Support
-                                            throw new Exception("Dishonor Support is not implemented");
+                                            ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                            ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                            ad.DisHonrorReturnCode = rc;
+                                            ad.OrigTraceNum = line.Substring(6, 15);
+                                            ad.Reserved1 = line.Substring(21, 6).Trim();
+                                            ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                            ad.Reserved2 = line.Substring(35, 3).Trim();
+                                            ad.ReturnTraceNum = line.Substring(38, 15);
+                                            ad.ReturnSettlementDate = line.Substring(53, 3);
+                                            ad.DReturnReasonCode = line.Substring(56, 2);
+                                            ad.AddendaInfo = line.Substring(58, 21).Trim();
+                                            ad.AdTraceNum = line.Substring(79, 15);
                                         }
                                         else if (isContestedDisHonor == true)
                                         {
-                                            //TODO: Contested Dishonor Support
-                                            throw new Exception("Contested Dishonor Support is not implemented");
+                                            ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                            ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                            ad.ContestedDisHonorReturnReasonCode = rc;
+                                            ad.OrigTraceNum = line.Substring(6, 15);
+                                            ad.DateOriginalEntryReturned = line.Substring(21, 6).Trim();
+                                            ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                            ad.OriginalSettlementDate = line.Substring(35, 3).Trim();
+                                            ad.ReturnTraceNum = line.Substring(38, 15);
+                                            ad.ReturnSettlementDate = line.Substring(53, 3);
+                                            ad.DReturnReasonCode = line.Substring(56, 2);
+                                            ad.DisHonrorReturnTraceNum = line.Substring(58, 15);
+                                            ad.ReturnSettlementDate = line.Substring(73, 3);
+                                            ad.CReturnReasonCode = line.Substring(76, 2);
+                                            ad.Reserved1 = line.Substring(78, 1).Trim();
+                                            ad.AdTraceNum = line.Substring(79, 15);
                                         }
                                         else
                                         {
@@ -99,6 +122,18 @@ namespace NACHAParser
                                             ad.AddendaInfo = line.Substring(35, 44).Trim();
                                             ad.AdTraceNum = line.Substring(79, 15);
                                         }
+                                        lastEntry.AddendaRecord.Add(ad);
+                                        break;
+                                    case AddendaTypeCode.NOCAddenda:
+                                        ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                        ad.AdTypeCode = (AddendaTypeCode)int.Parse(line.Substring(1, 2));
+                                        ad.ChangeCode = (ChangeCode)int.Parse(line.Substring(3, 3));
+                                        ad.OrigTraceNum = line.Substring(6, 15);
+                                        ad.Reserved1 = line.Substring(21, 6).Trim();
+                                        ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                        ad.CorrectedData = line.Substring(35, 29).Trim();
+                                        ad.Reserved2 = line.Substring(64, 15).Trim();
+                                        ad.AdTraceNum = line.Substring(79, 15);
                                         lastEntry.AddendaRecord.Add(ad);
                                         break;
                                     default:
