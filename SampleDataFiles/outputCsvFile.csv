@@ -1,0 +1,10 @@
+RecordType,PriorityCode,ImmediateDestination,ImmediateOrigin,FileCreationDate,FileCreationTime,FileIdModifier,RecordSize,BlockingFactor,FormatCode,ImmediateDestinationName,ImmediateOriginName,ReferenceCode
+1,01,031300012,0231380104,190816,1055,A,094,10,1,Federal Reserve Bank,My Bank Name,12345678
+Record Type,Service Class Code,Company Name,Company Discretionary Data,Company Identification,Standard Entry Class Code,Company Entry Description,Company Descriptive Date,Effective Date,Settlement Date (Julian),Originator Status Code,Originating DFI Identification,Batch Number
+5,225,Name on Account,,231380104 ,3,,,190816,,DepositoryFinancialInstitution,11210428,0000001
+Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Individual ID Number,Individual Name,Payment Type Code,Addenda Record Indicator,Trace Number
+6,CheckingDebit,23138010,4,12345678         ,0000050000,,,  ,NoAddenda,121042880000001
+Record Type,Service Class Code,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount,Total Credit Entry Dollar Amount,Company Identification,Message Authentication Code,Reserved,Originating DFI Identificiation,Batch Number
+8,225,000001,0023138010,000000050000,000000000000,231380104,,,12104288,0000001
+Record Type,Batch Count,Block Count,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount in File,Total Credit Entry Dollar Amount in File,Reserved
+9,000001,000001,00000001,0023138010,000000050000,000000000000,
