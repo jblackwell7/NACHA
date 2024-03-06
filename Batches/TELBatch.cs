@@ -16,10 +16,19 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                    var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
-                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.ReturnAddenda) || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
+
+                    if (adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7")
                     {
-                        throw new Exception($"Standard Entry Class Code '{currentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
+                        var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
+
+                        if (typeCode != AddendaTypeCode.ReturnAddenda)
+                        {
+                            throw new Exception($"Standard Entry Class Code '{currentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
+                        }
+                    }
+                    if (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) == "7")
+                    {
+                        throw new Exception($"Addenda Record Indicator error. Line '{lineNumber}'");
                     }
                     else
                     {
@@ -57,69 +66,77 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var lastEntry = currentBatch.EntryRecord.LastOrDefault();
-                    if (lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
+                    if (lastEntry != null)
                     {
-                        throw new Exception($"Missing Addenda Record Indicator Record line '{lineNumber}'");
+                        var ad = new Addenda();
+                        var adCount = lastEntry.AddendaCount();
+                        if (adCount > 1)
+                        {
+                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{currentBatch.BatchHeader.SECCode}'.");
+                        }
+                        else
+                        {
+                            var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                            switch (typeCode)
+                            {
+                                case AddendaTypeCode.ReturnAddenda:
+                                    var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
+                                    bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
+                                    bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
+                                    if (isDisHonor == true)
+                                    {
+                                        ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                        ad.AdTypeCode = typeCode;
+                                        ad.DisHonorReturnReasonCode = rc;
+                                        ad.OrigTraceNum = line.Substring(6, 15);
+                                        ad.Reserved1 = line.Substring(21, 6).Trim();
+                                        ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                        ad.Reserved2 = line.Substring(35, 3).Trim();
+                                        ad.ReturnTraceNum = line.Substring(38, 15);
+                                        ad.ReturnSettlementDate = line.Substring(53, 3);
+                                        ad.DReturnReasonCode = line.Substring(56, 2);
+                                        ad.AddendaInfo = line.Substring(58, 21).Trim();
+                                        ad.AdTraceNum = line.Substring(79, 15);
+                                    }
+                                    else if (isContestedDisHonor == true)
+                                    {
+                                        ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                        ad.AdTypeCode = typeCode;
+                                        ad.ContestedDisHonorReturnReasonCode = rc;
+                                        ad.OrigTraceNum = line.Substring(6, 15);
+                                        ad.DateOriginalEntryReturned = line.Substring(21, 6).Trim();
+                                        ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                        ad.OriginalSettlementDate = line.Substring(35, 3).Trim();
+                                        ad.ReturnTraceNum = line.Substring(38, 15);
+                                        ad.ReturnSettlementDate = line.Substring(53, 3);
+                                        ad.DReturnReasonCode = line.Substring(56, 2);
+                                        ad.DisHonrorReturnTraceNum = line.Substring(58, 15);
+                                        ad.ReturnSettlementDate = line.Substring(73, 3);
+                                        ad.CReturnReasonCode = line.Substring(76, 2);
+                                        ad.Reserved1 = line.Substring(78, 1).Trim();
+                                        ad.AdTraceNum = line.Substring(79, 15);
+                                    }
+                                    else
+                                    {
+                                        ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                        ad.AdTypeCode = typeCode;
+                                        ad.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
+                                        ad.OrigTraceNum = line.Substring(6, 15);
+                                        ad.DateOfDeath = line.Substring(21, 6).Trim();
+                                        ad.OrigReceivingDFIId = line.Substring(27, 8);
+                                        ad.AddendaInfo = line.Substring(35, 44).Trim();
+                                        ad.AdTraceNum = line.Substring(79, 15);
+                                    }
+                                    lastEntry.AddendaRecord.Add(ad);
+                                    break;
+                                default:
+                                    throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
+                            }
+                        }
                     }
                     else
                     {
-                        var ad = new Addenda();
-                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                        switch (typeCode)
-                        {
-                            case AddendaTypeCode.ReturnAddenda:
-                                var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
-                                bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
-                                bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
-                                if (isDisHonor == true)
-                                {
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.DisHonorReturnReasonCode = rc;
-                                    ad.OrigTraceNum = line.Substring(6, 15);
-                                    ad.Reserved1 = line.Substring(21, 6).Trim();
-                                    ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                    ad.Reserved2 = line.Substring(35, 3).Trim();
-                                    ad.ReturnTraceNum = line.Substring(38, 15);
-                                    ad.ReturnSettlementDate = line.Substring(53, 3);
-                                    ad.DReturnReasonCode = line.Substring(56, 2);
-                                    ad.AddendaInfo = line.Substring(58, 21).Trim();
-                                    ad.AdTraceNum = line.Substring(79, 15);
-                                }
-                                else if (isContestedDisHonor == true)
-                                {
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.ContestedDisHonorReturnReasonCode = rc;
-                                    ad.OrigTraceNum = line.Substring(6, 15);
-                                    ad.DateOriginalEntryReturned = line.Substring(21, 6).Trim();
-                                    ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                    ad.OriginalSettlementDate = line.Substring(35, 3).Trim();
-                                    ad.ReturnTraceNum = line.Substring(38, 15);
-                                    ad.ReturnSettlementDate = line.Substring(53, 3);
-                                    ad.DReturnReasonCode = line.Substring(56, 2);
-                                    ad.DisHonrorReturnTraceNum = line.Substring(58, 15);
-                                    ad.ReturnSettlementDate = line.Substring(73, 3);
-                                    ad.CReturnReasonCode = line.Substring(76, 2);
-                                    ad.Reserved1 = line.Substring(78, 1).Trim();
-                                    ad.AdTraceNum = line.Substring(79, 15);
-                                }
-                                else
-                                {
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.ReturnReasonCode = (ReturnCode)int.Parse(line.Substring(3, 3));
-                                    ad.OrigTraceNum = line.Substring(6, 15);
-                                    ad.DateOfDeath = line.Substring(21, 6).Trim();
-                                    ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                    ad.AddendaInfo = line.Substring(35, 44).Trim();
-                                    ad.AdTraceNum = line.Substring(79, 15);
-                                }
-                                lastEntry.AddendaRecord.Add(ad);
-                                break;
-                            default:
-                                throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
-                        }
+                        throw new Exception("EntryDetailRecord is null");
                     }
                 }
                 else

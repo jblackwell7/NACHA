@@ -134,7 +134,7 @@ namespace NACHAParser
                         }
                         else
                         {
-                            throw new Exception($"Missing Addenda Record Indicator Record line");
+                            throw new Exception($"Missing Addenda Record Indicator Record");
                         }
                     }
                     else
