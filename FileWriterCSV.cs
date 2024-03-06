@@ -75,13 +75,13 @@ namespace NACHAParser
                 (int)bh.ServiceClassCode,
                 bh.CoName,
                 bh.CoDiscretionaryData,
-                bh.CoId,
+                bh.CoId.Trim(),
                 (int)bh.SECCode,
                 bh.CoEntDescription,
                 bh.CoDescriptiveDate,
                 bh.EffectiveEntDate,
                 bh.SettlementDate,
-                bh.OriginatorStatusCode,
+                (int)bh.OriginatorStatusCode,
                 bh.OriginatingDFIId,
                 bh.BchNum
                 ));
@@ -95,15 +95,15 @@ namespace NACHAParser
                     sb.AppendLine(WEBTELeDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
                     eDetails.Amt,
-                    eDetails.IndivIdNum,
+                    eDetails.IndivIdNum.Trim(),
                     eDetails.IndivName,
-                    eDetails.PaymtTypeCode,
-                    eDetails.aDRecIndicator,
+                    eDetails.PaymtTypeCode.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -111,15 +111,15 @@ namespace NACHAParser
                     sb.AppendLine(CCDeDtailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
                     eDetails.Amt,
-                    eDetails.IndivIdNum,
-                    eDetails.ReceiverCoName,
-                    eDetails.DiscretionaryData,
-                    eDetails.aDRecIndicator,
+                    eDetails.IndivIdNum.Trim(),
+                    eDetails.ReceiverCoName.Trim(),
+                    eDetails.DiscretionaryData.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -127,15 +127,15 @@ namespace NACHAParser
                     sb.AppendLine(PPDeDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
                     eDetails.Amt,
-                    eDetails.IndivIdNum,
-                    eDetails.ReceiverCoName,
-                    eDetails.DiscretionaryData,
-                    eDetails.aDRecIndicator,
+                    eDetails.IndivIdNum.Trim(),
+                    eDetails.ReceiverCoName.Trim(),
+                    eDetails.DiscretionaryData.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -143,15 +143,15 @@ namespace NACHAParser
                     sb.AppendLine(TELDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
-                    eDetails.DFIAcctNum,
+                    eDetails.DFIAcctNum.Trim(),
                     eDetails.Amt,
-                    eDetails.IndivIdNum,
-                    eDetails.ReceiverCoName,
-                    eDetails.PaymtTypeCode,
-                    eDetails.aDRecIndicator,
+                    eDetails.IndivIdNum.Trim(),
+                    eDetails.ReceiverCoName.Trim(),
+                    eDetails.PaymtTypeCode.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -159,15 +159,15 @@ namespace NACHAParser
                     sb.AppendLine(NOCeDetailsHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                        (int)eDetails.RecType,
-                       eDetails.TransCode,
+                       (int)eDetails.TransCode,
                        eDetails.RDFIId,
                        eDetails.CheckDigit,
                        eDetails.DFIAcctNum,
                        eDetails.Amt,
-                       eDetails.IndivIdNum,
-                       eDetails.ReceiverCoName,
-                       eDetails.DiscretionaryData,
-                       eDetails.aDRecIndicator,
+                       eDetails.IndivIdNum.Trim(),
+                       eDetails.ReceiverCoName.Trim(),
+                       eDetails.DiscretionaryData.Trim(),
+                       (int)eDetails.aDRecIndicator,
                        eDetails.TraceNum
                        ));
                     break;
@@ -175,15 +175,15 @@ namespace NACHAParser
                     sb.AppendLine(POSDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
                     eDetails.Amt,
-                    eDetails.IndivIdNum,
+                    eDetails.IndivIdNum.Trim(),
                     eDetails.IndivName,
                     eDetails.CardTransTypeCode,
-                    eDetails.aDRecIndicator,
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -191,7 +191,7 @@ namespace NACHAParser
                     sb.AppendLine(POPDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
@@ -200,8 +200,8 @@ namespace NACHAParser
                     eDetails.TerminalCity,
                     eDetails.TerminalState,
                     eDetails.IndivName,
-                    eDetails.DiscretionaryData,
-                    eDetails.aDRecIndicator,
+                    eDetails.DiscretionaryData.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
@@ -209,16 +209,16 @@ namespace NACHAParser
                     sb.AppendLine(CTXeDetailHeader);
                     sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     (int)eDetails.RecType,
-                    eDetails.TransCode,
+                    (int)eDetails.TransCode,
                     eDetails.RDFIId,
                     eDetails.CheckDigit,
                     eDetails.DFIAcctNum,
                     eDetails.Amt,
                     eDetails.NumOfAddendaRecords,
-                    eDetails.ReceiverCoName,
+                    eDetails.ReceiverCoName.Trim(),
                     eDetails.Reserved,
-                    eDetails.DiscretionaryData,
-                    eDetails.aDRecIndicator,
+                    eDetails.DiscretionaryData.Trim(),
+                    (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
                     ));
                     break;
