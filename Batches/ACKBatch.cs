@@ -9,6 +9,7 @@ namespace NACHAParser
                 BatchHeader = BatchHeaderRecord.ParseBatchHeader(line, lineNumber, sec)
             };
         }
+        //TODO: Refactor if statement logic ACH-17
         public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
         {
             if (currentBatch != null)
@@ -17,11 +18,11 @@ namespace NACHAParser
                 {
                     var tc = (TransactionCode)int.Parse(line.Substring(1, 2));
                     var amt = line.Substring(29, 10);
+                    var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
 
-                    if ((tc == TransactionCode.CheckingZeroDollarRemitCredit || tc == TransactionCode.CheckingZeroDollarRemitCredit) && amt == null)
+                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                     {
-                        var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                        if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
+                        if ((tc == TransactionCode.CheckingZeroDollarRemitCredit || tc == TransactionCode.CheckingZeroDollarRemitCredit) && amt == null)
                         {
                             EntryDetailRecord entry = new EntryDetailRecord()
                             {
@@ -41,12 +42,13 @@ namespace NACHAParser
                         }
                         else
                         {
-                            throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
+                            throw new Exception($"Not a valid format for {currentBatch.BatchHeader.SECCode} on LineNumber '{lineNumber}'");
                         }
                     }
                     else
                     {
-                        throw new Exception($"Not a valid format for {currentBatch.BatchHeader.SECCode} on LineNumber '{lineNumber}'");
+                        throw new Exception($"Entry Detail Record error on LineNumber '{lineNumber}'");
+
                     }
                 }
                 else
@@ -66,27 +68,35 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var lastEntry = currentBatch.EntryRecord.LastOrDefault();
-                    if (lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
+                    if (lastEntry != null)
                     {
-                        throw new Exception($"Missing Addenda Record Indicator Record line '{lineNumber}'");
+                        var ad = new Addenda();
+                        var adCount = lastEntry.AddendaCount();
+                        if (adCount > 1)
+                        {
+                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{currentBatch.BatchHeader.SECCode}'.");
+                        }
+                        else
+                        {
+                            var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                            switch (typeCode)
+                            {
+                                case AddendaTypeCode.NOCAddenda:
+                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                    ad.AdTypeCode = typeCode;
+                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
+                                    ad.AddendaSeqNum = line.Substring(83, 4);
+                                    ad.EntDetailSeqNum = line.Substring(87, 7);
+                                    lastEntry.AddendaRecord.Add(ad);
+                                    break;
+                                default:
+                                    throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
+                            }
+                        }
                     }
                     else
                     {
-                        var ad = new Addenda();
-                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                        switch (typeCode)
-                        {
-                            case AddendaTypeCode.StandardAddenda:
-                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = typeCode;
-                                ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
-                                ad.AddendaSeqNum = line.Substring(83, 4);
-                                ad.EntDetailSeqNum = line.Substring(87, 7);
-                                lastEntry.AddendaRecord.Add(ad);
-                                break;
-                            default:
-                                throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
-                        }
+                        throw new Exception("EntryDetailRecord is null");
                     }
                 }
                 else
