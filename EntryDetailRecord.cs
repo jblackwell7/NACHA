@@ -9,6 +9,7 @@ namespace NACHAParser
         [JsonProperty("entDetailsId")]
         public string EntDetailsId { get; set; } = string.Empty;
 
+        [JsonIgnore]
         [JsonProperty("lineNum")]
         public int LineNum { get; set; }
 
@@ -24,25 +25,25 @@ namespace NACHAParser
         [JsonProperty("checkDigit")]
         public char CheckDigit { get; set; }
 
-        [JsonProperty("dFIAcctNum")]
+        [JsonProperty("dFIAcctNumber")]
         public string DFIAcctNum { get; set; } = string.Empty;
 
         [JsonProperty("amt")]
         public string Amt { get; set; } = string.Empty;
 
-        [JsonProperty("indivIdNum")]
+        [JsonProperty("indivIdNumber")]
         public string IndivIdNum { get; set; } = string.Empty;
 
         [JsonProperty("numOfAddendaRecords")]
         public int NumOfAddendaRecords { get; set; }
 
-        [JsonProperty("indivName")]
+        [JsonProperty("individualName")]
         public string IndivName { get; set; } = string.Empty;
 
         [JsonProperty("receiverCompanyName")]
         public string ReceiverCoName { get; set; } = string.Empty;
 
-        [JsonProperty("checkSerialNum")]
+        [JsonProperty("checkSerialNumber")]
         public string CheckSerialNum { get; set; } = string.Empty;
 
         [JsonProperty("terminalCity")]
@@ -66,8 +67,11 @@ namespace NACHAParser
         [JsonProperty("addendaRecordIndicator")]
         public AddendaRecordIndicator aDRecIndicator { get; set; }
 
-        [JsonProperty("traceNum")]
+        [JsonProperty("traceNumber")]
         public string TraceNum { get; set; } = string.Empty;
+
+        [JsonProperty("originalTraceNumber")]
+        public string OriginalTraceNum { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecords")]
         public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
