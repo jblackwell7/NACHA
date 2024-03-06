@@ -16,7 +16,7 @@ public class CORBatch : BatchBase
             if (currentBatch.EntryRecord != null)
             {
                 var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                if (adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7")
+                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                 {
                     EntryDetailRecord entry = new EntryDetailRecord()
                     {
