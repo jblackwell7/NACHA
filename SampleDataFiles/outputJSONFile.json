@@ -1,73 +1,77 @@
 {
-    "fileContents": {
-        "fileId": "99125f98-1a03-460c-9a7f-178632074f3a",
-        "achFile": {
-            "FileHeader": {
-                "filehdrId": "16f831cd-23c1-48ee-925f-ee89691cd133",
-                "recType": 1,
-                "priorityCode": "01",
-                "immedDestination": "031300012",
-                "immedOrigin": "0231380104",
-                "fileCreationDate": "190816",
-                "fileCreationTime": "1055",
-                "fileIDModifier": "A",
-                "recSize": "094",
-                "blockingFactor": "10",
-                "formatCode": "1",
-                "immedDestinationName": "Federal Reserve Bank",
-                "immedOriginName": "My Bank Name",
-                "refCode": "12345678"
-            },
-            "batches": [{
-                "bchId": "55dc9360-524e-41df-b372-799aacf5ccf7",
-                "BatchHeader": {
-                    "bchHeaderId": "5eaf5535-d74a-42ae-a1a4-150f9e0561c3",
-                    "recType": 5,
-                    "serviceClassCode": 225,
-                    "coName": "Name on Account",
-                    "coId": "231380104 ",
-                    "SECCode": 3,
-                    "effectiveEntDate": "190816",
-                    "originatorStatusCode": 1,
-                    "originatingDFIId": "11210428",
-                    "bchNum": "0000001"
-                },
-                "entryDetailRecords": [{
-                    "entDetailsId": "1f55a710-5caa-4f73-804d-b8a5ce52790d",
-                    "recType": 6,
-                    "transCode": 27,
-                    "rDFIId": "23138010",
-                    "checkDigit": "4",
-                    "dFIAcctNumber": "12345678         ",
-                    "amt": "0000050000",
-                    "individualName": "Receiver Account Name",
-                    "paymtTypeCode": "  ",
-                    "traceNumber": "121042880000001",
-                    "addendaRecords": []
-                }],
-                "batchTrailer": {
-                    "bchControlId": "06d2159f-f0fe-4f02-b9dd-9710689c6e1f",
-                    "recType": 8,
-                    "serviceClass": 225,
-                    "entAddendaCnt": "000001",
-                    "entHash": "0023138010",
-                    "totBchDrEntAmt": "000000050000",
-                    "totBchCrEntAmt": "000000000000",
-                    "coId": "231380104",
-                    "originatingDFIId": "12104288",
-                    "bchNum": "0000001"
-                }
-            }],
-            "FileControl": {
-                "fileControlId": "3bd5399a-424d-42b3-8228-871ad4ec9cd5",
-                "recType": 9,
-                "bchCnt": "000001",
-                "blockCnt": "000001",
-                "entAddendaCnt": "00000001",
-                "entHash": "0023138010",
-                "totFileDrEntAmt": "000000050000",
-                "totFileCrEntAmt": "000000000000"
+  "fileContents": {
+    "fileId": "69e0a3a2-f6c5-41c9-b380-85ae1be4fd17",
+    "achFile": {
+      "FileHeader": {
+        "filehdrId": "2c29fc21-20ce-4fe7-be87-32546c00f7d3",
+        "recType": 1,
+        "priorityCode": "01",
+        "immedDestination": "031300012",
+        "immedOrigin": "0231380104",
+        "fileCreationDate": "190816",
+        "fileCreationTime": "1055",
+        "fileIDModifier": "A",
+        "recSize": "094",
+        "blockingFactor": "10",
+        "formatCode": "1",
+        "immedDestinationName": "Federal Reserve Bank",
+        "immedOriginName": "My Bank Name",
+        "refCode": "12345678"
+      },
+      "batches": [
+        {
+          "bchId": "84cb010a-b6b5-44ff-a0b2-9cad45c89da3",
+          "BatchHeader": {
+            "bchHeaderId": "15c98ee0-9384-42c0-8e0b-5870bf0e493a",
+            "recType": 5,
+            "serviceClassCode": 225,
+            "coName": "Name on Account",
+            "coId": "231380104 ",
+            "SECCode": 3,
+            "effectiveEntDate": "190816",
+            "originatorStatusCode": 1,
+            "originatingDFIId": "11210428",
+            "bchNum": "0000001"
+          },
+          "entryDetailRecords": [
+            {
+              "entDetailsId": "763f14e4-8b66-4013-99ec-f038f014bc5e",
+              "recType": 6,
+              "transCode": 27,
+              "rDFIId": "23138010",
+              "checkDigit": "4",
+              "dFIAcctNumber": "12345678         ",
+              "amt": "0000050000",
+              "individualName": "Receiver Account Name",
+              "paymtTypeCode": "  ",
+              "traceNumber": "121042880000001",
+              "addendaRecords": []
             }
+          ],
+          "batchTrailer": {
+            "bchControlId": "3327a2d2-0de0-4432-92a1-628fd2abe005",
+            "recType": 8,
+            "serviceClass": 225,
+            "entAddendaCnt": "000001",
+            "entHash": "0023138010",
+            "totBchDrEntAmt": "000000050000",
+            "totBchCrEntAmt": "000000000000",
+            "coId": "231380104",
+            "originatingDFIId": "12104288",
+            "bchNum": "0000001"
+          }
         }
+      ],
+      "FileControl": {
+        "fileControlId": "d2952169-fa59-43af-8fb8-df350a665e3e",
+        "recType": 9,
+        "bchCnt": "000001",
+        "blockCnt": "000001",
+        "entAddendaCnt": "00000001",
+        "entHash": "0023138010",
+        "totFileDrEntAmt": "000000050000",
+        "totFileCrEntAmt": "000000000000"
+      }
     }
+  }
 }
