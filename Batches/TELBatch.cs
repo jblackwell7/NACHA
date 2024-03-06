@@ -16,7 +16,8 @@ namespace NACHAParser
                 if (currentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                    if (adIndicator == AddendaRecordIndicator.Addenda)
+                    var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
+                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.ReturnAddenda) || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                     {
                         throw new Exception($"Standard Entry Class Code '{currentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
                     }
