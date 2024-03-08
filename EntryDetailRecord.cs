@@ -56,13 +56,13 @@ namespace NACHAParser
         public string CardTransTypeCode { get; set; } = string.Empty;
 
         [JsonProperty("discretionaryData")]
-        public string? DiscretionaryData { get; set; }
+        public string DiscretionaryData { get; set; } = string.Empty;
 
         [JsonProperty("paymtTypeCode")]
-        public string? PaymtTypeCode { get; set; }
+        public string PaymtTypeCode { get; set; } = string.Empty;
 
         [JsonProperty("reserved")]
-        public string? Reserved { get; set; }
+        public string Reserved { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecordIndicator")]
         public AddendaRecordIndicator aDRecIndicator { get; set; }
