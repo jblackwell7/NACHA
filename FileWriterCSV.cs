@@ -16,6 +16,7 @@ namespace NACHAParser
         public const string POSDetailHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Individual ID Number,Individual Name,Card Transaction Type,Terminal City, Terminal State, Card Transaction Type,Addenda Record Indicator,Trace Number";
         public const string CTXeDetailHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Number of Addenda Records,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string CTXNOCeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Number of Addenda Records,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
+        public const string ACKeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Original Entry Trace Number,Receiving Trace Number,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string NOCeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Individual ID,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string ReturnAddendaHeader = "Record Type,Addenda Type Code,Return Reason Code,Original Entry Trace Number,Date of Death,Original Receiving DFI Identification,Addenda Information,Trace Number";
         public const string DishonorReturnAddendaHeader = "Record Type,Addenda Type Code,DisHonrorReturnCode,Original Entry Trace Number,Reserved,Original Receiving DFI Identification,Reserved,Return Trace Number,Return Settlement Date,Dis Honor Return Reason Code,Addenda Information,Trace Number";
@@ -217,6 +218,22 @@ namespace NACHAParser
                     eDetails.NumOfAddendaRecords,
                     eDetails.ReceiverCoName.Trim(),
                     eDetails.Reserved,
+                    eDetails.DiscretionaryData.Trim(),
+                    (int)eDetails.aDRecIndicator,
+                    eDetails.TraceNum
+                    ));
+                    break;
+                case StandardEntryClassCode.ACK:
+                    sb.AppendLine(ACKeDetailsHeader);
+                    sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                    (int)eDetails.RecType,
+                    (int)eDetails.TransCode,
+                    eDetails.RDFIId,
+                    eDetails.CheckDigit,
+                    eDetails.DFIAcctNum,
+                    eDetails.Amt,
+                    eDetails.OriginalTraceNum,
+                    eDetails.ReceiverCoName.Trim(),
                     eDetails.DiscretionaryData.Trim(),
                     (int)eDetails.aDRecIndicator,
                     eDetails.TraceNum
