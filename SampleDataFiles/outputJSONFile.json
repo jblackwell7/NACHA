@@ -1,13 +1,13 @@
 {
   "fileContents": {
-    "fileId": "69e0a3a2-f6c5-41c9-b380-85ae1be4fd17",
+    "fileId": "e962e77a-cc44-42b4-a758-a79e41f57970",
     "achFile": {
       "FileHeader": {
-        "filehdrId": "2c29fc21-20ce-4fe7-be87-32546c00f7d3",
+        "filehdrId": "d39acce4-f158-46bf-b394-9ad08d16ec73",
         "recType": 1,
         "priorityCode": "01",
         "immedDestination": "031300012",
-        "immedOrigin": "0231380104",
+        "immedOrigin": "771166881",
         "fileCreationDate": "190816",
         "fileCreationTime": "1055",
         "fileIDModifier": "A",
@@ -16,60 +16,73 @@
         "formatCode": "1",
         "immedDestinationName": "Federal Reserve Bank",
         "immedOriginName": "My Bank Name",
-        "refCode": "12345678"
+        "refCode": "        "
       },
       "batches": [
         {
-          "bchId": "84cb010a-b6b5-44ff-a0b2-9cad45c89da3",
+          "bchId": "9a6457ef-958b-4f3e-a1fb-b745d20d5062",
           "BatchHeader": {
-            "bchHeaderId": "15c98ee0-9384-42c0-8e0b-5870bf0e493a",
+            "bchHeaderId": "08c55214-c599-4158-8eca-e4c5e1410467",
             "recType": 5,
-            "serviceClassCode": 225,
+            "serviceClassCode": 220,
             "coName": "Name on Account",
-            "coId": "231380104 ",
-            "SECCode": 3,
+            "coId": "771166881 ",
+            "SECCode": "ACK",
             "effectiveEntDate": "190816",
             "originatorStatusCode": 1,
-            "originatingDFIId": "11210428",
+            "originatingDFIId": "17711668",
             "bchNum": "0000001"
           },
           "entryDetailRecords": [
             {
-              "entDetailsId": "763f14e4-8b66-4013-99ec-f038f014bc5e",
+              "entDetailsId": "e0efa960-3132-448f-b6da-7735aa58dd12",
               "recType": 6,
-              "transCode": 27,
-              "rDFIId": "23138010",
-              "checkDigit": "4",
-              "dFIAcctNumber": "12345678         ",
-              "amt": "0000050000",
-              "individualName": "Receiver Account Name",
-              "paymtTypeCode": "  ",
-              "traceNumber": "121042880000001",
+              "transCode": 24,
+              "rDFIId": "03130001",
+              "checkDigit": "2",
+              "dFIAcctNumber": "123456789",
+              "amt": "0000000000",
+              "receiverCompanyName": "Test",
+              "traceNumber": "771166880000001",
+              "originalTraceNumber": "031300010000001",
+              "addendaRecords": []
+            },
+            {
+              "entDetailsId": "de847e84-7dc6-48d7-a2de-19450abbd86f",
+              "recType": 6,
+              "transCode": 24,
+              "rDFIId": "03130001",
+              "checkDigit": "2",
+              "dFIAcctNumber": "321876549",
+              "amt": "0000000000",
+              "receiverCompanyName": "Best",
+              "traceNumber": "771166880000002",
+              "originalTraceNumber": "031300010000002",
               "addendaRecords": []
             }
           ],
           "batchTrailer": {
-            "bchControlId": "3327a2d2-0de0-4432-92a1-628fd2abe005",
+            "bchControlId": "5ec871cf-56c9-4a2f-a787-ddefd29e589a",
             "recType": 8,
-            "serviceClass": 225,
-            "entAddendaCnt": "000001",
-            "entHash": "0023138010",
-            "totBchDrEntAmt": "000000050000",
+            "serviceClass": 220,
+            "entAddendaCnt": "000002",
+            "entHash": "0006260002",
+            "totBchDrEntAmt": "000000000000",
             "totBchCrEntAmt": "000000000000",
-            "coId": "231380104",
-            "originatingDFIId": "12104288",
+            "coId": "771166881",
+            "originatingDFIId": "77116688",
             "bchNum": "0000001"
           }
         }
       ],
       "FileControl": {
-        "fileControlId": "d2952169-fa59-43af-8fb8-df350a665e3e",
+        "fileControlId": "ef183b82-979f-432a-9694-af56f7fa42a1",
         "recType": 9,
         "bchCnt": "000001",
         "blockCnt": "000001",
-        "entAddendaCnt": "00000001",
-        "entHash": "0023138010",
-        "totFileDrEntAmt": "000000050000",
+        "entAddendaCnt": "00000002",
+        "entHash": "0006260002",
+        "totFileDrEntAmt": "000000000000",
         "totFileCrEntAmt": "000000000000"
       }
     }
