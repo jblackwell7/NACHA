@@ -1,9 +1,9 @@
 {
   "fileContents": {
-    "fileId": "59c38d8d-c173-4a20-9d93-c7964ff7d98f",
+    "fileId": "e962e77a-cc44-42b4-a758-a79e41f57970",
     "achFile": {
       "FileHeader": {
-        "filehdrId": "fc0f515c-831c-43bb-a7e7-91e122816b52",
+        "filehdrId": "d39acce4-f158-46bf-b394-9ad08d16ec73",
         "recType": 1,
         "priorityCode": "01",
         "immedDestination": "031300012",
@@ -20,9 +20,9 @@
       },
       "batches": [
         {
-          "bchId": "38a5f5ba-0c70-445b-b5ad-82602f9bc9c7",
+          "bchId": "9a6457ef-958b-4f3e-a1fb-b745d20d5062",
           "BatchHeader": {
-            "bchHeaderId": "85029de7-1410-4d6b-8146-4bb43725e204",
+            "bchHeaderId": "08c55214-c599-4158-8eca-e4c5e1410467",
             "recType": 5,
             "serviceClassCode": 220,
             "coName": "Name on Account",
@@ -35,36 +35,34 @@
           },
           "entryDetailRecords": [
             {
-              "entDetailsId": "5868b4db-44e4-4e5c-ab57-c39c4c10b19b",
+              "entDetailsId": "e0efa960-3132-448f-b6da-7735aa58dd12",
               "recType": 6,
               "transCode": 24,
               "rDFIId": "03130001",
               "checkDigit": "2",
-              "dFIAcctNumber": "123456789        ",
+              "dFIAcctNumber": "123456789",
               "amt": "0000000000",
-              "receiverCompanyName": "Test                  ",
-              "discretionaryData": "  ",
+              "receiverCompanyName": "Test",
               "traceNumber": "771166880000001",
               "originalTraceNumber": "031300010000001",
               "addendaRecords": []
             },
             {
-              "entDetailsId": "0f129351-870d-4337-a526-d031f1a42136",
+              "entDetailsId": "de847e84-7dc6-48d7-a2de-19450abbd86f",
               "recType": 6,
               "transCode": 24,
               "rDFIId": "03130001",
               "checkDigit": "2",
-              "dFIAcctNumber": "321876549        ",
+              "dFIAcctNumber": "321876549",
               "amt": "0000000000",
-              "receiverCompanyName": "Best                  ",
-              "discretionaryData": "  ",
+              "receiverCompanyName": "Best",
               "traceNumber": "771166880000002",
               "originalTraceNumber": "031300010000002",
               "addendaRecords": []
             }
           ],
           "batchTrailer": {
-            "bchControlId": "12be690a-1ca2-4936-a4cf-0def2d42a62a",
+            "bchControlId": "5ec871cf-56c9-4a2f-a787-ddefd29e589a",
             "recType": 8,
             "serviceClass": 220,
             "entAddendaCnt": "000002",
@@ -78,7 +76,7 @@
         }
       ],
       "FileControl": {
-        "fileControlId": "e89db567-e810-45e6-9bdf-46ea1615cdd4",
+        "fileControlId": "ef183b82-979f-432a-9694-af56f7fa42a1",
         "recType": 9,
         "bchCnt": "000001",
         "blockCnt": "000001",
