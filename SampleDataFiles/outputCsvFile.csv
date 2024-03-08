@@ -3,9 +3,9 @@ RecordType,PriorityCode,ImmediateDestination,ImmediateOrigin,FileCreationDate,Fi
 Record Type,Service Class Code,Company Name,Company Discretionary Data,Company Identification,Standard Entry Class Code,Company Entry Description,Company Descriptive Date,Effective Date,Settlement Date (Julian),Originator Status Code,Originating DFI Identification,Batch Number
 5,220,Name on Account,,771166881,11,,,190816,,1,17711668,0000001
 Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Original Entry Trace Number,Receiving Trace Number,Discretionary Data,Addenda Record Indicator,Trace Number
-6,24,03130001,2,123456789        ,0000000000,031300010000001,Test,,0,771166880000001
+6,24,03130001,2,123456789,0000000000,031300010000001,Test,,0,771166880000001
 Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Original Entry Trace Number,Receiving Trace Number,Discretionary Data,Addenda Record Indicator,Trace Number
-6,24,03130001,2,321876549        ,0000000000,031300010000002,Best,,0,771166880000002
+6,24,03130001,2,321876549,0000000000,031300010000002,Best,,0,771166880000002
 Record Type,Service Class Code,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount,Total Credit Entry Dollar Amount,Company Identification,Message Authentication Code,Reserved,Originating DFI Identificiation,Batch Number
 8,220,000002,0006260002,000000000000,000000000000,771166881,,,77116688,0000001
 Record Type,Batch Count,Block Count,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount in File,Total Credit Entry Dollar Amount in File,Reserved
