@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace NACHAParser
 {
@@ -24,6 +25,7 @@ namespace NACHAParser
         [JsonProperty("coId")]
         public string CoId { get; set; } = string.Empty;
 
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("SECCode")]
         public StandardEntryClassCode SECCode { get; set; }
 
