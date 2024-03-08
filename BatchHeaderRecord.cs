@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace NACHAParser
 {
@@ -24,6 +25,7 @@ namespace NACHAParser
         [JsonProperty("coId")]
         public string CoId { get; set; } = string.Empty;
 
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("SECCode")]
         public StandardEntryClassCode SECCode { get; set; }
 
@@ -61,7 +63,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static BatchHeaderRecord ParseBatchHeader(string line,int lineNumber,StandardEntryClassCode sec)
+        public static BatchHeaderRecord ParseBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
             return new BatchHeaderRecord
             {
@@ -119,6 +121,8 @@ namespace NACHAParser
                     return StandardEntryClassCode.ADV;
                 case "XCK":
                     return StandardEntryClassCode.XCK;
+                case "ACK":
+                    return StandardEntryClassCode.ACK;
                 default:
                     throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode.");
             };

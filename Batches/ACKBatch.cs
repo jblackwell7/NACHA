@@ -22,7 +22,7 @@ namespace NACHAParser
 
                     if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                     {
-                        if ((tc == TransactionCode.CheckingZeroDollarRemitCredit || tc == TransactionCode.CheckingZeroDollarRemitCredit) && amt == null)
+                        if ((tc == TransactionCode.CheckingZeroDollarRemitCredit || tc == TransactionCode.CheckingZeroDollarRemitCredit) && amt == "0000000000")
                         {
                             EntryDetailRecord entry = new EntryDetailRecord()
                             {
@@ -30,11 +30,11 @@ namespace NACHAParser
                                 TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
                                 RDFIId = line.Substring(3, 8),
                                 CheckDigit = line[11],
-                                DFIAcctNum = line.Substring(12, 17),
+                                DFIAcctNum = line.Substring(12, 17).Trim(),
                                 Amt = line.Substring(29, 10),
                                 OriginalTraceNum = line.Substring(39, 15),
-                                ReceiverCoName = line.Substring(54, 22),
-                                DiscretionaryData = line.Substring(76, 2),
+                                ReceiverCoName = line.Substring(54, 22).Trim(),
+                                DiscretionaryData = line.Substring(76, 2).Trim(),
                                 aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                                 TraceNum = line.Substring(79, 15)
                             };
@@ -84,7 +84,7 @@ namespace NACHAParser
                                 case AddendaTypeCode.NOCAddenda:
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = typeCode;
-                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
+                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim().Trim();
                                     ad.AddendaSeqNum = line.Substring(83, 4);
                                     ad.EntDetailSeqNum = line.Substring(87, 7);
                                     lastEntry.AddendaRecord.Add(ad);
