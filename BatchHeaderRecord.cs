@@ -61,7 +61,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static BatchHeaderRecord ParseBatchHeader(string line,int lineNumber,StandardEntryClassCode sec)
+        public static BatchHeaderRecord ParseBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
             return new BatchHeaderRecord
             {
@@ -119,6 +119,8 @@ namespace NACHAParser
                     return StandardEntryClassCode.ADV;
                 case "XCK":
                     return StandardEntryClassCode.XCK;
+                case "ACK":
+                    return StandardEntryClassCode.ACK;
                 default:
                     throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode.");
             };
