@@ -7,7 +7,7 @@ namespace NACHAParser
     {
         public static void ExecuteProc(string connectionString, string procName, SqlParameter[] parameters)
         {
-            var sb = new StringBuilder($"Executing {procName} with parameters: ");
+            var sb = new StringBuilder($"EXEC {procName} ");
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -22,6 +22,7 @@ namespace NACHAParser
                     var value = p.Value is DBNull ? "NULL" : $"'{p.Value}'";
                     sb.Append($"{p.ParameterName}={value}, ");
                 }
+                sb.Length -= 2;
                 try
                 {
                     connection.Open();
@@ -31,9 +32,10 @@ namespace NACHAParser
                 catch (SqlException ex)
                 {
                     Console.WriteLine($"Error executing Stored Proc '{procName}': {sb}\n");
+
                     foreach (SqlError error in ex.Errors)
                     {
-                        Console.WriteLine($"SQL Error. Stored Proc '{procName}': Msg {error.Number},\nLevel {error.Class},\nState {error.State},\nLine {error.LineNumber}\n{error.Message}");
+                        Console.WriteLine($"SQL Error. Stored Proc '{procName}': Msg {error.Number},\nLevel {error.Class},\nState {error.State},\nLine {error.LineNumber}\n{error.Message}\n");
                     }
                 }
                 finally
@@ -50,12 +52,12 @@ namespace NACHAParser
                 SQLInsertBatchHeaderRecord(batch.BatchHeader, root, connectionString);
                 foreach (var entry in batch.EntryRecord)
                 {
-                    SQLInsertEntryDetailRecord(entry, batch, batch.BatchHeader.SECCode, connectionString);
+                    SQLInsertEntryDetailRecord(entry, batch, connectionString);
                     if (entry.AddendaRecord != null)
                     {
                         foreach (var addenda in entry.AddendaRecord)
                         {
-                            SQLInsertAddendaRecord(addenda, batch, batch.BatchHeader.SECCode, connectionString);
+                            SQLInsertAddendaRecord(addenda, batch, connectionString);
                         }
                     }
                 }
@@ -100,21 +102,21 @@ namespace NACHAParser
                 new SqlParameter("@CompanyDescriptiveDate", bh.CoDescriptiveDate),
                 new SqlParameter("@EffectiveEntryDate", bh.EffectiveEntDate),
                 new SqlParameter("@SettlementDate", bh.SettlementDate),
-                new SqlParameter("@OriginatorStatusCode", bh.OriginatorStatusCode),
+                new SqlParameter("@OriginatorStatusCode", (int)bh.OriginatorStatusCode),
                 new SqlParameter("@OriginatingDFIId", bh.OriginatingDFIId),
                 new SqlParameter("@BatchNumber", bh.BchNum),
             };
             ExecuteProc(connectionString, procName, parameters);
         }
-        private static void SQLInsertEntryDetailRecord(EntryDetailRecord ed, Batch batch, StandardEntryClassCode sec, string connectionString)
+        private static void SQLInsertEntryDetailRecord(EntryDetailRecord ed, Batch batch, string connectionString)
         {
-            SqlParameter[] parameters = GetEntryDetailParameters(ed, batch, sec);
+            SqlParameter[] parameters = GetEntryDetailParameters(ed, batch, batch.BatchHeader.SECCode);
             string procName = GetStoredProc(ed.RecType);
             ExecuteProc(connectionString, procName, parameters);
         }
-        private static void SQLInsertAddendaRecord(Addenda ad, Batch batch, StandardEntryClassCode sec, string connectionString)
+        private static void SQLInsertAddendaRecord(Addenda ad, Batch batch, string connectionString)
         {
-            SqlParameter[] parameters = GetAddendaParameters(ad, batch, sec);
+            SqlParameter[] parameters = GetAddendaParameters(ad, batch);
             string procName = GetStoredProc(ad.RecType);
             ExecuteProc(connectionString, procName, parameters);
         }
@@ -139,7 +141,8 @@ namespace NACHAParser
             ExecuteProc(connectionString, procName, parameters);
         }
         private static void SQLInsertFileControlRecord(FileControlRecord fc, FileHeaderRecord fh, string connectionString)
-        {string procName = GetStoredProc(fc.RecType);
+        {
+            string procName = GetStoredProc(fc.RecType);
             SqlParameter[] parameters = {
                 new SqlParameter("@FileControlId", fc.FileControlId),
                 new SqlParameter("@FileheaderId", fh.FileheaderId),
@@ -153,18 +156,70 @@ namespace NACHAParser
                 new SqlParameter("@Reserved", fc.Reserved),
             };
 
-            ExecuteProc(connectionString, "sp_InsertFileControlRecord", parameters);
+            ExecuteProc(connectionString, procName, parameters);
         }
         private static SqlParameter[] GetEntryDetailParameters(EntryDetailRecord ed, Batch batch, StandardEntryClassCode sec)
         {
-            return null;
+            //TODO: ACH-26 Add logic for additional batches
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            switch (sec)
+            {
+                case StandardEntryClassCode.PPD:
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", batch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.WEB:
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", batch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+            }
+            return parameters.ToArray();
         }
-        private static SqlParameter[] GetAddendaParameters(Addenda ad, Batch batch, StandardEntryClassCode sec)
+        private static SqlParameter[] GetAddendaParameters(Addenda ad, Batch batch)
         {
-            return null;
+            //TODO: ACH-25 Returns, Add COR, Contested COR, Dishonor &  Contested Support
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            var lastEntry = batch.EntryRecord.LastOrDefault();
+            switch (ad.AdTypeCode)
+            {
+                case AddendaTypeCode.StandardAddenda:
+                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("BatchHeaderId", batch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("PaymentRelatedInformation", ad.PaymtRelatedInfo));
+                    parameters.Add(new SqlParameter("AddendaSequenceNumber", ad.AddendaSeqNum));
+                    parameters.Add(new SqlParameter("EntryDetailSequenceNumber", ad.EntDetailSeqNum));
+                    break;
+            }
+            return parameters.ToArray();
         }
         private static string GetStoredProc(RecordType recType)
         {
+            //root.FileContents.AchFile.Batches[0].BatchHeader.SECCode.ToString();
             //TODO: ACH-22 Add StandardEntryClassCode logic
             //TODO: ACH-23 RecordType.ed and AdTypeCode for RecordType.ad
             //TODO: ACH-24 Add stored procs for to support ACH-23
@@ -176,7 +231,7 @@ namespace NACHAParser
                 case RecordType.bh:
                     return "sp_InsertBatchHeaderRecord";
                 case RecordType.ed:
-                    return "sp_InsertEntryDetailRecord";
+                    return "sp_InsertWEBEntryDetailRecord";
                 case RecordType.ad:
                     return "sp_InsertAddendaRecord";
                 case RecordType.bc:
