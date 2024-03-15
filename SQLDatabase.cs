@@ -44,24 +44,50 @@ namespace NACHAParser
         }
         public static void SQLInsertData(string connectionString, Root root)
         {
+            SQLInsertFileHeaderRecord(root.FileContents.AchFile.FileHeader, connectionString);
+            foreach (var batch in root.FileContents.AchFile.Batches)
+            {
+                SQLInsertBatchHeaderRecord(batch.BatchHeader, root, connectionString);
+                foreach (var entry in batch.EntryRecord)
+                {
+                    SQLInsertEntryDetailRecord(entry, batch, batch.BatchHeader.SECCode, connectionString);
+                    if (entry.AddendaRecord != null)
+                    {
+                        foreach (var addenda in entry.AddendaRecord)
+                        {
+                            SQLInsertAddendaRecord(addenda, batch, connectionString);
+                        }
+                    }
+                }
+                SQLInsertBatchControlRecord(batch.BatchControl, batch, connectionString);
+            }
+            SQLInsertFileControlRecord(root.FileContents.AchFile.FileControl, root.FileContents.AchFile.FileHeader, connectionString);
         }
-        private static void SQLInsertFileHeaderRecord()
+        private static void SQLInsertFileHeaderRecord(FileHeaderRecord fh, string connectionString)
         {
         }
-        private static void SQLInsertBatchHeaderRecord()
+        private static void SQLInsertBatchHeaderRecord(BatchHeaderRecord bh, Root root, string connectionString)
         {
         }
-        private static void SQLInsertEntryDetailRecord()
+        private static void SQLInsertEntryDetailRecord(EntryDetailRecord ed, Batch batch, StandardEntryClassCode sec, string connectionString)
         {
         }
-        private static void SQLInsertAddendaRecord()
+        private static void SQLInsertAddendaRecord(Addenda ad, Batch batch, string connectionString)
         {
         }
-        private static void SQLInsertBatchControlRecord()
+        private static void SQLInsertBatchControlRecord(BatchControlRecord bc, Batch batch, string connectionString)
         {
         }
-        private static void SQLInsertFileControlRecord()
+        private static void SQLInsertFileControlRecord(FileControlRecord fc, FileHeaderRecord fh, string connectionString)
         {
+        }
+        private static SqlParameter[] GetEntryDetailParameters(EntryDetailRecord ed, Batch batch, StandardEntryClassCode sec)
+        {
+            return null;
+        }
+        private static SqlParameter[] GetAddendaParameters(Addenda ad, Batch batch, StandardEntryClassCode sec)
+        {
+            return null;
         }
         private static string GetStoredProcs()
         {
