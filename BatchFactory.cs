@@ -3,7 +3,7 @@ namespace NACHAParser
     public class BatchFactory
     {
         #region Methods
-        public static IBatch CreateBatch(StandardEntryClassCode sec)
+        public IBatch CreateBatch(StandardEntryClassCode sec)
         {
             switch (sec)
             {
@@ -31,6 +31,7 @@ namespace NACHAParser
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
         }
+
         #endregion
     }
 }
