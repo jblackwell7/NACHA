@@ -53,7 +53,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static BatchControlRecord ParseBatchControl(string line)
+        public BatchControlRecord ParseBatchControl(string line)
         {
             return new BatchControlRecord
             {
