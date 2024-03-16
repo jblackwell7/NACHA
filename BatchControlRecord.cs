@@ -50,27 +50,5 @@ namespace NACHAParser
         }
 
         #endregion
-
-        #region Methods
-
-        public BatchControlRecord ParseBatchControl(string line)
-        {
-            return new BatchControlRecord
-            {
-                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
-                ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
-                EntAddendaCnt = line.Substring(4, 6),
-                EntHash = line.Substring(10, 10),
-                TotBchDrEntAmt = line.Substring(20, 12),
-                TotBchCrEntAmt = line.Substring(32, 12),
-                CoId = line.Substring(44, 10).Trim(),
-                MsgAuthCode = line.Substring(54, 19).Trim(),
-                Reserved = line.Substring(73, 6).Trim(),
-                OriginatingDFIId = line.Substring(79, 8),
-                BchNum = line.Substring(87, 7)
-            };
-        }
-
-        #endregion
     }
 }
