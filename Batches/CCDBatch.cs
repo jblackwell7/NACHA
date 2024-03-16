@@ -2,13 +2,28 @@ namespace NACHAParser
 {
     public class CCDBatch : BatchBase
     {
-        public override void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
+        public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
-            BatchHeaderRecord bh = new BatchHeaderRecord();
-            currentBatch = new Batch()
+            currentBatch = new Batch
             {
-                BatchHeader = bh.ParseBatchHeader(line, lineNumber, sec)
+                BatchHeader = new BatchHeaderRecord()
+                {
+                    RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                    ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
+                    CoName = line.Substring(4, 16).Trim(),
+                    CoDiscretionaryData = line.Substring(20, 20).Trim(),
+                    CoId = line.Substring(40, 10).Trim(),
+                    SECCode = sec,
+                    CoEntDescription = line.Substring(63, 10).Trim(),
+                    CoDescriptiveDate = line.Substring(63, 6).Trim(),
+                    EffectiveEntDate = line.Substring(69, 6),
+                    SettlementDate = line.Substring(75, 3).Trim(),
+                    OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
+                    OriginatingDFIId = line.Substring(78, 8),
+                    BchNum = line.Substring(87, 7)
+                }
             };
+            return currentBatch.BatchHeader;
         }
         public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
         {

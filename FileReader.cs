@@ -56,7 +56,6 @@ namespace NACHAParser
                         ProcessFileHeader(line, root);
                         break;
                     case RecordType.bh:
-                        BatchHeaderRecord bh = new BatchHeaderRecord();
                         BatchFactory bf = new BatchFactory();
                         var sec = bf.ParseSEC(line.Substring(50, 3));
                         iBatch = bf.CreateBatch(sec);
