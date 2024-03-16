@@ -317,6 +317,8 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
                     parameters.Add(new SqlParameter("RESERVED", ed.Reserved));
                     break;
+                default:
+                    throw new Exception($"Standard Entry Class Code '{sec}' is not supported");
             }
             return parameters.ToArray();
         }
@@ -337,6 +339,43 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("AddendaSequenceNumber", ad.AddendaSeqNum));
                     parameters.Add(new SqlParameter("EntryDetailSequenceNumber", ad.EntDetailSeqNum));
                     break;
+                case AddendaTypeCode.NOCAddenda:
+                    bool isRefusedCOR = ad.IsRefusedCORCode(ad.ChangeCode);
+                    if (isRefusedCOR == false && ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
+                    {
+                        parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                        parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                        parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
+                        parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
+                        parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                        parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
+                        parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
+                        parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
+                        parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
+                    }
+                    else if (isRefusedCOR == true && ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
+                    {
+                        parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                        parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                        parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
+                        parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
+                        parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
+                        parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                        parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
+                        parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
+                        parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
+                        parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
+                        parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
+
+                    }
+                    else
+                    {
+                        throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
+                    }
+
+                    break;
+                default:
+                    throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
             }
             return parameters.ToArray();
         }
