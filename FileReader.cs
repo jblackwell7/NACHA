@@ -56,8 +56,10 @@ namespace NACHAParser
                         ProcessFileHeader(line, root);
                         break;
                     case RecordType.bh:
-                        var sec = BatchHeaderRecord.ParseSEC(line.Substring(50, 3));
-                        iBatch = BatchFactory.CreateBatch(sec);
+                        BatchHeaderRecord bh = new BatchHeaderRecord();
+                        var sec = bh.ParseSEC(line.Substring(50, 3));
+                        BatchFactory bf = new BatchFactory();
+                        iBatch = bf.CreateBatch(sec);
                         iBatch.ProcessBatchHeader(line, lineNumber, sec);
                         break;
                     case RecordType.ed:
@@ -98,7 +100,8 @@ namespace NACHAParser
         /// <param name="root">The root object where the parsed file control information is stored.</param>
         private static void ProcessFileControl(string line, Root root)
         {
-            root.FileContents.AchFile.FileControl = FileControlRecord.ParseFileControl(line);
+            FileControlRecord fc = new FileControlRecord();
+            root.FileContents.AchFile.FileControl = fc.ParseFileControl(line);
         }
     }
 }
