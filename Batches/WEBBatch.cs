@@ -2,12 +2,28 @@ namespace NACHAParser
 {
     public class WEBBatch : BatchBase
     {
-        public override void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
+        public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
-            currentBatch = new Batch()
+            currentBatch = new Batch
             {
-                BatchHeader = BatchHeaderRecord.ParseBatchHeader(line, lineNumber, sec)
+                BatchHeader = new BatchHeaderRecord()
+                {
+                    RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                    ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
+                    CoName = line.Substring(4, 16).Trim(),
+                    CoDiscretionaryData = line.Substring(20, 20).Trim(),
+                    CoId = line.Substring(40, 10).Trim(),
+                    SECCode = sec,
+                    CoEntDescription = line.Substring(63, 10).Trim(),
+                    CoDescriptiveDate = line.Substring(63, 6).Trim(),
+                    EffectiveEntDate = line.Substring(69, 6),
+                    SettlementDate = line.Substring(75, 3).Trim(),
+                    OriginatorStatusCode = (OriginatorStatusCode)int.Parse(line.Substring(78, 1)),
+                    OriginatingDFIId = line.Substring(78, 8),
+                    BchNum = line.Substring(87, 7)
+                }
             };
+            return currentBatch.BatchHeader;
         }
         public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
         {
@@ -78,7 +94,7 @@ namespace NACHAParser
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
                                 case AddendaTypeCode.ReturnAddenda:
-                                    var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
+                                    var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
                                     if (isDisHonor == true)
@@ -147,14 +163,28 @@ namespace NACHAParser
                 throw new Exception("batch is null");
             }
         }
-        public override void ProcessBatchControl(string line, Root root)
+        public override BatchControlRecord ProcessBatchControl(string line, Root root)
         {
             if (currentBatch != null)
             {
                 if (currentBatch.BatchControl == null)
                 {
-                    currentBatch.BatchControl = BatchControlRecord.ParseBatchControl(line);
+                    currentBatch.BatchControl = new BatchControlRecord()
+                    {
+                        RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                        ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
+                        EntAddendaCnt = line.Substring(4, 6),
+                        EntHash = line.Substring(10, 10),
+                        TotBchDrEntAmt = line.Substring(20, 12),
+                        TotBchCrEntAmt = line.Substring(32, 12),
+                        CoId = line.Substring(44, 10).Trim(),
+                        MsgAuthCode = line.Substring(54, 19).Trim(),
+                        Reserved = line.Substring(73, 6).Trim(),
+                        OriginatingDFIId = line.Substring(79, 8),
+                        BchNum = line.Substring(87, 7)
+                    };
                     root.FileContents.AchFile.Batches.Add(currentBatch);
+                    return currentBatch.BatchControl;
                 }
                 else
                 {

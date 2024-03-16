@@ -8,7 +8,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("filehdrId")]
-        public string FilehdrId { get; set; } = string.Empty;
+        public string FileheaderId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
@@ -55,8 +55,8 @@ namespace NACHAParser
 
         public FileHeaderRecord()
         {
-            FilehdrId = Guid.NewGuid().ToString();
-            Console.WriteLine($"FilehdrId: '{FilehdrId}'");
+            FileheaderId = Guid.NewGuid().ToString();
+            Console.WriteLine($"FilehdrId: '{FileheaderId}'");
         }
 
         #endregion
