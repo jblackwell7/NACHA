@@ -3,7 +3,7 @@ namespace NACHAParser
     public class BatchFactory
     {
         #region Methods
-        public static IBatch CreateBatch(StandardEntryClassCode sec)
+        public IBatch CreateBatch(StandardEntryClassCode sec)
         {
             switch (sec)
             {
@@ -31,6 +31,53 @@ namespace NACHAParser
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
         }
+        public StandardEntryClassCode ParseSEC(string value)
+        {
+            switch (value)
+            {
+                case "CCD":
+                    return StandardEntryClassCode.CCD;
+                case "PPD":
+                    return StandardEntryClassCode.PPD;
+                case "WEB":
+                    return StandardEntryClassCode.WEB;
+                case "TEL":
+                    return StandardEntryClassCode.TEL;
+                case "COR":
+                    return StandardEntryClassCode.COR;
+                case "POP":
+                    return StandardEntryClassCode.POP;
+                case "POS":
+                    return StandardEntryClassCode.POS;
+                case "BOC":
+                    return StandardEntryClassCode.BOC;
+                case "ARC":
+                    return StandardEntryClassCode.ARC;
+                case "RCK":
+                    return StandardEntryClassCode.RCK;
+                case "MTE":
+                    return StandardEntryClassCode.MTE;
+                case "SHR":
+                    return StandardEntryClassCode.SHR;
+                case "CTX":
+                    return StandardEntryClassCode.CTX;
+                case "IAT":
+                    return StandardEntryClassCode.IAT;
+                case "ENR":
+                    return StandardEntryClassCode.ENR;
+                case "TRC":
+                    return StandardEntryClassCode.TRC;
+                case "ADV":
+                    return StandardEntryClassCode.ADV;
+                case "XCK":
+                    return StandardEntryClassCode.XCK;
+                case "ACK":
+                    return StandardEntryClassCode.ACK;
+                default:
+                    throw new ArgumentException($"'{value}' is not a valid StandardEntryClassCode.");
+            };
+        }
+
         #endregion
     }
 }

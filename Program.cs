@@ -7,6 +7,7 @@
             string inputACHFile = args[0];
             string outputJSONFile = args[1];
             string outputCSVFile = args[2];
+            string connectionString = args[3];
 
             List<string> lines = new List<string>(File.ReadLines(inputACHFile));
             ParseDataResult result = FileReader.ParseData(lines);
@@ -14,6 +15,7 @@
             if (result.Root != null)
             {
                 Root root = result.Root;
+                SQLDatabase.SQLInsertData(connectionString, root);
                 JsonFileWriter.WriteJsonFile(root, outputJSONFile);
                 CSVFileWriter.WriteCsvFile(root, outputCSVFile);
                 Console.WriteLine($"Line Count: '{result.LinesProcessed}'");
