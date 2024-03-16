@@ -4,9 +4,10 @@ namespace NACHAParser
     {
         public override void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
+            BatchHeaderRecord bh = new BatchHeaderRecord();
             currentBatch = new Batch()
             {
-                BatchHeader = BatchHeaderRecord.ParseBatchHeader(line, lineNumber, sec)
+                BatchHeader = bh.ParseBatchHeader(line, lineNumber, sec)
             };
         }
         public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
@@ -78,7 +79,7 @@ namespace NACHAParser
                                         lastEntry.AddendaRecord.Add(ad);
                                         break;
                                     case AddendaTypeCode.ReturnAddenda:
-                                        var rc = Addenda.ParseReturnCode(line.Substring(3, 3));
+                                        var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                         bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                         bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
                                         if (isDisHonor == true)
@@ -158,7 +159,8 @@ namespace NACHAParser
             {
                 if (currentBatch.BatchControl == null)
                 {
-                    currentBatch.BatchControl = BatchControlRecord.ParseBatchControl(line);
+                    BatchControlRecord bc = new BatchControlRecord();
+                    currentBatch.BatchControl = bc.ParseBatchControl(line);
                     root.FileContents.AchFile.Batches.Add(currentBatch);
                 }
                 else

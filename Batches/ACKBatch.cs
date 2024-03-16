@@ -4,9 +4,10 @@ namespace NACHAParser
     {
         public override void ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
+            BatchHeaderRecord bh = new BatchHeaderRecord();
             currentBatch = new Batch()
             {
-                BatchHeader = BatchHeaderRecord.ParseBatchHeader(line, lineNumber, sec)
+                BatchHeader = bh.ParseBatchHeader(line, lineNumber, sec)
             };
         }
         //TODO: Refactor if statement logic ACH-17
@@ -115,7 +116,8 @@ namespace NACHAParser
             {
                 if (currentBatch.BatchControl == null)
                 {
-                    currentBatch.BatchControl = BatchControlRecord.ParseBatchControl(line);
+                    BatchControlRecord bc = new BatchControlRecord();
+                    currentBatch.BatchControl = bc.ParseBatchControl(line);
                     root.FileContents.AchFile.Batches.Add(currentBatch);
                 }
                 else
