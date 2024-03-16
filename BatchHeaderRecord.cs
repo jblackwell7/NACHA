@@ -63,7 +63,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static BatchHeaderRecord ParseBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
+        public BatchHeaderRecord ParseBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
         {
             return new BatchHeaderRecord
             {
@@ -82,7 +82,7 @@ namespace NACHAParser
                 BchNum = line.Substring(87, 7)
             };
         }
-        public static StandardEntryClassCode ParseSEC(string value)
+        public StandardEntryClassCode ParseSEC(string value)
         {
             switch (value)
             {
