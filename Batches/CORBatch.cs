@@ -71,7 +71,7 @@ public class CORBatch : BatchBase
                     else
                     {
                         var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                        var cc = Addenda.ParseChangeCode(line.Substring(3, 3));
+                        var cc = ad.ParseChangeCode(line.Substring(3, 3));
                         bool isRefusedCOR = ad.IsRefusedCORCode(cc);
 
                         if (isRefusedCOR == false && typeCode == AddendaTypeCode.NOCAddenda)
