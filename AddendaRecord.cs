@@ -150,7 +150,7 @@ namespace NACHAParser
                 return false;
             }
         }
-        public static bool IsRCContestedReturnCode(ReturnCode rc)
+        public bool IsRCContestedReturnCode(ReturnCode rc)
         {
             switch (rc)
             {
@@ -179,7 +179,7 @@ namespace NACHAParser
                 return false;
             }
         }
-        public static bool IsRCDishonorReturnCode(ReturnCode rc)
+        public bool IsRCDishonorReturnCode(ReturnCode rc)
         {
             switch (rc)
             {
@@ -213,7 +213,7 @@ namespace NACHAParser
                     return false;
             }
         }
-        public static ChangeCode ParseChangeCode(string value)
+        public ChangeCode ParseChangeCode(string value)
         {
             switch (value)
             {
@@ -259,7 +259,7 @@ namespace NACHAParser
                     throw new ArgumentException($"'{value}' is not a valid ChangeCode.");
             }
         }
-        public static ReturnCode ParseReturnCode(string value)
+        public ReturnCode ParseReturnCode(string value)
         {
             switch (value)
             {
