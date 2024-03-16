@@ -47,7 +47,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public static FileControlRecord ParseFileControl(string line)
+        public FileControlRecord ParseFileControl(string line)
         {
             return new FileControlRecord
             {
