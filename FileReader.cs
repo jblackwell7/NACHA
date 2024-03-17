@@ -15,7 +15,7 @@ namespace NACHAParser
             {
                 FileContents = new FileContents
                 {
-                    AchFile = new AchFile
+                    AchFile = new ACHFile
                     {
                         Batches = new List<Batch>()
                     }
