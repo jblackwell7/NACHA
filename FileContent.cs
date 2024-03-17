@@ -14,7 +14,7 @@ namespace NACHAParser
         [JsonProperty("fileId")]
         public string FileId { get; set; } = string.Empty;
         [JsonProperty("achFile")]
-        public AchFile? AchFile { get; set; }
+        public ACHFile? AchFile { get; set; }
         #endregion
         #region Constructors
         public FileContents()
@@ -24,14 +24,14 @@ namespace NACHAParser
         }
         #endregion
     }
-    public class AchFile
+    public class ACHFile
     {
         #region Properties
-        [JsonProperty("FileHeader")]
+        [JsonProperty("fileHeader")]
         public FileHeaderRecord? FileHeader { get; set; }
         [JsonProperty("batches")]
         public List<Batch>? Batches { get; set; }
-        [JsonProperty("FileControl")]
+        [JsonProperty("fileControl")]
         public FileControlRecord? FileControl { get; set; }
         #endregion
     }
