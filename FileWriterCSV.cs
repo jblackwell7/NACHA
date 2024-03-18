@@ -30,9 +30,9 @@ namespace NACHAParser
         public static void WriteCsvFile(Root root, string outputFile)
         {
             var sb = new StringBuilder();
-            var fh = root.FileContents.AchFile.FileHeader;
+            var fh = root.FileContents.ACHFile.FileHeader;
             CsvFHRecords(sb, fh);
-            foreach (var batch in root.FileContents.AchFile.Batches)
+            foreach (var batch in root.FileContents.ACHFile.Batches)
             {
                 CsvWriteBHRecords(sb, batch);
                 foreach (var etR in batch.EntryRecord)
@@ -45,7 +45,7 @@ namespace NACHAParser
                 }
                 CsvBCRecords(sb, batch.BatchControl);
             }
-            CsvWriteFCRecords(sb, root.FileContents.AchFile.FileControl);
+            CsvWriteFCRecords(sb, root.FileContents.ACHFile.FileControl);
             File.WriteAllText(outputFile, sb.ToString());
         }
         public static void CsvFHRecords(StringBuilder sb, FileHeaderRecord fh)
