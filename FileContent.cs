@@ -17,7 +17,7 @@ namespace NACHAParser
         [JsonProperty("fileId")]
         public string FileId { get; set; } = string.Empty;
         [JsonProperty("achFile")]
-        public ACHFile? AchFile { get; set; }
+        public ACHFile? ACHFile { get; set; }
 
         #endregion
 

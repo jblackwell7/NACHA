@@ -15,7 +15,7 @@ namespace NACHAParser
             {
                 FileContents = new FileContents
                 {
-                    AchFile = new ACHFile()
+                    ACHFile = new ACHFile()
                 }
             };
             for (int i = 0; i < lines.Count; i++)
@@ -29,7 +29,7 @@ namespace NACHAParser
                 {
                     string nextLine = lines[i + 1];
                     lineNumber++;
-                    ProcessLine(recordType, line, root, ref iBatch!, root.FileContents.AchFile, lineNumber, nextLine);
+                    ProcessLine(recordType, line, root, ref iBatch!, root.FileContents.ACHFile, lineNumber, nextLine);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace NACHAParser
         /// <param name="root">The root object where the parsed file header information is stored.</param>
         private static void ProcessFileHeader(string line, Root root)
         {
-            root.FileContents.AchFile.FileHeader = FileHeaderRecord.ParseFileHeader(line);
+            root.FileContents.ACHFile.FileHeader = FileHeaderRecord.ParseFileHeader(line);
         }
         /// <summary>
         /// Parses the file control line
@@ -97,7 +97,7 @@ namespace NACHAParser
         private static void ProcessFileControl(string line, Root root)
         {
             FileControlRecord fc = new FileControlRecord();
-            root.FileContents.AchFile.FileControl = fc.ParseFileControl(line);
+            root.FileContents.ACHFile.FileControl = fc.ParseFileControl(line);
         }
     }
 }
