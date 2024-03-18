@@ -400,6 +400,10 @@ namespace NACHAParser
             //TODO: ACH-23 RecordType.ed and AdTypeCode for RecordType.ad
             //TODO: ACH-24 Add stored procs for to support ACH-23
 
+            var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
+            var ad = lastEntry.AddendaRecord.LastOrDefault();
+            var bh = achFile.CurrentBatch.BatchHeader;
+
             switch (recType)
             {
                 case RecordType.fh:
@@ -407,9 +411,104 @@ namespace NACHAParser
                 case RecordType.bh:
                     return "sp_InsertBatchHeaderRecord";
                 case RecordType.ed:
-                    return "sp_InsertWEBEntryDetailRecord";
+                    if (bh.SECCode == StandardEntryClassCode.WEB)
+                    {
+                        return "sp_InsertWEBEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.PPD)
+                    {
+                        return "sp_InsertPPDEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POS)
+                    {
+                        return "sp_InsertPOSEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POP)
+                    {
+                        return "sp_InsertPOPEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CCD)
+                    {
+                        return "sp_InsertCCDEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.COR)
+                    {
+                        return "sp_InsertCOREntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ACK)
+                    {
+                        return "sp_InsertACKEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ATX)
+                    {
+                        return "sp_InsertATXEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TEL)
+                    {
+                        return "sp_InsertTELEntryDetailRecord";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CTX)
+                    {
+                        return "sp_InsertCTXEntryDetailRecord";
+                    }
+                    else
+                    {
+                        throw new Exception($"Standard Entry Class Code '{bh.SECCode}' is not supported");
+                    }
                 case RecordType.ad:
-                    return "sp_InsertAddendaRecord";
+                    if (lastEntry.aDRecIndicator == AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
+                    {
+                        if (ad.AdTypeCode == AddendaTypeCode.StandardAddenda)
+                        {
+                            return "sp_InsertAddendaRecord";
+                        }
+                        else if (ad.AdTypeCode == AddendaTypeCode.POSAddenda)
+                        {
+                            return "sp_InsertPOSAddendaRecord";
+                        }
+                        else if (ad.AdTypeCode == AddendaTypeCode.ReturnAddenda)
+                        {
+                            if (ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
+                            {
+                                return "sp_InsertReturnAddendaRecord";
+                            }
+                            else if (ad.DisHonorReturnReasonCode != ReturnCode.Unknown)
+                            {
+                                return "sp_InsertDisHonorReturnAddendaRecord";
+                            }
+                            else if (ad.ContestedDisHonorReturnReasonCode != ReturnCode.Unknown)
+                            {
+                                return "sp_InsertContestedDisHonorReturnAddendaRecord";
+                            }
+                            else
+                            {
+                                throw new Exception("Addenda Return Code is not supported");
+                            }
+                        }
+                        else if (ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
+                        {
+                            if (ad.IsRefusedCORCode(ad.ChangeCode) == false)
+                            {
+                                return "sp_InsertNOCAddendaRecord";
+                            }
+                            else if (ad.IsRefusedCORCode(ad.ChangeCode) == true)
+                            {
+                                return "sp_InsertRefusedCORAddendaRecord";
+                            }
+                            else
+                            {
+                                throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
+                        }
+                    }
+                    else
+                    {
+                        throw new($"Addenda Record Indicator is not supported for Record Type '{recType}'");
+                    }
                 case RecordType.bc:
                     return "sp_InsertBatchControlRecord";
                 case RecordType.fc:
