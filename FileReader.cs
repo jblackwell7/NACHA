@@ -15,10 +15,7 @@ namespace NACHAParser
             {
                 FileContents = new FileContents
                 {
-                    AchFile = new ACHFile
-                    {
-                        Batches = new List<Batch>()
-                    }
+                    AchFile = new ACHFile()
                 }
             };
             for (int i = 0; i < lines.Count; i++)
@@ -32,7 +29,7 @@ namespace NACHAParser
                 {
                     string nextLine = lines[i + 1];
                     lineNumber++;
-                    ProcessLine(recordType, line, root, ref iBatch, lineNumber, nextLine);
+                    ProcessLine(recordType, line, root, ref iBatch!, root.FileContents.AchFile, lineNumber, nextLine);
                 }
                 else
                 {
@@ -46,7 +43,7 @@ namespace NACHAParser
                 LinesProcessed = lineNumber - 1
             };
         }
-        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, int lineNumber, string nextLine)
+        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, ACHFile achFile, int lineNumber, string nextLine)
         {
             try
             {
@@ -59,7 +56,7 @@ namespace NACHAParser
                         BatchFactory bf = new BatchFactory();
                         var sec = bf.ParseSEC(line.Substring(50, 3));
                         iBatch = bf.CreateBatch(sec);
-                        iBatch.ProcessBatchHeader(line, lineNumber, sec);
+                        iBatch.ProcessBatchHeader(line, lineNumber, achFile, sec);
                         break;
                     case RecordType.ed:
                         iBatch.ProcessEntryDetail(line, nextLine, lineNumber);
@@ -68,7 +65,7 @@ namespace NACHAParser
                         iBatch.ProcessAddenda(line, lineNumber);
                         break;
                     case RecordType.bc:
-                        iBatch.ProcessBatchControl(line, root);
+                        iBatch.ProcessBatchControl(line, root, achFile);
                         break;
                     case RecordType.fc:
                         ProcessFileControl(line, root);

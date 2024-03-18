@@ -2,9 +2,9 @@ namespace NACHAParser
 {
     public class CTXBatch : BatchBase
     {
-        public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, StandardEntryClassCode sec)
+        public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, ACHFile achFile, StandardEntryClassCode sec)
         {
-            currentBatch = new Batch
+            var batch = new Batch
             {
                 BatchHeader = new BatchHeaderRecord()
                 {
@@ -23,7 +23,8 @@ namespace NACHAParser
                     BchNum = line.Substring(87, 7)
                 }
             };
-            return currentBatch.BatchHeader;
+            achFile.AddBatch(batch);
+            return batch.BatchHeader;
         }
         public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
         {
@@ -168,13 +169,13 @@ namespace NACHAParser
                 throw new Exception("batch is null");
             }
         }
-        public override BatchControlRecord ProcessBatchControl(string line, Root root)
+        public override BatchControlRecord ProcessBatchControl(string line, Root root, ACHFile achFile)
         {
-            if (currentBatch != null)
+            if (achFile.CurrentBatch != null)
             {
-                if (currentBatch.BatchControl == null)
+                if (achFile.CurrentBatch.BatchControl == null)
                 {
-                    currentBatch.BatchControl = new BatchControlRecord()
+                    BatchControlRecord bc = new BatchControlRecord()
                     {
                         RecType = (RecordType)int.Parse(line.Substring(0, 1)),
                         ServiceClassCode = (ServiceClassCode)int.Parse(line.Substring(1, 3)),
@@ -188,8 +189,8 @@ namespace NACHAParser
                         OriginatingDFIId = line.Substring(79, 8),
                         BchNum = line.Substring(87, 7)
                     };
-                    root.FileContents.AchFile.Batches.Add(currentBatch);
-                    return currentBatch.BatchControl;
+                    achFile.CurrentBatch.BatchControl = bc;
+                    return achFile.CurrentBatch.BatchControl;
                 }
                 else
                 {
