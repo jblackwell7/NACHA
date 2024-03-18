@@ -46,8 +46,8 @@ namespace NACHAParser
         }
         public static void SQLInsertData(string connectionString, Root root)
         {
-            SQLInsertFileHeaderRecord(root.FileContents.AchFile.FileHeader, connectionString);
-            foreach (var batch in root.FileContents.AchFile.Batches)
+            SQLInsertFileHeaderRecord(root.FileContents.ACHFile.FileHeader, connectionString);
+            foreach (var batch in root.FileContents.ACHFile.Batches)
             {
                 SQLInsertBatchHeaderRecord(batch.BatchHeader, root, connectionString);
                 foreach (var entry in batch.EntryRecord)
@@ -63,7 +63,7 @@ namespace NACHAParser
                 }
                 SQLInsertBatchControlRecord(batch.BatchControl, batch, connectionString);
             }
-            SQLInsertFileControlRecord(root.FileContents.AchFile.FileControl, root.FileContents.AchFile.FileHeader, connectionString);
+            SQLInsertFileControlRecord(root.FileContents.ACHFile.FileControl, root.FileContents.ACHFile.FileHeader, connectionString);
         }
         private static void SQLInsertFileHeaderRecord(FileHeaderRecord fh, string connectionString)
         {
@@ -91,7 +91,7 @@ namespace NACHAParser
             string procName = GetStoredProc(bh.RecType);
             SqlParameter[] parameters = {
                 new SqlParameter("@BatchHeaderId", bh.BchHeaderId),
-                new SqlParameter("@FileheaderId", root.FileContents.AchFile.FileHeader.FileheaderId),
+                new SqlParameter("@FileheaderId", root.FileContents.ACHFile.FileHeader.FileheaderId),
                 new SqlParameter("@RecordType", (int)bh.RecType),
                 new SqlParameter("@ServiceClassCode", (int)bh.ServiceClassCode),
                 new SqlParameter("@CompanyName", bh.CoName),
@@ -381,7 +381,7 @@ namespace NACHAParser
         }
         private static string GetStoredProc(RecordType recType)
         {
-            //root.FileContents.AchFile.Batches[0].BatchHeader.SECCode.ToString();
+            //root.FileContents.ACHFile.Batches[0].BatchHeader.SECCode.ToString();
             //TODO: ACH-22 Add StandardEntryClassCode logic
             //TODO: ACH-23 RecordType.ed and AdTypeCode for RecordType.ad
             //TODO: ACH-24 Add stored procs for to support ACH-23

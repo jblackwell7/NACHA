@@ -59,10 +59,10 @@ namespace NACHAParser
                         iBatch.ProcessBatchHeader(line, lineNumber, achFile, sec);
                         break;
                     case RecordType.ed:
-                        iBatch.ProcessEntryDetail(line, nextLine, lineNumber);
+                        iBatch.ProcessEntryDetail(line, nextLine, achFile, lineNumber);
                         break;
                     case RecordType.ad:
-                        iBatch.ProcessAddenda(line, lineNumber);
+                        iBatch.ProcessAddenda(line, achFile, lineNumber);
                         break;
                     case RecordType.bc:
                         iBatch.ProcessBatchControl(line, root, achFile);

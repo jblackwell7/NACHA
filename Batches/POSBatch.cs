@@ -27,11 +27,11 @@ namespace NACHAParser
             achFile.AddBatch(batch);
             return batch.BatchHeader;
         }
-        public override void ProcessEntryDetail(string line, string nextLine, int lineNumber)
+        public override void ProcessEntryDetail(string line, string nextLine, ACHFile achFile, int lineNumber)
         {
-            if (currentBatch != null)
+            if (achFile.CurrentBatch != null)
             {
-                if (currentBatch.EntryRecord != null)
+                if (achFile.CurrentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
                     if (adIndicator == AddendaRecordIndicator.NoAddenda)
@@ -58,7 +58,7 @@ namespace NACHAParser
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };
-                        currentBatch.EntryRecord.Add(entry);
+                        achFile.CurrentBatch.EntryRecord.Add(entry);
                     }
                 }
                 else
@@ -71,20 +71,20 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
-        public override void ProcessAddenda(string line, int lineNumber)
+        public override void ProcessAddenda(string line, ACHFile achFile, int lineNumber)
         {
-            if (currentBatch != null)
+            if (achFile.CurrentBatch != null)
             {
-                if (currentBatch.EntryRecord != null)
+                if (achFile.CurrentBatch.EntryRecord != null)
                 {
-                    var lastEntry = currentBatch.EntryRecord.LastOrDefault();
+                    var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry != null)
                     {
                         var ad = new Addenda();
                         var adCount = lastEntry.AddendaCount();
                         if (adCount > 1)
                         {
-                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{currentBatch.BatchHeader.SECCode}'.");
+                                                        throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{achFile.CurrentBatch.BatchHeader.SECCode}'.");
                         }
                         else
                         {
