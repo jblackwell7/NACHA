@@ -78,7 +78,7 @@ namespace NACHAParser
                         var adCount = lastEntry.AddendaCount();
                         if (adCount > 1)
                         {
-                                                        throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{achFile.CurrentBatch.BatchHeader.SECCode}'.");
+                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{achFile.CurrentBatch.BatchHeader.SECCode}'.");
                         }
                         else
                         {
