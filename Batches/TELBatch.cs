@@ -128,7 +128,7 @@ namespace NACHAParser
                                         ad.ReturnSettlementDate = line.Substring(53, 3);
                                         ad.DReturnReasonCode = line.Substring(56, 2);
                                         ad.DisHonrorReturnTraceNum = line.Substring(58, 15);
-                                        ad.ReturnSettlementDate = line.Substring(73, 3);
+                                        ad.DisHonrorReturnSettlementDate = line.Substring(73, 3);
                                         ad.CReturnReasonCode = line.Substring(76, 2);
                                         ad.Reserved1 = line.Substring(78, 1).Trim();
                                         ad.AdTraceNum = line.Substring(79, 15);
