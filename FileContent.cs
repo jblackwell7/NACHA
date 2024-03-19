@@ -87,6 +87,7 @@ namespace NACHAParser
         public void AddBatch(Batch batch)
         {
             _batches.Add(batch);
+            SetCurrentBatch(batch);
         }
         public void SetCurrentBatch(Batch batch)
         {
