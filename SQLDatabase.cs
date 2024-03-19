@@ -524,21 +524,21 @@ namespace NACHAParser
                         }
                         else if (ad.AdTypeCode == AddendaTypeCode.POSAddenda)
                         {
-                            return "sp_InsertPOSAddendaRecord";
+                            return "sp_InsertAddendaRecord_POS";
                         }
                         else if (ad.AdTypeCode == AddendaTypeCode.ReturnAddenda)
                         {
                             if (ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
                             {
-                                return "sp_InsertReturnAddendaRecord";
+                                return "sp_InsertAddendaRecord_Return";
                             }
                             else if (ad.DisHonorReturnReasonCode != ReturnCode.Unknown)
                             {
-                                return "sp_InsertDisHonorReturnAddendaRecord";
+                                return "sp_InsertAddendaRecord_Dishonor";
                             }
                             else if (ad.ContestedDisHonorReturnReasonCode != ReturnCode.Unknown)
                             {
-                                return "sp_InsertContestedDisHonorReturnAddendaRecord";
+                                return "sp_InsertAddendaRecord_ContestedDishonor";
                             }
                             else
                             {
@@ -549,11 +549,11 @@ namespace NACHAParser
                         {
                             if (ad.IsRefusedCORCode(ad.ChangeCode) == false)
                             {
-                                return "sp_InsertNOCAddendaRecord";
+                                return "sp_InsertAddendaRecord_COR";
                             }
                             else if (ad.IsRefusedCORCode(ad.ChangeCode) == true)
                             {
-                                return "sp_InsertRefusedCORAddendaRecord";
+                                return "sp_InsertAddendaRecord_ResfusedCOR";
                             }
                             else
                             {
