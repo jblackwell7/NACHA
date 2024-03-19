@@ -494,43 +494,43 @@ namespace NACHAParser
                 case RecordType.ed:
                     if (bh.SECCode == StandardEntryClassCode.WEB)
                     {
-                        return "sp_InsertWEBEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_WEB";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.PPD)
                     {
-                        return "sp_InsertPPDEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_PPD";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.POS)
                     {
-                        return "sp_InsertPOSEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_POS";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.POP)
                     {
-                        return "sp_InsertPOPEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_POP";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.CCD)
                     {
-                        return "sp_InsertCCDEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_CCD";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.COR)
                     {
-                        return "sp_InsertCOREntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_COR";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.ACK)
                     {
-                        return "sp_InsertACKEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_ACK";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.ATX)
                     {
-                        return "sp_InsertATXEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_ATX";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.TEL)
                     {
-                        return "sp_InsertTELEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_TEL";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.CTX)
                     {
-                        return "sp_InsertCTXEntryDetailRecord";
+                        return "sp_InsertEntryDetailRecord_CTX";
                     }
                     else
                     {
