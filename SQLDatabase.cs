@@ -356,6 +356,8 @@ namespace NACHAParser
                 case "sp_InsertNOCAddendaRecord":
                     parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
                     parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
                     parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
                     parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
@@ -367,6 +369,8 @@ namespace NACHAParser
                 case "sp_InsertRefusedCORAddendaRecord":
                     parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
                     parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
                     parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
                     parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
