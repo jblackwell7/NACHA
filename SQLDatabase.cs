@@ -130,8 +130,8 @@ namespace NACHAParser
         }
         private static void SQLInsertAddendaRecord(Addenda ad, ACHFile achFile, string connectionString)
         {
-            SqlParameter[] parameters = GetAddendaParameters(ad, achFile);
             string procName = GetStoredProc(ad.RecType, achFile);
+            SqlParameter[] parameters = GetAddendaParameters(ad, achFile, procName);
             ExecuteProc(connectionString, procName, parameters);
         }
         private static void SQLInsertBatchControlRecord(BatchControlRecord bc, ACHFile achFile, string connectionString)
@@ -336,14 +336,14 @@ namespace NACHAParser
             }
             return parameters.ToArray();
         }
-        private static SqlParameter[] GetAddendaParameters(Addenda ad, ACHFile achFile)
+        private static SqlParameter[] GetAddendaParameters(Addenda ad, ACHFile achFile, string procName)
         {
             //TODO: ACH-25 Returns, Add COR, Contested COR, Dishonor &  Contested Support
             List<SqlParameter> parameters = new List<SqlParameter>();
             var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
-            switch (ad.AdTypeCode)
+            switch (procName)
             {
-                case AddendaTypeCode.StandardAddenda:
+                case "sp_InsertAddendaRecord":
                     parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
@@ -353,40 +353,96 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("AddendaSequenceNumber", ad.AddendaSeqNum));
                     parameters.Add(new SqlParameter("EntryDetailSequenceNumber", ad.EntDetailSeqNum));
                     break;
-                case AddendaTypeCode.NOCAddenda:
-                    bool isRefusedCOR = ad.IsRefusedCORCode(ad.ChangeCode);
-                    if (isRefusedCOR == false && ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
-                    {
-                        parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
-                        parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
-                        parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
-                        parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
-                        parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
-                        parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
-                        parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
-                        parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
-                        parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
-                    }
-                    else if (isRefusedCOR == true && ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
-                    {
-                        parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
-                        parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
-                        parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
-                        parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
-                        parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
-                        parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
-                        parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
-                        parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
-                        parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
-                        parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
-                        parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
-
-                    }
-                    else
-                    {
-                        throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
-                    }
-
+                case "sp_InsertNOCAddendaRecord":
+                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
+                    parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
+                    parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
+                    parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
+                    parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertRefusedCORAddendaRecord":
+                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
+                    parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
+                    parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
+                    parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
+                    parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
+                    parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
+                    parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertReturnAddendaRecord":
+                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertPOSAddendaRecord":
+                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@ReferenceInformation1", ad.RefInfo1));
+                    parameters.Add(new SqlParameter("@ReferenceInformation2", ad.RefInfo2));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@AuthorizationCodeOrExpireDate", ad.AuthCodeOrExpDate));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertDisHonorReturnAddendaRecord":
+                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@DishonorReturnReasonCode", ad.DisHonorReturnReasonCode));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("@Reserved", ad.Reserved1));
+                    parameters.Add(new SqlParameter("@ReturnTraceNumber", ad.ReturnTraceNum));
+                    parameters.Add(new SqlParameter("@ReturnSettlementDate", ad.ReturnSettlementDate));
+                    parameters.Add(new SqlParameter("@Reserved2", ad.Reserved2));
+                    parameters.Add(new SqlParameter("@DishonorReturnReasonCode", ad.DReturnReasonCode));
+                    parameters.Add(new SqlParameter("@ReturnCode", ad.CReturnReasonCode));
+                    parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertContestedDisHonorReturnAddendaRecord":
+                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@ContestedDishonorCode", ad.ContestedDisHonorReturnReasonCode));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("@DateOriginalEntryReturned", ad.DateOriginalEntryReturned));
+                    parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("@OriginalSettlementDate", ad.OriginalSettlementDate));
+                    parameters.Add(new SqlParameter("@ReturnTraceNumber", ad.ReturnTraceNum));
+                    parameters.Add(new SqlParameter("@ReturnSettlementDate", ad.ReturnSettlementDate));
+                    parameters.Add(new SqlParameter("@DishonorReturnReasonCode", ad.DReturnReasonCode));
+                    parameters.Add(new SqlParameter("@DisHonrorReturnTraceNumber", ad.DisHonrorReturnTraceNum));
+                    parameters.Add(new SqlParameter("@DisHonrorReturnSettlementDate", ad.DisHonrorReturnSettlementDate));
+                    parameters.Add(new SqlParameter("@Reserved", ad.Reserved1));
+                    parameters.Add(new SqlParameter("@ReturnCode", ad.CReturnReasonCode));
+                    parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
                 default:
                     throw new Exception($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
@@ -456,7 +512,7 @@ namespace NACHAParser
                         throw new Exception($"Standard Entry Class Code '{bh.SECCode}' is not supported");
                     }
                 case RecordType.ad:
-                    if (lastEntry.aDRecIndicator == AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator == AddendaRecordIndicator.NoAddenda)
+                    if (lastEntry.aDRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator != AddendaRecordIndicator.NoAddenda)
                     {
                         if (ad.AdTypeCode == AddendaTypeCode.StandardAddenda)
                         {
