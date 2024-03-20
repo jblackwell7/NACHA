@@ -164,7 +164,8 @@ namespace NACHAParser
     public enum AddendaRecordIndicator
     {
         NoAddenda = 0,
-        Addenda = 1
+        Addenda = 1,
+        Unknown
     }
     public enum TransactionCode
     {

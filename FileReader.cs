@@ -15,10 +15,7 @@ namespace NACHAParser
             {
                 FileContents = new FileContents
                 {
-                    AchFile = new AchFile
-                    {
-                        Batches = new List<Batch>()
-                    }
+                    ACHFile = new ACHFile()
                 }
             };
             for (int i = 0; i < lines.Count; i++)
@@ -32,7 +29,7 @@ namespace NACHAParser
                 {
                     string nextLine = lines[i + 1];
                     lineNumber++;
-                    ProcessLine(recordType, line, root, ref iBatch, lineNumber, nextLine);
+                    ProcessLine(recordType, line, root, ref iBatch!, root.FileContents.ACHFile, lineNumber, nextLine);
                 }
                 else
                 {
@@ -46,7 +43,7 @@ namespace NACHAParser
                 LinesProcessed = lineNumber - 1
             };
         }
-        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, int lineNumber, string nextLine)
+        private static void ProcessLine(RecordType recordType, string line, Root root, ref IBatch iBatch, ACHFile achFile, int lineNumber, string nextLine)
         {
             try
             {
@@ -59,16 +56,16 @@ namespace NACHAParser
                         BatchFactory bf = new BatchFactory();
                         var sec = bf.ParseSEC(line.Substring(50, 3));
                         iBatch = bf.CreateBatch(sec);
-                        iBatch.ProcessBatchHeader(line, lineNumber, sec);
+                        iBatch.ProcessBatchHeader(line, lineNumber, achFile, sec);
                         break;
                     case RecordType.ed:
-                        iBatch.ProcessEntryDetail(line, nextLine, lineNumber);
+                        iBatch.ProcessEntryDetail(line, nextLine, achFile, lineNumber);
                         break;
                     case RecordType.ad:
-                        iBatch.ProcessAddenda(line, lineNumber);
+                        iBatch.ProcessAddenda(line, achFile, lineNumber);
                         break;
                     case RecordType.bc:
-                        iBatch.ProcessBatchControl(line, root);
+                        iBatch.ProcessBatchControl(line, root, achFile);
                         break;
                     case RecordType.fc:
                         ProcessFileControl(line, root);
@@ -90,7 +87,8 @@ namespace NACHAParser
         /// <param name="root">The root object where the parsed file header information is stored.</param>
         private static void ProcessFileHeader(string line, Root root)
         {
-            root.FileContents.AchFile.FileHeader = FileHeaderRecord.ParseFileHeader(line);
+            FileHeaderRecord fh = new FileHeaderRecord();
+            root.FileContents.ACHFile.FileHeader = fh.ParseFileHeader(line);
         }
         /// <summary>
         /// Parses the file control line
@@ -100,7 +98,7 @@ namespace NACHAParser
         private static void ProcessFileControl(string line, Root root)
         {
             FileControlRecord fc = new FileControlRecord();
-            root.FileContents.AchFile.FileControl = fc.ParseFileControl(line);
+            root.FileContents.ACHFile.FileControl = fc.ParseFileControl(line);
         }
     }
 }
