@@ -36,7 +36,6 @@ namespace NACHAParser
         #endregion
 
         #region Constructors
-
         public FileControlRecord()
         {
             FileControlId = Guid.NewGuid().ToString();
@@ -49,17 +48,15 @@ namespace NACHAParser
 
         public FileControlRecord ParseFileControl(string line)
         {
-            return new FileControlRecord
-            {
-                RecType = (RecordType)int.Parse(line.Substring(0, 1)),
-                BchCnt = line.Substring(1, 6),
-                BlockCnt = line.Substring(7, 6),
-                EntAddendaCnt = line.Substring(13, 8),
-                EntHash = line.Substring(21, 10),
-                TotFileDrEntAmt = line.Substring(31, 12),
-                TotFileCrEntAmt = line.Substring(43, 12),
-                Reserved = line.Substring(55, 39).Trim()
-            };
+            RecType = (RecordType)int.Parse(line.Substring(0, 1));
+            BchCnt = line.Substring(1, 6);
+            BlockCnt = line.Substring(7, 6);
+            EntAddendaCnt = line.Substring(13, 8);
+            EntHash = line.Substring(21, 10);
+            TotFileDrEntAmt = line.Substring(31, 12);
+            TotFileCrEntAmt = line.Substring(43, 12);
+            Reserved = line.Substring(55, 39).Trim();
+            return this;
         }
 
         #endregion
