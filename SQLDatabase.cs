@@ -359,7 +359,7 @@ namespace NACHAParser
             {
                 case "sp_InsertAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
@@ -370,7 +370,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertNOCAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
                     parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
@@ -384,7 +384,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertRefusedCORAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
                     parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
@@ -400,7 +400,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertReturnAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -412,7 +412,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertPOSAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -430,7 +430,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertDisHonorReturnAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -449,7 +449,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertContestedDisHonorReturnAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@Addenda05Id", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
