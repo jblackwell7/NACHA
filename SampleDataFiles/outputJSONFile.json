@@ -1,13 +1,14 @@
 {
   "fileContents": {
-    "fileId": "d1da1a82-b5c7-47a0-a9e7-24bed172c522",
+    "fileId": "447a5c59-456b-4172-bdc3-0f23cb54622b",
     "achFile": {
-      "FileHeader": {
-        "filehdrId": "116071af-d035-493d-891f-a33b9a3ad573",
+      "achFileId": "a7b3e744-376e-4c99-bcf9-81431d3cf497",
+      "fileHeader": {
+        "filehdrId": "eb3ee7f9-e1df-4075-812f-d26d8a498341",
         "recType": 1,
         "priorityCode": "01",
         "immedDestination": "031300012",
-        "immedOrigin": "0231380104",
+        "immedOrigin": "771166881",
         "fileCreationDate": "190816",
         "fileCreationTime": "1055",
         "fileIDModifier": "A",
@@ -16,76 +17,131 @@
         "formatCode": "1",
         "immedDestinationName": "Federal Reserve Bank",
         "immedOriginName": "My Bank Name",
-        "refCode": "12345678"
+        "refCode": "        "
       },
       "batches": [
         {
-          "bchId": "babdf390-dbf0-453d-8e22-762cdc802b8b",
+          "bchId": "fdcd8182-a595-4678-b9bd-778a5c0df032",
           "BatchHeader": {
-            "bchHeaderId": "8833dc2b-d6ee-4bb2-a704-96c20a27b06d",
+            "bchHeaderId": "f85073c1-ae0f-4c63-8bfd-a25640dcb56e",
             "recType": 5,
             "serviceClassCode": 220,
             "coName": "Name on Account",
-            "coId": "231380104",
-            "SECCode": "WEB",
+            "coId": "771166881",
+            "SECCode": "ACK",
             "coEntDescription": "1908",
             "effectiveEntDate": "190816",
             "originatorStatusCode": 1,
-            "originatingDFIId": "11210428",
+            "originatingDFIId": "17711668",
             "bchNum": "0000001"
           },
           "entryDetailRecords": [
             {
-              "entDetailsId": "0970a2ef-d112-473a-9504-f551d89893ca",
+              "entDetailsId": "ab22b9e7-2f57-4871-a400-624d055f4431",
               "recType": 6,
-              "transCode": 22,
-              "rDFIId": "23138010",
-              "checkDigit": "4",
-              "dFIAcctNumber": "12345678         ",
-              "amt": "0000010000",
-              "indivIdNumber": "#789654",
-              "individualName": "John Doe",
-              "paymtTypeCode": "S ",
-              "addendaRecordIndicator": 1,
-              "traceNumber": "121042880000001",
-              "addendaRecords": [
-                {
-                  "addenda05Id": "2860b3cc-fa78-4f39-9df0-ac0307f24a9a",
-                  "recType": 7,
-                  "addendaTypeCode": 5,
-                  "returnReasonCode": 70,
-                  "disHonorReturnReasonCode": 70,
-                  "contestedDisHonorReturnReasonCode": 70,
-                  "paymtRelatedInfo": "PAY-GATE payment\\",
-                  "addendaSeqNum": "0001",
-                  "entDetailSeqNum": "0000001"
-                }
-              ]
+              "transCode": 24,
+              "rDFIId": "03130001",
+              "checkDigit": "2",
+              "dFIAcctNumber": "123456789",
+              "amt": "0000000000",
+              "receiverCompanyName": "Test",
+              "traceNumber": "771166880000001",
+              "originalTraceNumber": "031300010000001",
+              "addendaRecords": []
+            },
+            {
+              "entDetailsId": "6fbbe648-91b8-44c1-a6c0-c2da091701ad",
+              "recType": 6,
+              "transCode": 24,
+              "rDFIId": "03130001",
+              "checkDigit": "2",
+              "dFIAcctNumber": "321876549",
+              "amt": "0000000000",
+              "receiverCompanyName": "Best",
+              "traceNumber": "771166880000002",
+              "originalTraceNumber": "031300010000002",
+              "addendaRecords": []
             }
           ],
           "batchTrailer": {
-            "bchControlId": "16c38dd3-53cd-4ece-8117-e17e7b57d4a1",
+            "bchControlId": "6b9b8f66-2f25-4934-8d72-de87f93e1723",
             "recType": 8,
             "serviceClass": 220,
             "entAddendaCnt": "000002",
-            "entHash": "0023138010",
+            "entHash": "0006260002",
             "totBchDrEntAmt": "000000000000",
-            "totBchCrEntAmt": "000000010000",
-            "coId": "231380104",
-            "originatingDFIId": "12104288",
+            "totBchCrEntAmt": "000000000000",
+            "coId": "771166881",
+            "originatingDFIId": "77116688",
             "bchNum": "0000001"
           }
         }
       ],
-      "FileControl": {
-        "fileControlId": "c44df464-ad46-47d7-98e2-11d24368221d",
+      "fileControl": {
+        "fileControlId": "99d239fc-3652-4c54-bf98-454e62e36d60",
         "recType": 9,
         "bchCnt": "000001",
         "blockCnt": "000001",
         "entAddendaCnt": "00000002",
-        "entHash": "0023138010",
+        "entHash": "0006260002",
         "totFileDrEntAmt": "000000000000",
-        "totFileCrEntAmt": "000000010000"
+        "totFileCrEntAmt": "000000000000"
+      },
+      "CurrentBatch": {
+        "bchId": "fdcd8182-a595-4678-b9bd-778a5c0df032",
+        "BatchHeader": {
+          "bchHeaderId": "f85073c1-ae0f-4c63-8bfd-a25640dcb56e",
+          "recType": 5,
+          "serviceClassCode": 220,
+          "coName": "Name on Account",
+          "coId": "771166881",
+          "SECCode": "ACK",
+          "coEntDescription": "1908",
+          "effectiveEntDate": "190816",
+          "originatorStatusCode": 1,
+          "originatingDFIId": "17711668",
+          "bchNum": "0000001"
+        },
+        "entryDetailRecords": [
+          {
+            "entDetailsId": "ab22b9e7-2f57-4871-a400-624d055f4431",
+            "recType": 6,
+            "transCode": 24,
+            "rDFIId": "03130001",
+            "checkDigit": "2",
+            "dFIAcctNumber": "123456789",
+            "amt": "0000000000",
+            "receiverCompanyName": "Test",
+            "traceNumber": "771166880000001",
+            "originalTraceNumber": "031300010000001",
+            "addendaRecords": []
+          },
+          {
+            "entDetailsId": "6fbbe648-91b8-44c1-a6c0-c2da091701ad",
+            "recType": 6,
+            "transCode": 24,
+            "rDFIId": "03130001",
+            "checkDigit": "2",
+            "dFIAcctNumber": "321876549",
+            "amt": "0000000000",
+            "receiverCompanyName": "Best",
+            "traceNumber": "771166880000002",
+            "originalTraceNumber": "031300010000002",
+            "addendaRecords": []
+          }
+        ],
+        "batchTrailer": {
+          "bchControlId": "6b9b8f66-2f25-4934-8d72-de87f93e1723",
+          "recType": 8,
+          "serviceClass": 220,
+          "entAddendaCnt": "000002",
+          "entHash": "0006260002",
+          "totBchDrEntAmt": "000000000000",
+          "totBchCrEntAmt": "000000000000",
+          "coId": "771166881",
+          "originatingDFIId": "77116688",
+          "bchNum": "0000001"
+        }
       }
     }
   }

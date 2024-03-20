@@ -43,12 +43,12 @@ namespace NACHAParser
         {
             Console.WriteLine("JSON file written to {0}", outputFile);
 
-            int totalBatches = root.FileContents.AchFile.Batches.Count;
+            int totalBatches = root.FileContents.ACHFile.Batches.Count;
 
 
             int totalEntries = 0;
             int totalAddenda = 0;
-            foreach (var batch in root.FileContents.AchFile.Batches)
+            foreach (var batch in root.FileContents.ACHFile.Batches)
             {
                 totalEntries += batch.EntryRecord.Count;
 
