@@ -130,9 +130,9 @@ namespace NACHAParser
                 case "05":
                     return AddendaTypeCode.StandardAddenda;
                 case "98":
-                    return AddendaTypeCode.ReturnAddenda;
-                case "99":
                     return AddendaTypeCode.NOCAddenda;
+                case "99":
+                    return AddendaTypeCode.ReturnAddenda;
                 default:
                     throw new InvalidOperationException($"Addenda Type Code '{value}' is not supported");
             }
