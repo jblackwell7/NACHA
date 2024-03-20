@@ -278,7 +278,7 @@ namespace NACHAParser
                         else if (aDetails.DisHonorReturnReasonCode != ReturnCode.Unknown && aDetails.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown && aDetails.ReturnReasonCode == ReturnCode.Unknown)
                         {
                             sb.AppendLine(DishonorReturnAddendaHeader);
-                            sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}",
+                            sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                            (int)aDetails.RecType,
                             aDetails.AdTypeCode,
                             aDetails.DisHonorReturnReasonCode,
