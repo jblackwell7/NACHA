@@ -368,7 +368,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("AddendaSequenceNumber", ad.AddendaSeqNum));
                     parameters.Add(new SqlParameter("EntryDetailSequenceNumber", ad.EntDetailSeqNum));
                     break;
-                case "sp_InsertNOCAddendaRecord":
+                case "sp_InsertAddendaRecord_COR":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
@@ -382,7 +382,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
                     parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertRefusedCORAddendaRecord":
+                case "sp_InsertAddendaRecord_RefusedCOR":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
@@ -398,7 +398,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
                     parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertReturnAddendaRecord":
+                case "sp_InsertAddendaRecord_Return":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
@@ -410,7 +410,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertPOSAddendaRecord":
+                case "sp_InsertAddendaRecord_POS":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
@@ -428,7 +428,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertDisHonorReturnAddendaRecord":
+                case "sp_InsertAddendaRecord_Dishonor":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
@@ -447,7 +447,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertContestedDisHonorReturnAddendaRecord":
+                case "sp_InsertAddendaRecord_ContestedDishonor":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
