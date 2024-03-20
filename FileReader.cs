@@ -87,7 +87,8 @@ namespace NACHAParser
         /// <param name="root">The root object where the parsed file header information is stored.</param>
         private static void ProcessFileHeader(string line, Root root)
         {
-            root.FileContents.ACHFile.FileHeader = FileHeaderRecord.ParseFileHeader(line);
+            FileHeaderRecord fh = new FileHeaderRecord();
+            root.FileContents.ACHFile.FileHeader = fh.ParseFileHeader(line);
         }
         /// <summary>
         /// Parses the file control line
