@@ -157,7 +157,7 @@ namespace NACHAParser
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
                                 default:
-                                    throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
+                                    throw new Exception($"Addenda Type Code '{(int)typeCode}' is not supported on line '{line}'");
                             }
                         }
                     }
