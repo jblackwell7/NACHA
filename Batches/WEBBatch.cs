@@ -144,6 +144,14 @@ namespace NACHAParser
                                     }
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
+                                case AddendaTypeCode.NOCAddenda:
+                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                    ad.AdTypeCode = typeCode;
+                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
+                                    ad.AddendaSeqNum = line.Substring(83, 4);
+                                    ad.EntDetailSeqNum = line.Substring(87, 7);
+                                    lastEntry.AddendaRecord.Add(ad);
+                                    break;
                                 default:
                                     throw new Exception($"Addenda Type Code '{typeCode}' is not supported on line '{line}'");
                             }
