@@ -460,11 +460,11 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@OriginalSettlementDate", ad.OriginalSettlementDate));
                     parameters.Add(new SqlParameter("@ReturnTraceNumber", ad.ReturnTraceNum));
                     parameters.Add(new SqlParameter("@ReturnSettlementDate", ad.ReturnSettlementDate));
+                    parameters.Add(new SqlParameter("@ReturnCode", ad.CReturnReasonCode));
                     parameters.Add(new SqlParameter("@DishonorReturnReasonCode", ad.DReturnReasonCode));
                     parameters.Add(new SqlParameter("@DisHonrorReturnTraceNumber", ad.DisHonrorReturnTraceNum));
                     parameters.Add(new SqlParameter("@DisHonrorReturnSettlementDate", ad.DisHonrorReturnSettlementDate));
                     parameters.Add(new SqlParameter("@Reserved", ad.Reserved1));
-                    parameters.Add(new SqlParameter("@ReturnCode", ad.CReturnReasonCode));
                     parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
