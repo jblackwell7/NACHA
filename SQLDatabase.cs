@@ -640,11 +640,6 @@ namespace NACHAParser
         }
         private static string GetStoredProc(RecordType recType, ACHFile achFile)
         {
-            //root.FileContents.ACHFile.Batches[0].BatchHeader.SECCode.ToString();
-            //TODO: ACH-22 Add StandardEntryClassCode logic
-            //TODO: ACH-23 RecordType.ed and AdTypeCode for RecordType.ad
-            //TODO: ACH-24 Add stored procs for to support ACH-23
-
             var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
             var ad = lastEntry.AddendaRecord.LastOrDefault();
             var bh = achFile.CurrentBatch.BatchHeader;
@@ -656,45 +651,89 @@ namespace NACHAParser
                 case RecordType.bh:
                     return "sp_InsertBatchHeaderRecord";
                 case RecordType.ed:
-                    if (bh.SECCode == StandardEntryClassCode.WEB)
-                    {
-                        return "sp_InsertEntryDetailRecord_WEB";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.PPD)
-                    {
-                        return "sp_InsertEntryDetailRecord_PPD";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.POS)
-                    {
-                        return "sp_InsertEntryDetailRecord_POS";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.POP)
-                    {
-                        return "sp_InsertEntryDetailRecord_POP";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.CCD)
-                    {
-                        return "sp_InsertEntryDetailRecord_CCD";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.COR)
-                    {
-                        return "sp_InsertEntryDetailRecord_COR";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.ACK)
+                    if (bh.SECCode == StandardEntryClassCode.ACK)
                     {
                         return "sp_InsertEntryDetailRecord_ACK";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ARC)
+                    {
+                        return "sp_InsertEntryDetailRecord_ARC";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.ATX)
                     {
                         return "sp_InsertEntryDetailRecord_ATX";
                     }
-                    else if (bh.SECCode == StandardEntryClassCode.TEL)
+                    else if (bh.SECCode == StandardEntryClassCode.BOC)
                     {
-                        return "sp_InsertEntryDetailRecord_TEL";
+                        return "sp_InsertEntryDetailRecord_BOC";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CCD)
+                    {
+                        return "sp_InsertEntryDetailRecord_CCD";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CIE)
+                    {
+                        return "sp_InsertEntryDetailRecord_CIE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.COR)
+                    {
+                        return "sp_InsertEntryDetailRecord_COR";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.DNE)
+                    {
+                        return "sp_InsertEntryDetailRecord_DNE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ENR)
+                    {
+                        return "sp_InsertEntryDetailRecord_ENR";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.CTX)
                     {
                         return "sp_InsertEntryDetailRecord_CTX";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.MTE)
+                    {
+                        return "sp_InsertEntryDetailRecord_MTE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POP)
+                    {
+                        return "sp_InsertEntryDetailRecord_POP";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POS)
+                    {
+                        return "sp_InsertEntryDetailRecord_POS";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.PPD)
+                    {
+                        return "sp_InsertEntryDetailRecord_PPD";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.RCK)
+                    {
+                        return "sp_InsertEntryDetailRecord_RCK";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.SHR)
+                    {
+                        return "sp_InsertEntryDetailRecord_SHR";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TEL)
+                    {
+                        return "sp_InsertEntryDetailRecord_TEL";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TRC)
+                    {
+                        return "sp_InsertEntryDetailRecord_TRC";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TRX)
+                    {
+                        return "sp_InsertEntryDetailRecord_TRX";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.WEB)
+                    {
+                        return "sp_InsertEntryDetailRecord_WEB";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.XCK)
+                    {
+                        return "sp_InsertEntryDetailRecord_XCK";
                     }
                     else
                     {
@@ -703,13 +742,28 @@ namespace NACHAParser
                 case RecordType.ad:
                     if (lastEntry.aDRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator != AddendaRecordIndicator.NoAddenda)
                     {
-                        if (ad.AdTypeCode == AddendaTypeCode.Addenda05)
+                        if (ad.AdTypeCode == AddendaTypeCode.Addenda02)
+                        {
+                            if (bh.SECCode == StandardEntryClassCode.POS)
+                            {
+                                return "sp_InsertAddendaRecord_POS";
+                            }
+                            else if (bh.SECCode == StandardEntryClassCode.MTE)
+                            {
+                                return "sp_InsertAddendaRecord_MTE";
+                            }
+                            else if (bh.SECCode == StandardEntryClassCode.SHR)
+                            {
+                                return "sp_InsertAddendaRecord_SHR";
+                            }
+                            else
+                            {
+                                throw new Exception($"Standard Entry Class Code '{bh.SECCode}' is not supported");
+                            }
+                        }
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda05)
                         {
                             return "sp_InsertAddendaRecord";
-                        }
-                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda02)
-                        {
-                            return "sp_InsertAddendaRecord_POS";
                         }
                         else if (ad.AdTypeCode == AddendaTypeCode.Addenda99)
                         {
