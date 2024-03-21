@@ -58,6 +58,15 @@ namespace NACHAParser
         [JsonProperty("cardTransTypeCode")]
         public string CardTransTypeCode { get; set; } = string.Empty;
 
+        [JsonProperty("cardExpirationDate")]
+        public string CardExpirationDate { get; set; } = string.Empty;
+
+        [JsonProperty("documentReferenceNumber")]
+        public string DocRefNum { get; set; } = string.Empty;
+
+        [JsonProperty("IndividualCardAcctNumber")]
+        public string IndivCardAcctNum { get; set; } = string.Empty;
+
         [JsonProperty("discretionaryData")]
         public string DiscretionaryData { get; set; } = string.Empty;
 
