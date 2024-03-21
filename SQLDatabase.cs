@@ -547,6 +547,59 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
                     parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
                     break;
+                case "sp_InsertAddendaRecord_MTE":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@TransactionDescription", ad.TransDescription));
+                    parameters.Add(new SqlParameter("@NetworkIdentificationCode", ad.NetworkIdCode));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@TransactionTime", ad.TransTime));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                break;
+                case "sp_InsertAddendaRecord_SHR":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@ReferenceInformation1", ad.RefInfo1));
+                    parameters.Add(new SqlParameter("@ReferenceInformation2", ad.RefInfo2));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@AuthorizationCodeOrExpireDate", ad.AuthCodeOrExpDate));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                break;
+                case "sp_InsertAddendaRecord_POS":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@ReferenceInformation1", ad.RefInfo1));
+                    parameters.Add(new SqlParameter("@ReferenceInformation2", ad.RefInfo2));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@AuthorizationCodeOrExpireDate", ad.AuthCodeOrExpDate));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                    break;
                 case "sp_InsertAddendaRecord_RefusedCOR":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
@@ -573,24 +626,6 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
                     parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
                     parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
-                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
-                    break;
-                case "sp_InsertAddendaRecord_POS":
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
-                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
-                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
-                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
-                    parameters.Add(new SqlParameter("@ReferenceInformation1", ad.RefInfo1));
-                    parameters.Add(new SqlParameter("@ReferenceInformation2", ad.RefInfo2));
-                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
-                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
-                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
-                    parameters.Add(new SqlParameter("@AuthorizationCodeOrExpireDate", ad.AuthCodeOrExpDate));
-                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
-                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
-                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
                 case "sp_InsertAddendaRecord_Dishonor":
