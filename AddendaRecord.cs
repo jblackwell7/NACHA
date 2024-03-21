@@ -7,7 +7,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("addenda05Id")]
-        public string Addenda05Id { get; set; } = string.Empty;
+        public string AddendaId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
@@ -34,6 +34,7 @@ namespace NACHAParser
 
         [JsonProperty("paymtRelatedInfo")]
         public string? PaymtRelatedInfo { get; set; }
+
         [JsonProperty("addendaSeqNum")]
         public string AddendaSeqNum { get; set; } = string.Empty;
         [JsonProperty("entDetailSeqNum")]
@@ -57,7 +58,7 @@ namespace NACHAParser
         [JsonProperty("disHonrorReturnSettlementDate")]
         public string DisHonrorReturnSettlementDate { get; set; } = string.Empty;
 
-        [JsonProperty("feturnTraceNum")]
+        [JsonProperty("returnTraceNumber")]
         public string ReturnTraceNum { get; set; } = string.Empty;
 
         [JsonProperty("returnSettlementDate")]
@@ -68,13 +69,14 @@ namespace NACHAParser
 
         [JsonProperty("dateOfDeath")]
         public string DateOfDeath { get; set; } = string.Empty;
+
         [JsonProperty("origReceivingDFIId")]
         public string OrigReceivingDFIId { get; set; } = string.Empty;
 
         [JsonProperty("addendaInfo")]
         public string AddendaInfo { get; set; } = string.Empty;
 
-        [JsonProperty("adTraceNum")]
+        [JsonProperty("addendaTraceNum")]
         public string AdTraceNum { get; set; } = string.Empty;
 
         [JsonProperty("correctedData")]
@@ -86,38 +88,49 @@ namespace NACHAParser
         [JsonProperty("reserved2")]
         public string Reserved2 { get; set; } = string.Empty;
 
-        [JsonProperty("RefInfo1")]
+        [JsonProperty("refInfo1")]
         public string RefInfo1 { get; set; } = string.Empty;
 
-        [JsonProperty("RefInfo2")]
+        [JsonProperty("refInfo2")]
         public string RefInfo2 { get; set; } = string.Empty;
 
-        [JsonProperty("TerminalIDCode")]
+        [JsonProperty("terminalIDCode")]
         public string TerminalIDCode { get; set; } = string.Empty;
 
-        [JsonProperty("TransSerialNum")]
+        [JsonProperty("transSerialNumber")]
         public string TransSerialNum { get; set; } = string.Empty;
 
-        [JsonProperty("TransDate")]
+        [JsonProperty("transactionDate")]
         public string TransDate { get; set; } = string.Empty;
 
-        [JsonProperty("AuthCodeOrExpDate")]
+        [JsonProperty("authCodeOrExpDate")]
         public string AuthCodeOrExpDate { get; set; } = string.Empty;
 
-        [JsonProperty("TerminalLoc")]
+        [JsonProperty("terminalLocation")]
         public string TerminalLoc { get; set; } = string.Empty;
 
-        [JsonProperty("TerminalCity")]
+        [JsonProperty("terminalCity")]
         public string TerminalCity { get; set; } = string.Empty;
 
-        [JsonProperty("TerminalState")]
+        [JsonProperty("terminalState")]
         public string TerminalState { get; set; } = string.Empty;
+
+        [JsonProperty("transactionDescription")]
+        public string TransDescription { get; set; } = string.Empty;
+
+        [JsonProperty("networkIdCode")]
+        public string NetworkIdCode { get; set; } = string.Empty;
+
+        [JsonProperty("transactionTIme")]
+        public string TransTime { get; set; } = string.Empty;
+
         #endregion
+
         #region Constructors
         public Addenda()
         {
-            Addenda05Id = Guid.NewGuid().ToString();
-            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
+            AddendaId = Guid.NewGuid().ToString();
+            Console.WriteLine($"AddendaId: '{AddendaId}'");
         }
         #endregion
         #region Methods
@@ -126,13 +139,13 @@ namespace NACHAParser
             switch (value)
             {
                 case "02":
-                    return AddendaTypeCode.POSAddenda;
+                    return AddendaTypeCode.Addenda02;
                 case "05":
-                    return AddendaTypeCode.StandardAddenda;
+                    return AddendaTypeCode.Addenda05;
                 case "98":
-                    return AddendaTypeCode.NOCAddenda;
+                    return AddendaTypeCode.Addenda98;
                 case "99":
-                    return AddendaTypeCode.ReturnAddenda;
+                    return AddendaTypeCode.Addenda99;
                 default:
                     throw new InvalidOperationException($"Addenda Type Code '{value}' is not supported");
             }

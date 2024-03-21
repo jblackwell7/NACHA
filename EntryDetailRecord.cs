@@ -28,8 +28,11 @@ namespace NACHAParser
         [JsonProperty("dFIAcctNumber")]
         public string DFIAcctNum { get; set; } = string.Empty;
 
-        [JsonProperty("amt")]
+        [JsonProperty("amount")]
         public string Amt { get; set; } = string.Empty;
+
+        [JsonProperty("totalAmount")]
+        public string TotalAmt { get; set; } = string.Empty;
 
         [JsonProperty("indivIdNumber")]
         public string IndivIdNum { get; set; } = string.Empty;
@@ -55,6 +58,15 @@ namespace NACHAParser
         [JsonProperty("cardTransTypeCode")]
         public string CardTransTypeCode { get; set; } = string.Empty;
 
+        [JsonProperty("cardExpirationDate")]
+        public string CardExpirationDate { get; set; } = string.Empty;
+
+        [JsonProperty("documentReferenceNumber")]
+        public string DocRefNum { get; set; } = string.Empty;
+
+        [JsonProperty("IndividualCardAcctNumber")]
+        public string IndivCardAcctNum { get; set; } = string.Empty;
+
         [JsonProperty("discretionaryData")]
         public string DiscretionaryData { get; set; } = string.Empty;
 
@@ -72,6 +84,15 @@ namespace NACHAParser
 
         [JsonProperty("originalTraceNumber")]
         public string OriginalTraceNum { get; set; } = string.Empty;
+
+        [JsonProperty("processControlField")]
+        public string ProcessControlField { get; set; } = string.Empty;
+
+        [JsonProperty("itemResearchNumber")]
+        public string ItemResearchNum { get; set; } = string.Empty;
+
+        [JsonProperty("itemTypeIndicator")]
+        public string ItemTypeIndicator { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecords")]
         public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();

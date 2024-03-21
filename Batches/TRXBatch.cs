@@ -1,6 +1,6 @@
 namespace NACHAParser
 {
-    public class CTXBatch : BatchBase
+    public class TRXBatch : BatchBase
     {
         public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, ACHFile achFile, StandardEntryClassCode sec)
         {
@@ -42,12 +42,12 @@ namespace NACHAParser
                             RDFIId = line.Substring(3, 8),
                             CheckDigit = line[11],
                             DFIAcctNum = line.Substring(12, 17),
-                            Amt = line.Substring(29, 10),
+                            TotalAmt = line.Substring(29, 10),
                             IndivIdNum = line.Substring(39, 15).Trim(),
                             NumOfAddendaRecords = int.Parse(line.Substring(54, 4)),
                             ReceiverCoName = line.Substring(58, 16).Trim(),
                             Reserved = line.Substring(74, 2).Trim(),
-                            DiscretionaryData = line.Substring(76, 2).Trim(),
+                            ItemTypeIndicator = line.Substring(76, 2).Trim(),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };

@@ -1,6 +1,6 @@
 namespace NACHAParser
 {
-    public class PPDBatch : BatchBase
+    public class BOCBatch : BatchBase
     {
         public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, ACHFile achFile, StandardEntryClassCode sec)
         {
@@ -33,11 +33,7 @@ namespace NACHAParser
                 if (achFile.CurrentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) == "7"))
-                    {
-                        throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
-                    }
-                    else
+                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
                         {
@@ -47,13 +43,17 @@ namespace NACHAParser
                             CheckDigit = line[11],
                             DFIAcctNum = line.Substring(12, 17),
                             Amt = line.Substring(29, 10),
-                            IndivIdNum = line.Substring(39, 15).Trim(),
+                            CheckSerialNum = line.Substring(39, 15).Trim(),
                             IndivName = line.Substring(54, 22).Trim(),
-                            DiscretionaryData = line.Substring(76, 2).Trim(),
+                            DiscretionaryData = line.Substring(76, 2),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };
                         achFile.CurrentBatch.EntryRecord.Add(entry);
+                    }
+                    else
+                    {
+                        throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
                     }
                 }
                 else
@@ -75,6 +75,7 @@ namespace NACHAParser
                     var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry != null)
                     {
+                        var ad = new Addenda();
                         var adCount = lastEntry.AddendaCount();
                         if (adCount > 1)
                         {
@@ -82,18 +83,9 @@ namespace NACHAParser
                         }
                         else
                         {
-                            var ad = new Addenda();
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.Addenda05:
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
-                                    ad.AddendaSeqNum = line.Substring(83, 4);
-                                    ad.EntDetailSeqNum = line.Substring(87, 7);
-                                    lastEntry.AddendaRecord.Add(ad);
-                                    break;
                                 case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);

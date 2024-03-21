@@ -86,7 +86,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.StandardAddenda:
+                                case AddendaTypeCode.Addenda05:
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = typeCode;
                                     ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
@@ -94,7 +94,7 @@ namespace NACHAParser
                                     ad.EntDetailSeqNum = line.Substring(87, 7);
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
-                                case AddendaTypeCode.ReturnAddenda:
+                                case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);
@@ -142,14 +142,6 @@ namespace NACHAParser
                                         ad.AddendaInfo = line.Substring(35, 44).Trim();
                                         ad.AdTraceNum = line.Substring(79, 15);
                                     }
-                                    lastEntry.AddendaRecord.Add(ad);
-                                    break;
-                                case AddendaTypeCode.NOCAddenda:
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim();
-                                    ad.AddendaSeqNum = line.Substring(83, 4);
-                                    ad.EntDetailSeqNum = line.Substring(87, 7);
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
                                 default:
