@@ -35,6 +35,8 @@ namespace NACHAParser
                     return new CIEBatch();
                 case StandardEntryClassCode.DNE:
                     return new DNEBatch();
+                case StandardEntryClassCode.ENR:
+                    return new ENRBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
