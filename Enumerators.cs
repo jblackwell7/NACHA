@@ -31,6 +31,7 @@ namespace NACHAParser
         ACK,
         BOC,
         CTX,
+        CIE,
         DNE,
         ENR,
         SHR,
