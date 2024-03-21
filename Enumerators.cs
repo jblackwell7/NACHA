@@ -50,19 +50,19 @@ namespace NACHAParser
     }
     public enum AddendaTypeCode
     {
-        POSAddenda = 02,
-        StandardAddenda = 05,
-        IAT1Addenda = 10,
-        IAT2Addenda = 11,
-        IAT3Addenda = 12,
-        IAT4Addenda = 13,
-        IAT5Addenda = 14,
-        IAT6Addenda = 15,
-        IAT7Addenda = 16,
-        IAT8Addenda = 17,
-        IAT9Addenda = 18,
-        NOCAddenda = 98,
-        ReturnAddenda = 99
+        Addenda02 = 02,
+        Addenda05 = 05,
+        IAT10Addenda = 10,
+        IAT11Addenda = 11,
+        IAT12Addenda = 12,
+        IAT13Addenda = 13,
+        IAT14Addenda = 14,
+        IAT15Addenda = 15,
+        IAT16Addenda = 16,
+        IAT17Addenda = 17,
+        IAT18Addenda = 18,
+        Addenda98 = 98,
+        Addenda99 = 99
     }
     public enum ReturnCode : int
     {
