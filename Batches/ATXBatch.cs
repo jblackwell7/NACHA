@@ -96,7 +96,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.ReturnAddenda:
+                                case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);

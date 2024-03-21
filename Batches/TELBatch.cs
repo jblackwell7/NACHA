@@ -38,7 +38,7 @@ namespace NACHAParser
                     {
                         var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
 
-                        if (typeCode != AddendaTypeCode.ReturnAddenda)
+                        if (typeCode != AddendaTypeCode.Addenda99)
                         {
                             throw new Exception($"Standard Entry Class Code '{achFile.CurrentBatch.BatchHeader.SECCode}' does not support Addenda records. Line number '{lineNumber}'");
                         }
@@ -96,7 +96,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.ReturnAddenda:
+                                case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);

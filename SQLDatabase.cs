@@ -538,15 +538,15 @@ namespace NACHAParser
                 case RecordType.ad:
                     if (lastEntry.aDRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator != AddendaRecordIndicator.NoAddenda)
                     {
-                        if (ad.AdTypeCode == AddendaTypeCode.StandardAddenda)
+                        if (ad.AdTypeCode == AddendaTypeCode.Addenda05)
                         {
                             return "sp_InsertAddendaRecord";
                         }
-                        else if (ad.AdTypeCode == AddendaTypeCode.POSAddenda)
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda02)
                         {
                             return "sp_InsertAddendaRecord_POS";
                         }
-                        else if (ad.AdTypeCode == AddendaTypeCode.ReturnAddenda)
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda99)
                         {
                             if (ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
                             {
@@ -565,7 +565,7 @@ namespace NACHAParser
                                 throw new Exception("Addenda Return Code is not supported");
                             }
                         }
-                        else if (ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda98)
                         {
                             if (ad.IsRefusedCORCode(ad.ChangeCode) == false)
                             {

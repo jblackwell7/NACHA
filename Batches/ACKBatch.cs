@@ -97,7 +97,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.StandardAddenda:
+                                case AddendaTypeCode.Addenda05:
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = typeCode;
                                     ad.PaymtRelatedInfo = line.Substring(3, 80).Trim().Trim();
