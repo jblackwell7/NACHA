@@ -49,7 +49,9 @@ namespace NACHAParser
                                 DFIAcctNum = line.Substring(12, 17),
                                 Amt = line.Substring(29, 10),
                                 OriginalTraceNum = line.Substring(39, 15),
+                                NumOfAddendaRecords = int.Parse(line.Substring(54, 4)),
                                 ReceiverCoName = line.Substring(54, 22),
+                                Reserved = line.Substring(76, 2),
                                 DiscretionaryData = line.Substring(76, 2),
                                 aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                                 TraceNum = line.Substring(79, 15)
