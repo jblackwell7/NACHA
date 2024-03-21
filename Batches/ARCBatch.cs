@@ -189,6 +189,5 @@ namespace NACHAParser
                 throw new Exception("Batch is null");
             }
         }
-
     }
 }
