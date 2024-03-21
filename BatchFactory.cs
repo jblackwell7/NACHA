@@ -33,6 +33,8 @@ namespace NACHAParser
                     return new BOCBatch();
                 case StandardEntryClassCode.CIE:
                     return new CIEBatch();
+                case StandardEntryClassCode.DNE:
+                    return new DNEBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
