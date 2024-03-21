@@ -27,6 +27,8 @@ namespace NACHAParser
                     return new ACKBatch();
                 case StandardEntryClassCode.ATX:
                     return new ATXBatch();
+                    case StandardEntryClassCode.ARC:
+                    return new ARCBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
