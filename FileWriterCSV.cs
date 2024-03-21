@@ -17,11 +17,13 @@ namespace NACHAParser
         public const string CTXeDetailHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Number of Addenda Records,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string CTXNOCeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Number of Addenda Records,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string ACKeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Original Entry Trace Number,Receiving Trace Number,Discretionary Data,Addenda Record Indicator,Trace Number";
+        public const string SHReDetailsHeader = "Record Type, Transaction Code, Receiving DFI Identification, Check Digit, DFI Account Number, Amount, Card Expiration Date, Document Reference Number, Individual Card Account Number, Card Transaction Type Code, Addenda Record Indicator, Trace Number";
         public const string NOCeDetailsHeader = "Record Type,Transaction Code,Receiving DFI Identification,Check Digit,DFI Account Number,Amount,Individual ID,Receiving Company Name or ID Number,Reserved,Discretionary Data,Addenda Record Indicator,Trace Number";
         public const string ReturnAddendaHeader = "Record Type,Addenda Type Code,Return Reason Code,Original Entry Trace Number,Date of Death,Original Receiving DFI Identification,Addenda Information,Trace Number";
         public const string DishonorReturnAddendaHeader = "Record Type,Addenda Type Code,DisHonrorReturnCode,Original Entry Trace Number,Reserved,Original Receiving DFI Identification,Reserved,Return Trace Number,Return Settlement Date,Dis Honor Return Reason Code,Addenda Information,Trace Number";
         public const string ContestedDishonorReturnAddendaHeader = "Record Type,Addenda Type Code,Contested Dishonor Return Reason Code,Original Entry Trace Number,Date Original Entry Returned,Original Receiving DFI Identification,Original Settlement Date,Return Trace Number,Return Settlement Date,Return Reason Code,Dishonor Return Settlement Date,Dishonor Return Reason Code, Reserved,Trace Number";
         public const string AddendaHeader = "Record Type,Payment Related Information,Addenda Sequence Number,Entry Detail Sequence Number";
+        public const string SHRAddendaHeader = "Record Type, Addenda Type Code, Reference Information #1, Reference Information #2, Terminal Identification Code, Transaction Serial Number, Transaction Date, Authorization Code or Card Expiration Date, Terminal Location, Terminal City, Terminal State, Trace Number";
         public const string NOCAddendaHeader = "Record Type,Addenda Type Code,Change Code,Original Entry Trace Number,Reserved,Original Receiving DFI Identification,Corrected Data,Reserved,Trace Number";
         public const string BatchControlHeader = "Record Type,Service Class Code,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount,Total Credit Entry Dollar Amount,Company Identification,Message Authentication Code,Reserved,Originating DFI Identificiation,Batch Number";
         public const string FileControlHeader = "Record Type,Batch Count,Block Count,Entry/Addenda Count,Entry Hash,Total Debit Entry Dollar Amount in File,Total Credit Entry Dollar Amount in File,Reserved";
@@ -89,6 +91,7 @@ namespace NACHAParser
         }
         public static void CsvWriteEDRecords(StringBuilder sb, BatchHeaderRecord bh, EntryDetailRecord ed)
         {
+            //TODO: ACH-31 Add BOC,DNE,ENR,MTE,RCK,TRC,TRX,XCK logic
             var eDetails = ed;
             switch (bh.SECCode)
             {
@@ -239,12 +242,30 @@ namespace NACHAParser
                     eDetails.TraceNum
                     ));
                     break;
+                case StandardEntryClassCode.SHR:
+                    sb.AppendLine(SHReDetailsHeader);
+                    sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
+                    (int)eDetails.RecType,
+                    (int)eDetails.TransCode,
+                    eDetails.RDFIId,
+                    eDetails.CheckDigit,
+                    eDetails.DFIAcctNum.Trim(),
+                    eDetails.Amt,
+                    eDetails.CardExpirationDate.Trim(),
+                    eDetails.DocRefNum.Trim(),
+                    eDetails.IndivCardAcctNum.Trim(),
+                    eDetails.CardTransTypeCode.Trim(),
+                    (int)eDetails.aDRecIndicator,
+                    eDetails.TraceNum
+                    ));
+                    break;
                 default:
                     throw new System.NotImplementedException($"Standard Entry Class Code '{bh.SECCode}' is not supported");
             }
         }
         public static void CsvADRecords(StringBuilder sb, Addenda ad)
         {
+            //TODO: ACH-42 Add Addenda02 & Addenda98 logic
             if (ad != null)
             {
                 var aDetails = ad;
@@ -259,6 +280,20 @@ namespace NACHAParser
                         aDetails.AddendaSeqNum,
                         aDetails.EntDetailSeqNum
                         ));
+                        break;
+                    case AddendaTypeCode.Addenda98:
+                        sb.AppendLine(NOCAddendaHeader);
+                        sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
+                            (int)aDetails.RecType,
+                            (int)aDetails.AdTypeCode,
+                            aDetails.ChangeCode,
+                            aDetails.OrigTraceNum,
+                            aDetails.Reserved1,
+                            aDetails.OrigReceivingDFIId,
+                            aDetails.CorrectedData,
+                            aDetails.Reserved2,
+                            aDetails.AdTraceNum
+                            ));
                         break;
                     case AddendaTypeCode.Addenda99:
                         if (aDetails.ReturnReasonCode != ReturnCode.Unknown && aDetails.DisHonorReturnReasonCode == ReturnCode.Unknown && aDetails.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
@@ -314,20 +349,6 @@ namespace NACHAParser
                             aDetails.AdTraceNum
                             ));
                         }
-                        break;
-                    case AddendaTypeCode.Addenda98:
-                        sb.AppendLine(NOCAddendaHeader);
-                        sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                            (int)aDetails.RecType,
-                            (int)aDetails.AdTypeCode,
-                            aDetails.ChangeCode,
-                            aDetails.OrigTraceNum,
-                            aDetails.Reserved1,
-                            aDetails.OrigReceivingDFIId,
-                            aDetails.CorrectedData,
-                            aDetails.Reserved2,
-                            aDetails.AdTraceNum
-                            ));
                         break;
                     default:
                         throw new System.NotImplementedException($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
