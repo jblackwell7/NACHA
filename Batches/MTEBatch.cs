@@ -86,7 +86,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.POSAddenda:
+                                case AddendaTypeCode.Addenda02:
                                     ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                     ad.AdTypeCode = typeCode;
                                     ad.TransDescription = line.Substring(3, 10).Trim();
@@ -101,7 +101,7 @@ namespace NACHAParser
                                     ad.AdTraceNum = line.Substring(79, 15);
                                     lastEntry.AddendaRecord.Add(ad);
                                     break;
-                                case AddendaTypeCode.ReturnAddenda:
+                                case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);

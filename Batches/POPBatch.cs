@@ -35,7 +35,7 @@ namespace NACHAParser
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
                     var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
-                    if ((adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.ReturnAddenda))
+                    if ((adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.Addenda99))
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
                         {
@@ -89,7 +89,7 @@ namespace NACHAParser
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
-                                case AddendaTypeCode.ReturnAddenda:
+                                case AddendaTypeCode.Addenda99:
                                     var rc = ad.ParseReturnCode(line.Substring(3, 3));
                                     bool isDisHonor = ad.IsDisHonor(lastEntry, rc);
                                     bool isContestedDisHonor = ad.IsContestedDishonor(lastEntry, rc);

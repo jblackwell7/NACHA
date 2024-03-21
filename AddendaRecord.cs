@@ -139,13 +139,13 @@ namespace NACHAParser
             switch (value)
             {
                 case "02":
-                    return AddendaTypeCode.POSAddenda;
+                    return AddendaTypeCode.Addenda02;
                 case "05":
-                    return AddendaTypeCode.StandardAddenda;
+                    return AddendaTypeCode.Addenda05;
                 case "98":
-                    return AddendaTypeCode.NOCAddenda;
+                    return AddendaTypeCode.Addenda98;
                 case "99":
-                    return AddendaTypeCode.ReturnAddenda;
+                    return AddendaTypeCode.Addenda99;
                 default:
                     throw new InvalidOperationException($"Addenda Type Code '{value}' is not supported");
             }

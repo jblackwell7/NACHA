@@ -250,7 +250,7 @@ namespace NACHAParser
                 var aDetails = ad;
                 switch (ad.AdTypeCode)
                 {
-                    case AddendaTypeCode.StandardAddenda:
+                    case AddendaTypeCode.Addenda05:
                         sb.AppendLine(AddendaHeader);
                         sb.AppendLine(string.Format("{0},{1},{2},{3},{4}",
                         (int)aDetails.RecType,
@@ -260,7 +260,7 @@ namespace NACHAParser
                         aDetails.EntDetailSeqNum
                         ));
                         break;
-                    case AddendaTypeCode.ReturnAddenda:
+                    case AddendaTypeCode.Addenda99:
                         if (aDetails.ReturnReasonCode != ReturnCode.Unknown && aDetails.DisHonorReturnReasonCode == ReturnCode.Unknown && aDetails.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
                         {
                             sb.AppendLine(ReturnAddendaHeader);
@@ -315,7 +315,7 @@ namespace NACHAParser
                             ));
                         }
                         break;
-                    case AddendaTypeCode.NOCAddenda:
+                    case AddendaTypeCode.Addenda98:
                         sb.AppendLine(NOCAddendaHeader);
                         sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
                             (int)aDetails.RecType,
