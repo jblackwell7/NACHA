@@ -7,7 +7,7 @@ namespace NACHAParser
         #region Properties
 
         [JsonProperty("addenda05Id")]
-        public string Addenda05Id { get; set; } = string.Empty;
+        public string AddendaId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
@@ -129,8 +129,8 @@ namespace NACHAParser
         #region Constructors
         public Addenda()
         {
-            Addenda05Id = Guid.NewGuid().ToString();
-            Console.WriteLine($"Addenda05Id: '{Addenda05Id}'");
+            AddendaId = Guid.NewGuid().ToString();
+            Console.WriteLine($"AddendaId: '{AddendaId}'");
         }
         #endregion
         #region Methods
