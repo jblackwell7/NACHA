@@ -1,6 +1,6 @@
 namespace NACHAParser
 {
-    public class PPDBatch : BatchBase
+    public class CIEBatch : BatchBase
     {
         public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, ACHFile achFile, StandardEntryClassCode sec)
         {
@@ -33,11 +33,7 @@ namespace NACHAParser
                 if (achFile.CurrentBatch.EntryRecord != null)
                 {
                     var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) == "7"))
-                    {
-                        throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
-                    }
-                    else
+                    if ((adIndicator == AddendaRecordIndicator.Addenda && nextLine.Substring(0, 1) == "7") || (adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7"))
                     {
                         EntryDetailRecord entry = new EntryDetailRecord()
                         {
@@ -49,11 +45,15 @@ namespace NACHAParser
                             Amt = line.Substring(29, 10),
                             IndivIdNum = line.Substring(39, 15).Trim(),
                             IndivName = line.Substring(54, 22).Trim(),
-                            DiscretionaryData = line.Substring(76, 2).Trim(),
+                            DiscretionaryData = line.Substring(76, 2),
                             aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                             TraceNum = line.Substring(79, 15)
                         };
                         achFile.CurrentBatch.EntryRecord.Add(entry);
+                    }
+                    else
+                    {
+                        throw new Exception($"Entry Detail Record is missing an Addenda Record on LineNumber '{lineNumber}'");
                     }
                 }
                 else
@@ -75,6 +75,7 @@ namespace NACHAParser
                     var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry != null)
                     {
+                        var ad = new Addenda();
                         var adCount = lastEntry.AddendaCount();
                         if (adCount > 1)
                         {
@@ -82,7 +83,6 @@ namespace NACHAParser
                         }
                         else
                         {
-                            var ad = new Addenda();
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {

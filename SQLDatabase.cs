@@ -182,12 +182,76 @@ namespace NACHAParser
             List<SqlParameter> parameters = new List<SqlParameter>();
             switch (achFile.CurrentBatch.BatchHeader.SECCode)
             {
-                case StandardEntryClassCode.PPD:
+                case StandardEntryClassCode.ACK:
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("@BchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
-                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.ARC:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.ATX:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.CCD:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.CIE:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
                     parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
                     parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
                     parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
@@ -195,123 +259,10 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.WEB:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
-                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
-                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
-                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
-                    parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.POP:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("CheckSerialNumber", ed.CheckSerialNum));
-                    parameters.Add(new SqlParameter("TerminalCity", ed.TerminalCity));
-                    parameters.Add(new SqlParameter("TerminalState", ed.TerminalState));
-                    parameters.Add(new SqlParameter("DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.POS:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("IndividualIdNumber", ed.IndivIdNum));
-                    parameters.Add(new SqlParameter("IndividualName", ed.IndivName));
-                    parameters.Add(new SqlParameter("CardTransactionType", ed.CardTransTypeCode));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.CCD:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("ReceivingCompanyName", ed.ReceiverCoName));
-                    parameters.Add(new SqlParameter("IndividualIdNumber", ed.IndivIdNum));
-                    parameters.Add(new SqlParameter("DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.COR:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("IndividualIdNumber", ed.IndivIdNum));
-                    parameters.Add(new SqlParameter("IndividualName", ed.IndivName));
-                    parameters.Add(new SqlParameter("PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.ACK:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("OriginalTraceNumber", ed.OriginalTraceNum));
-                    parameters.Add(new SqlParameter("ReceivingCompanyName", ed.ReceiverCoName));
-                    parameters.Add(new SqlParameter("DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.ATX:
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
-                    parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
-                    parameters.Add(new SqlParameter("RecordType", ed.RecType));
-                    parameters.Add(new SqlParameter("TransactionCode", ed.TransCode));
-                    parameters.Add(new SqlParameter("ReceivingDFIId", ed.RDFIId));
-                    parameters.Add(new SqlParameter("CheckDigit", ed.CheckDigit));
-                    parameters.Add(new SqlParameter("DFIAccountNumber", ed.DFIAcctNum));
-                    parameters.Add(new SqlParameter("Amount", ed.Amt));
-                    parameters.Add(new SqlParameter("OriginalTraceNumber", ed.OriginalTraceNum));
-                    parameters.Add(new SqlParameter("ReceivingCompanyName", ed.ReceiverCoName));
-                    parameters.Add(new SqlParameter("DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
-                    parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
-                    break;
-                case StandardEntryClassCode.TEL:
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
                     parameters.Add(new SqlParameter("EntryDetailId", ed.EntDetailsId));
                     parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
@@ -345,6 +296,220 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
                     parameters.Add(new SqlParameter("RESERVED", ed.Reserved));
                     break;
+                case StandardEntryClassCode.DNE:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.ENR:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@NumberOfAddendaRecords", ed.NumOfAddendaRecords));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@Reserved", ed.Reserved));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.MTE:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.POP:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@CheckSerialNumber", ed.CheckSerialNum));
+                    parameters.Add(new SqlParameter("@TerminalCity", ed.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ed.TerminalState));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.POS:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@CardTransactionType", ed.CardTransTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.PPD:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.RCK:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@CheckSerialNumber", ed.CheckSerialNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.SHR:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@CardExpirationDate", ed.CardExpirationDate));
+                    parameters.Add(new SqlParameter("@DocumentReferenceNumber", ed.DocRefNum));
+                    parameters.Add(new SqlParameter("@IndividualCardAccountNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@CardTransactionType", ed.CardTransTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.TEL:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.TRC:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@CheckSerialNumber", ed.CheckSerialNum));
+                    parameters.Add(new SqlParameter("@ProcessControlField", ed.ProcessControlField));
+                    parameters.Add(new SqlParameter("@ItemResearchNumber", ed.ItemResearchNum));
+                    parameters.Add(new SqlParameter("@ItemTypeIndicator", ed.ItemTypeIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.TRX:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@TotalAmount", ed.TotalAmt));
+                    parameters.Add(new SqlParameter("@IndividualNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
+                    parameters.Add(new SqlParameter("@Reserved", ed.Reserved));
+                    parameters.Add(new SqlParameter("@ItemTypeIndicator", ed.ItemTypeIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.WEB:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", (int)ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", (int)ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
+                    parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
+                    parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
+                case StandardEntryClassCode.XCK:
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", ed.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ed.RecType));
+                    parameters.Add(new SqlParameter("@TransactionCode", ed.TransCode));
+                    parameters.Add(new SqlParameter("@ReceivingDFIId", ed.RDFIId));
+                    parameters.Add(new SqlParameter("@CheckDigit", ed.CheckDigit));
+                    parameters.Add(new SqlParameter("@DFIAccountNumber", ed.DFIAcctNum));
+                    parameters.Add(new SqlParameter("@Amount", ed.Amt));
+                    parameters.Add(new SqlParameter("@CheckSerialNumber", ed.CheckSerialNum));
+                    parameters.Add(new SqlParameter("@ProcessControlField", ed.ProcessControlField));
+                    parameters.Add(new SqlParameter("@ItemResearchNumber", ed.ItemResearchNum));
+                    parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
+                    break;
                 default:
                     throw new Exception($"Standard Entry Class Code '{achFile.CurrentBatch.BatchHeader.SECCode}' is not supported");
             }
@@ -359,7 +524,7 @@ namespace NACHAParser
             {
                 case "sp_InsertAddendaRecord":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
@@ -370,7 +535,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertAddendaRecord_COR":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
                     parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
@@ -382,37 +547,44 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
                     parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
                     break;
-                case "sp_InsertAddendaRecord_RefusedCOR":
+                case "sp_InsertAddendaRecord_MTE":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
-                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
-                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
-                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
-                    parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
-                    parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
-                    parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
-                    parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
-                    parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
-                    parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
-                    parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
-                    parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
-                    parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
-                    break;
-                case "sp_InsertAddendaRecord_Return":
-                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
                     parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
-                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
-                    parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
-                    parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
+                    parameters.Add(new SqlParameter("@TransactionDescription", ad.TransDescription));
+                    parameters.Add(new SqlParameter("@NetworkIdentificationCode", ad.NetworkIdCode));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@TransactionTime", ad.TransTime));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
-                    break;
+                break;
+                case "sp_InsertAddendaRecord_SHR":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@ReferenceInformation1", ad.RefInfo1));
+                    parameters.Add(new SqlParameter("@ReferenceInformation2", ad.RefInfo2));
+                    parameters.Add(new SqlParameter("@TerminalIdCode", ad.TerminalIDCode));
+                    parameters.Add(new SqlParameter("@TransactionSerialNumber", ad.TransSerialNum));
+                    parameters.Add(new SqlParameter("@TransactionDate", ad.TransDate));
+                    parameters.Add(new SqlParameter("@AuthorizationCodeOrExpireDate", ad.AuthCodeOrExpDate));
+                    parameters.Add(new SqlParameter("@TerminalLocation", ad.TerminalLoc));
+                    parameters.Add(new SqlParameter("@TerminalCity", ad.TerminalCity));
+                    parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                break;
                 case "sp_InsertAddendaRecord_POS":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -428,9 +600,37 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@TerminalState", ad.TerminalState));
                     parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
                     break;
+                case "sp_InsertAddendaRecord_RefusedCOR":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("RecordType", (int)ad.RecType));
+                    parameters.Add(new SqlParameter("AddendaTypeCode", (int)ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("ChanceCode", ad.ChangeCode));
+                    parameters.Add(new SqlParameter("RefusedCORCode", ad.RefusedCORCode));
+                    parameters.Add(new SqlParameter("OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("Reserved", ad.Reserved1));
+                    parameters.Add(new SqlParameter("CorrectedData", ad.CorrectedData));
+                    parameters.Add(new SqlParameter("Reserved2", ad.Reserved2));
+                    parameters.Add(new SqlParameter("CORTraceSequenceNumber", ad.CorTraceSeqNum));
+                    parameters.Add(new SqlParameter("AddendaTraceNumber", ad.AdTraceNum));
+                    break;
+                case "sp_InsertAddendaRecord_Return":
+                    parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
+                    parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
+                    parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
+                    parameters.Add(new SqlParameter("@RecordType", ad.RecType));
+                    parameters.Add(new SqlParameter("@AddendaTypeCode", ad.AdTypeCode));
+                    parameters.Add(new SqlParameter("@OriginalTraceNumber", ad.OrigTraceNum));
+                    parameters.Add(new SqlParameter("@OriginalReceivingDFIId", ad.OrigReceivingDFIId));
+                    parameters.Add(new SqlParameter("@AddendaInformation", ad.AddendaInfo));
+                    parameters.Add(new SqlParameter("@AddendaTraceNumber", ad.AdTraceNum));
+                    break;
                 case "sp_InsertAddendaRecord_Dishonor":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -448,7 +648,7 @@ namespace NACHAParser
                     break;
                 case "sp_InsertAddendaRecord_ContestedDishonor":
                     parameters.Add(new SqlParameter("@AchFileId", achFile.AchFileId));
-                    parameters.Add(new SqlParameter("@AddendaId", ad.Addenda05Id));
+                    parameters.Add(new SqlParameter("@AddendaId", ad.AddendaId));
                     parameters.Add(new SqlParameter("@EntryDetailId", lastEntry.EntDetailsId));
                     parameters.Add(new SqlParameter("@BatchHeaderId", achFile.CurrentBatch.BatchHeader.BchHeaderId));
                     parameters.Add(new SqlParameter("@RecordType", ad.RecType));
@@ -475,11 +675,6 @@ namespace NACHAParser
         }
         private static string GetStoredProc(RecordType recType, ACHFile achFile)
         {
-            //root.FileContents.ACHFile.Batches[0].BatchHeader.SECCode.ToString();
-            //TODO: ACH-22 Add StandardEntryClassCode logic
-            //TODO: ACH-23 RecordType.ed and AdTypeCode for RecordType.ad
-            //TODO: ACH-24 Add stored procs for to support ACH-23
-
             var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
             var ad = lastEntry.AddendaRecord.LastOrDefault();
             var bh = achFile.CurrentBatch.BatchHeader;
@@ -491,45 +686,89 @@ namespace NACHAParser
                 case RecordType.bh:
                     return "sp_InsertBatchHeaderRecord";
                 case RecordType.ed:
-                    if (bh.SECCode == StandardEntryClassCode.WEB)
-                    {
-                        return "sp_InsertEntryDetailRecord_WEB";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.PPD)
-                    {
-                        return "sp_InsertEntryDetailRecord_PPD";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.POS)
-                    {
-                        return "sp_InsertEntryDetailRecord_POS";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.POP)
-                    {
-                        return "sp_InsertEntryDetailRecord_POP";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.CCD)
-                    {
-                        return "sp_InsertEntryDetailRecord_CCD";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.COR)
-                    {
-                        return "sp_InsertEntryDetailRecord_COR";
-                    }
-                    else if (bh.SECCode == StandardEntryClassCode.ACK)
+                    if (bh.SECCode == StandardEntryClassCode.ACK)
                     {
                         return "sp_InsertEntryDetailRecord_ACK";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ARC)
+                    {
+                        return "sp_InsertEntryDetailRecord_ARC";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.ATX)
                     {
                         return "sp_InsertEntryDetailRecord_ATX";
                     }
-                    else if (bh.SECCode == StandardEntryClassCode.TEL)
+                    else if (bh.SECCode == StandardEntryClassCode.BOC)
                     {
-                        return "sp_InsertEntryDetailRecord_TEL";
+                        return "sp_InsertEntryDetailRecord_BOC";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CCD)
+                    {
+                        return "sp_InsertEntryDetailRecord_CCD";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.CIE)
+                    {
+                        return "sp_InsertEntryDetailRecord_CIE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.COR)
+                    {
+                        return "sp_InsertEntryDetailRecord_COR";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.DNE)
+                    {
+                        return "sp_InsertEntryDetailRecord_DNE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.ENR)
+                    {
+                        return "sp_InsertEntryDetailRecord_ENR";
                     }
                     else if (bh.SECCode == StandardEntryClassCode.CTX)
                     {
                         return "sp_InsertEntryDetailRecord_CTX";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.MTE)
+                    {
+                        return "sp_InsertEntryDetailRecord_MTE";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POP)
+                    {
+                        return "sp_InsertEntryDetailRecord_POP";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.POS)
+                    {
+                        return "sp_InsertEntryDetailRecord_POS";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.PPD)
+                    {
+                        return "sp_InsertEntryDetailRecord_PPD";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.RCK)
+                    {
+                        return "sp_InsertEntryDetailRecord_RCK";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.SHR)
+                    {
+                        return "sp_InsertEntryDetailRecord_SHR";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TEL)
+                    {
+                        return "sp_InsertEntryDetailRecord_TEL";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TRC)
+                    {
+                        return "sp_InsertEntryDetailRecord_TRC";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.TRX)
+                    {
+                        return "sp_InsertEntryDetailRecord_TRX";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.WEB)
+                    {
+                        return "sp_InsertEntryDetailRecord_WEB";
+                    }
+                    else if (bh.SECCode == StandardEntryClassCode.XCK)
+                    {
+                        return "sp_InsertEntryDetailRecord_XCK";
                     }
                     else
                     {
@@ -538,15 +777,30 @@ namespace NACHAParser
                 case RecordType.ad:
                     if (lastEntry.aDRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator != AddendaRecordIndicator.NoAddenda)
                     {
-                        if (ad.AdTypeCode == AddendaTypeCode.StandardAddenda)
+                        if (ad.AdTypeCode == AddendaTypeCode.Addenda02)
+                        {
+                            if (bh.SECCode == StandardEntryClassCode.POS)
+                            {
+                                return "sp_InsertAddendaRecord_POS";
+                            }
+                            else if (bh.SECCode == StandardEntryClassCode.MTE)
+                            {
+                                return "sp_InsertAddendaRecord_MTE";
+                            }
+                            else if (bh.SECCode == StandardEntryClassCode.SHR)
+                            {
+                                return "sp_InsertAddendaRecord_SHR";
+                            }
+                            else
+                            {
+                                throw new Exception($"Standard Entry Class Code '{bh.SECCode}' is not supported");
+                            }
+                        }
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda05)
                         {
                             return "sp_InsertAddendaRecord";
                         }
-                        else if (ad.AdTypeCode == AddendaTypeCode.POSAddenda)
-                        {
-                            return "sp_InsertAddendaRecord_POS";
-                        }
-                        else if (ad.AdTypeCode == AddendaTypeCode.ReturnAddenda)
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda99)
                         {
                             if (ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
                             {
@@ -565,7 +819,7 @@ namespace NACHAParser
                                 throw new Exception("Addenda Return Code is not supported");
                             }
                         }
-                        else if (ad.AdTypeCode == AddendaTypeCode.NOCAddenda)
+                        else if (ad.AdTypeCode == AddendaTypeCode.Addenda98)
                         {
                             if (ad.IsRefusedCORCode(ad.ChangeCode) == false)
                             {

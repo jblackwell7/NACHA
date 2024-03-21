@@ -27,6 +27,28 @@ namespace NACHAParser
                     return new ACKBatch();
                 case StandardEntryClassCode.ATX:
                     return new ATXBatch();
+                case StandardEntryClassCode.ARC:
+                    return new ARCBatch();
+                case StandardEntryClassCode.BOC:
+                    return new BOCBatch();
+                case StandardEntryClassCode.CIE:
+                    return new CIEBatch();
+                case StandardEntryClassCode.DNE:
+                    return new DNEBatch();
+                case StandardEntryClassCode.ENR:
+                    return new ENRBatch();
+                case StandardEntryClassCode.MTE:
+                    return new MTEBatch();
+                case StandardEntryClassCode.RCK:
+                    return new RCKBatch();
+                case StandardEntryClassCode.TRC:
+                    return new TRCBatch();
+                case StandardEntryClassCode.TRX:
+                    return new TRXBatch();
+                case StandardEntryClassCode.XCK:
+                    return new XCKBatch();
+                case StandardEntryClassCode.SHR:
+                    return new SHRBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }

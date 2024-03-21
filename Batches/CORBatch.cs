@@ -92,7 +92,7 @@ namespace NACHAParser
                             var cc = ad.ParseChangeCode(line.Substring(3, 3));
                             bool isRefusedCOR = ad.IsRefusedCORCode(cc);
 
-                            if (isRefusedCOR == false && typeCode == AddendaTypeCode.NOCAddenda)
+                            if (isRefusedCOR == false && typeCode == AddendaTypeCode.Addenda98)
                             {
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                 ad.AdTypeCode = typeCode;
@@ -105,7 +105,7 @@ namespace NACHAParser
                                 ad.AdTraceNum = line.Substring(79, 15);
                                 lastEntry.AddendaRecord.Add(ad);
                             }
-                            else if (isRefusedCOR == true && typeCode == AddendaTypeCode.NOCAddenda)
+                            else if (isRefusedCOR == true && typeCode == AddendaTypeCode.Addenda98)
                             {
                                 ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
                                 ad.AdTypeCode = typeCode;

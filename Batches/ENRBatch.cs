@@ -1,6 +1,6 @@
 namespace NACHAParser
 {
-    public class CTXBatch : BatchBase
+    public class ENRBatch : BatchBase
     {
         public override BatchHeaderRecord ProcessBatchHeader(string line, int lineNumber, ACHFile achFile, StandardEntryClassCode sec)
         {
