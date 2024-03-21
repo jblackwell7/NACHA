@@ -38,6 +38,7 @@ namespace NACHAParser
         MTE,
         RCK,
         TRC,
+        TRX,
         XCK,
         Unknown
     }

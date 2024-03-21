@@ -28,8 +28,11 @@ namespace NACHAParser
         [JsonProperty("dFIAcctNumber")]
         public string DFIAcctNum { get; set; } = string.Empty;
 
-        [JsonProperty("amt")]
+        [JsonProperty("amount")]
         public string Amt { get; set; } = string.Empty;
+
+        [JsonProperty("totalAmount")]
+        public string TotalAmt { get; set; } = string.Empty;
 
         [JsonProperty("indivIdNumber")]
         public string IndivIdNum { get; set; } = string.Empty;
