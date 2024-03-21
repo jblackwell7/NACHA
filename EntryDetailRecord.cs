@@ -73,6 +73,15 @@ namespace NACHAParser
         [JsonProperty("originalTraceNumber")]
         public string OriginalTraceNum { get; set; } = string.Empty;
 
+        [JsonProperty("processControlField")]
+        public string ProcessControlField { get; set; } = string.Empty;
+
+        [JsonProperty("itemResearchNumber")]
+        public string ItemResearchNum { get; set; } = string.Empty;
+
+        [JsonProperty("itemTypeIndicator")]
+        public string ItemTypeIndicator { get; set; } = string.Empty;
+
         [JsonProperty("addendaRecords")]
         public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
 

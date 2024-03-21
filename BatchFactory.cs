@@ -41,6 +41,8 @@ namespace NACHAParser
                     return new MTEBatch();
                 case StandardEntryClassCode.RCK:
                     return new RCKBatch();
+                case StandardEntryClassCode.TRC:
+                    return new TRCBatch();
                 default:
                     throw new NotImplementedException($"Standard Entry Class Code '{sec}' is not supported");
             }
