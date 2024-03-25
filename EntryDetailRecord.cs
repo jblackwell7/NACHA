@@ -23,13 +23,13 @@ namespace NACHAParser
         public string RDFIId { get; set; } = string.Empty;
 
         [JsonProperty("checkDigit")]
-        public char CheckDigit { get; set; }
+        public string CheckDigit { get; set; }
 
         [JsonProperty("dFIAcctNumber")]
         public string DFIAcctNum { get; set; } = string.Empty;
 
         [JsonProperty("amount")]
-        public string Amt { get; set; } = string.Empty;
+        public int Amt { get; set; }
 
         [JsonProperty("totalAmount")]
         public string TotalAmt { get; set; } = string.Empty;
@@ -97,6 +97,10 @@ namespace NACHAParser
         [JsonProperty("addendaRecords")]
         public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
 
+        public StandardEntryClassCode SECCode { get; set; }
+
+        public ACHFile AchFile { get; set; }
+
         #endregion
 
         #region Constructors
@@ -110,6 +114,103 @@ namespace NACHAParser
         #endregion
 
         #region Methods
+
+        public bool ValidateEntryDetail(string nextLine)
+        {
+            if (IsMandatoryField())
+            {
+                if (IsMandatoryAddenda(nextLine))
+                {
+                    return true;
+                }
+                else
+                {
+                    return IsAddendaRecordIndicator(nextLine, isMandatory: false);
+                }
+            }
+            else
+            {
+                throw new Exception("Entry Detail Record is missing required fields.");
+            }
+        }
+        public bool IsMandatoryField()
+        {
+            if (Enum.IsDefined(typeof(TransactionCode), TransCode)
+            && !string.IsNullOrWhiteSpace(RDFIId)
+            && !string.IsNullOrWhiteSpace(CheckDigit)
+            && !string.IsNullOrWhiteSpace(DFIAcctNum)
+            && !string.IsNullOrWhiteSpace(TraceNum))
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception("Entry Detail Record is missing required fields.");
+            }
+        }
+        public bool IsMandatoryAddenda(string nextLine)
+        {
+            switch (SECCode)
+            {
+                case StandardEntryClassCode.COR:
+                case StandardEntryClassCode.DNE:
+                case StandardEntryClassCode.ENR:
+                case StandardEntryClassCode.POS:
+                case StandardEntryClassCode.SHR:
+                case StandardEntryClassCode.MTE:
+                case StandardEntryClassCode.TRX:
+                    return IsAddendaRecordIndicator(nextLine, isMandatory: true);
+                default:
+                    return true;
+            }
+        }
+        public bool IsAddendaRecordIndicator(string nextLine, bool isMandatory)
+        {
+            char recType = '7';
+            if (isMandatory is true && aDRecIndicator != AddendaRecordIndicator.Addenda)
+            {
+                throw new Exception($"Addenda Record is mandatory for Standard Entry Class Code '{SECCode}'. Addenda Record Indicator should be '1'.");
+            }
+            else if (aDRecIndicator == AddendaRecordIndicator.NoAddenda && nextLine.StartsWith(recType))
+            {
+                throw new Exception("Addenda Record should be '1'.");
+            }
+            else if (aDRecIndicator == AddendaRecordIndicator.Addenda && !nextLine.StartsWith(recType))
+            {
+                throw new Exception("Entry Detail is missing Addenda Record");
+            }
+            else if (aDRecIndicator == AddendaRecordIndicator.Addenda && nextLine.StartsWith(recType))
+            {
+                if (isMandatory is true)
+                {
+                    if (AddendaCount() == 0)
+                    {
+                        throw new Exception($"Addenda Record is missing. Addenda Record is mandatory for Standard Entry Class Code '{SECCode}'.");
+                    }
+                    else if (AddendaCount() > 1)
+                    {
+                        throw new Exception($"Only one Addenda Record is allowed for Standard Entry Class Code '{SECCode}'.");
+                    }
+                }
+                else if (AddendaCount() == 0)
+                {
+                    throw new Exception($"Addenda Record Indicator is '{aDRecIndicator}', but Addenda Record is missing.");
+                }
+                else if (SECCode == StandardEntryClassCode.CTX || SECCode == StandardEntryClassCode.ENR || SECCode == StandardEntryClassCode.TRX)
+                {
+                    if (AddendaCount() >= 9999)
+                    {
+                        throw new Exception($"Addenda Count exceeds the number of addenda record for Standard Entry Class Code '{SECCode}'.");
+                    }
+                }
+                else if (AddendaCount() > 1)
+                {
+                    throw new Exception($"Only one Addenda Record is allowed for Standard Entry Class Code '{SECCode}'.");
+                }
+            }
+
+            return true;
+        }
         public int AddendaCount()
         {
             return AddendaRecord.Count;
