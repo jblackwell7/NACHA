@@ -70,49 +70,41 @@ namespace NACHAParser
                     if (lastEntry != null)
                     {
                         var ad = new Addenda();
-                        var adCount = lastEntry.AddendaCount();
-                        if (adCount > 1)
+                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                        var cc = ad.ParseChangeCode(line.Substring(3, 3));
+                        bool isRefusedCOR = ad.IsRefusedCORCode(cc);
+
+                        if (isRefusedCOR == false && typeCode == AddendaTypeCode.Addenda98)
                         {
-                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{achFile.CurrentBatch.BatchHeader.SECCode}'.");
+                            ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                            ad.AdTypeCode = typeCode;
+                            ad.ChangeCode = cc;
+                            ad.OrigTraceNum = line.Substring(6, 15);
+                            ad.Reserved1 = line.Substring(21, 6).Trim();
+                            ad.OrigReceivingDFIId = line.Substring(27, 8);
+                            ad.CorrectedData = line.Substring(35, 29).Trim();
+                            ad.Reserved2 = line.Substring(64, 15).Trim();
+                            ad.AdTraceNum = line.Substring(79, 15);
+                            lastEntry.AddendaRecord.Add(ad);
+                        }
+                        else if (isRefusedCOR == true && typeCode == AddendaTypeCode.Addenda98)
+                        {
+                            ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                            ad.AdTypeCode = typeCode;
+                            ad.RefusedCORCode = cc;
+                            ad.OrigTraceNum = line.Substring(6, 15);
+                            ad.Reserved1 = line.Substring(21, 6).Trim();
+                            ad.OrigReceivingDFIId = line.Substring(27, 8);
+                            ad.CorrectedData = line.Substring(35, 29).Trim();
+                            ad.ChangeCode = (ChangeCode)int.Parse(line.Substring(64, 3));
+                            ad.CorTraceSeqNum = line.Substring(67, 7);
+                            ad.Reserved2 = line.Substring(74, 5).Trim();
+                            ad.AdTraceNum = line.Substring(79, 15);
+                            lastEntry.AddendaRecord.Add(ad);
                         }
                         else
                         {
-                            var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                            var cc = ad.ParseChangeCode(line.Substring(3, 3));
-                            bool isRefusedCOR = ad.IsRefusedCORCode(cc);
-
-                            if (isRefusedCOR == false && typeCode == AddendaTypeCode.Addenda98)
-                            {
-                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = typeCode;
-                                ad.ChangeCode = cc;
-                                ad.OrigTraceNum = line.Substring(6, 15);
-                                ad.Reserved1 = line.Substring(21, 6).Trim();
-                                ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                ad.CorrectedData = line.Substring(35, 29).Trim();
-                                ad.Reserved2 = line.Substring(64, 15).Trim();
-                                ad.AdTraceNum = line.Substring(79, 15);
-                                lastEntry.AddendaRecord.Add(ad);
-                            }
-                            else if (isRefusedCOR == true && typeCode == AddendaTypeCode.Addenda98)
-                            {
-                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                ad.AdTypeCode = typeCode;
-                                ad.RefusedCORCode = cc;
-                                ad.OrigTraceNum = line.Substring(6, 15);
-                                ad.Reserved1 = line.Substring(21, 6).Trim();
-                                ad.OrigReceivingDFIId = line.Substring(27, 8);
-                                ad.CorrectedData = line.Substring(35, 29).Trim();
-                                ad.ChangeCode = (ChangeCode)int.Parse(line.Substring(64, 3));
-                                ad.CorTraceSeqNum = line.Substring(67, 7);
-                                ad.Reserved2 = line.Substring(74, 5).Trim();
-                                ad.AdTraceNum = line.Substring(79, 15);
-                                lastEntry.AddendaRecord.Add(ad);
-                            }
-                            else
-                            {
-                                throw new Exception($"Addenda Type Code '{(int)typeCode}' is not supported on line '{line}'");
-                            }
+                            throw new Exception($"Addenda Type Code '{(int)typeCode}' is not supported on line '{line}'");
                         }
                     }
                 }

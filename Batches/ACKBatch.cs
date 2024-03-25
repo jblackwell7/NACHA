@@ -69,27 +69,19 @@ namespace NACHAParser
                     if (lastEntry != null)
                     {
                         var ad = new Addenda();
-                        var adCount = lastEntry.AddendaCount();
-                        if (adCount > 1)
+                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                        switch (typeCode)
                         {
-                            throw new Exception($"'{adCount}' Addenda Count exceeds the number of addenda record for '{achFile.CurrentBatch.BatchHeader.SECCode}'.");
-                        }
-                        else
-                        {
-                            var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
-                            switch (typeCode)
-                            {
-                                case AddendaTypeCode.Addenda05:
-                                    ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
-                                    ad.AdTypeCode = typeCode;
-                                    ad.PaymtRelatedInfo = line.Substring(3, 80).Trim().Trim();
-                                    ad.AddendaSeqNum = line.Substring(83, 4);
-                                    ad.EntDetailSeqNum = line.Substring(87, 7);
-                                    lastEntry.AddendaRecord.Add(ad);
-                                    break;
-                                default:
-                                    throw new Exception($"Addenda Type Code '{(int)typeCode}' is not supported on line '{line}'");
-                            }
+                            case AddendaTypeCode.Addenda05:
+                                ad.RecType = (RecordType)int.Parse(line.Substring(0, 1));
+                                ad.AdTypeCode = typeCode;
+                                ad.PaymtRelatedInfo = line.Substring(3, 80).Trim().Trim();
+                                ad.AddendaSeqNum = line.Substring(83, 4);
+                                ad.EntDetailSeqNum = line.Substring(87, 7);
+                                lastEntry.AddendaRecord.Add(ad);
+                                break;
+                            default:
+                                throw new Exception($"Addenda Type Code '{(int)typeCode}' is not supported on line '{line}'");
                         }
                     }
                     else
