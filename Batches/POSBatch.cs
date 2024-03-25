@@ -24,6 +24,7 @@ namespace NACHAParser
                     BchNum = line.Substring(87, 7)
                 }
             };
+            batch.BatchHeader.ValidateBatchHeader();
             achFile.AddBatch(batch);
             return batch.BatchHeader;
         }
