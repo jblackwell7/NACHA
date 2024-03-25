@@ -63,7 +63,7 @@ namespace NACHAParser
 
         #region Methods
 
-        public bool ValidateBatchHeader(string nextLine)
+        public bool ValidateBatchHeader()
         {
             if (IsMandatoryField())
             {
