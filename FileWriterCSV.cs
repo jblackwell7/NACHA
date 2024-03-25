@@ -473,7 +473,7 @@ namespace NACHAParser
                     throw new System.NotImplementedException($"Standard Entry Class Code '{bh.SECCode}' is not supported");
             }
         }
-        public static void CSVADRecords(StringBuilder sb, Addenda ad, BatchHeaderRecord bh)
+        public static void CSVADRecords(StringBuilder sb, AddendaRecord ad, BatchHeaderRecord bh)
         {
             if (ad != null)
             {

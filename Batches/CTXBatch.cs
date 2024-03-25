@@ -72,8 +72,8 @@ namespace NACHAParser
                     {
                         if (lastEntry.adRecIndicator == AddendaRecordIndicator.Addenda)
                         {
-                            var ad = new Addenda();
-                            var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                            var ad = new AddendaRecord();
+                            var typeCode = AddendaRecord.ParseAddendaType(line.Substring(1, 2));
                             switch (typeCode)
                             {
                                 case AddendaTypeCode.Addenda05:

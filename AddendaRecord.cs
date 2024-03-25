@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace NACHAParser
 {
-    public class Addenda
+    public class AddendaRecord
     {
         #region Properties
 
@@ -129,7 +129,7 @@ namespace NACHAParser
         #endregion
 
         #region Constructors
-        public Addenda()
+        public AddendaRecord()
         {
             AddendaId = Guid.NewGuid().ToString();
             Console.WriteLine($"AddendaId: '{AddendaId}'");
