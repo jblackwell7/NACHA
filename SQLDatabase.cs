@@ -195,7 +195,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.ARC:
@@ -211,7 +211,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.ATX:
@@ -227,7 +227,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@OriginalTraceNumber", ed.OriginalTraceNum));
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.CCD:
@@ -243,7 +243,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.CIE:
@@ -259,7 +259,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.COR:
@@ -275,7 +275,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.CTX:
@@ -292,7 +292,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("TraceNumber", ed.TraceNum));
                     parameters.Add(new SqlParameter("RESERVED", ed.Reserved));
                     break;
@@ -309,7 +309,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.ENR:
@@ -326,7 +326,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@Reserved", ed.Reserved));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.MTE:
@@ -342,7 +342,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.POP:
@@ -359,7 +359,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@TerminalCity", ed.TerminalCity));
                     parameters.Add(new SqlParameter("@TerminalState", ed.TerminalState));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.POS:
@@ -375,7 +375,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@CardTransactionType", ed.CardTransTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.PPD:
@@ -391,7 +391,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.RCK:
@@ -407,7 +407,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@CheckSerialNumber", ed.CheckSerialNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.SHR:
@@ -424,7 +424,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@DocumentReferenceNumber", ed.DocRefNum));
                     parameters.Add(new SqlParameter("@IndividualCardAccountNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@CardTransactionType", ed.CardTransTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.TEL:
@@ -440,7 +440,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.TRC:
@@ -457,7 +457,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@ProcessControlField", ed.ProcessControlField));
                     parameters.Add(new SqlParameter("@ItemResearchNumber", ed.ItemResearchNum));
                     parameters.Add(new SqlParameter("@ItemTypeIndicator", ed.ItemTypeIndicator));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.TRX:
@@ -474,7 +474,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@ReceivingCompanyName", ed.ReceiverCoName));
                     parameters.Add(new SqlParameter("@Reserved", ed.Reserved));
                     parameters.Add(new SqlParameter("@ItemTypeIndicator", ed.ItemTypeIndicator));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.WEB:
@@ -490,7 +490,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@IndividualIdNumber", ed.IndivIdNum));
                     parameters.Add(new SqlParameter("@IndividualName", ed.IndivName));
                     parameters.Add(new SqlParameter("@PaymentTypeCode", ed.PaymtTypeCode));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", (int)ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 case StandardEntryClassCode.XCK:
@@ -507,7 +507,7 @@ namespace NACHAParser
                     parameters.Add(new SqlParameter("@ProcessControlField", ed.ProcessControlField));
                     parameters.Add(new SqlParameter("@ItemResearchNumber", ed.ItemResearchNum));
                     parameters.Add(new SqlParameter("@DiscretionaryData", ed.DiscretionaryData));
-                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.aDRecIndicator));
+                    parameters.Add(new SqlParameter("@AddendaRecordIndicator", ed.adRecIndicator));
                     parameters.Add(new SqlParameter("@TraceNumber", ed.TraceNum));
                     break;
                 default:
@@ -775,7 +775,7 @@ namespace NACHAParser
                         throw new Exception($"Standard Entry Class Code '{bh.SECCode}' is not supported");
                     }
                 case RecordType.ad:
-                    if (lastEntry.aDRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.aDRecIndicator != AddendaRecordIndicator.NoAddenda)
+                    if (lastEntry.adRecIndicator != AddendaRecordIndicator.Unknown || lastEntry.adRecIndicator != AddendaRecordIndicator.NoAddenda)
                     {
                         if (ad.AdTypeCode == AddendaTypeCode.Addenda02)
                         {

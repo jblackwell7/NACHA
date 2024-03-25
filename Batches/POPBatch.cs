@@ -45,7 +45,7 @@ namespace NACHAParser
                         TerminalCity = line.Substring(48, 4).Trim(),
                         TerminalState = line.Substring(52, 2),
                         DiscretionaryData = line.Substring(76, 2).Trim(),
-                        aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                        adRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                         TraceNum = line.Substring(79, 15)
                     };
                     entry.ValidateEntryDetail(nextLine);
