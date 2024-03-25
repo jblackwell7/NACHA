@@ -43,7 +43,7 @@ namespace NACHAParser
                         OriginalTraceNum = line.Substring(39, 15),
                         ReceiverCoName = line.Substring(54, 22).Trim(),
                         DiscretionaryData = line.Substring(76, 2).Trim(),
-                        aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                        adRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                         TraceNum = line.Substring(79, 15)
                     };
                     entry.ValidateEntryDetail(nextLine);

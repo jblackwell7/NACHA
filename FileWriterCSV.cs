@@ -135,7 +135,7 @@ namespace NACHAParser
                     ed.OriginalTraceNum,
                     ed.ReceiverCoName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -153,7 +153,7 @@ namespace NACHAParser
                     ed.ReceiverCoName.Trim(),
                     ed.Reserved.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -169,7 +169,7 @@ namespace NACHAParser
                     ed.CheckSerialNum,
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -185,7 +185,7 @@ namespace NACHAParser
                     ed.CheckSerialNum,
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -201,7 +201,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.ReceiverCoName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -217,7 +217,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -233,7 +233,7 @@ namespace NACHAParser
                        ed.IndivIdNum.Trim(),
                        ed.ReceiverCoName.Trim(),
                        ed.DiscretionaryData.Trim(),
-                       (int)ed.aDRecIndicator,
+                       (int)ed.adRecIndicator,
                        ed.TraceNum
                        ));
                     break;
@@ -250,7 +250,7 @@ namespace NACHAParser
                     ed.ReceiverCoName.Trim(),
                     ed.Reserved.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -266,7 +266,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -283,7 +283,7 @@ namespace NACHAParser
                     ed.NumOfAddendaRecords,
                     ed.Reserved.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -299,7 +299,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -317,7 +317,7 @@ namespace NACHAParser
                     ed.TerminalState,
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -333,7 +333,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.IndivName.Trim(),
                     ed.CardTransTypeCode,
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -349,7 +349,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.ReceiverCoName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -365,7 +365,7 @@ namespace NACHAParser
                     ed.CheckSerialNum,
                     ed.IndivName.Trim(),
                     ed.DiscretionaryData.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -382,7 +382,7 @@ namespace NACHAParser
                     ed.DocRefNum.Trim(),
                     ed.IndivCardAcctNum.Trim(),
                     ed.CardTransTypeCode.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -398,7 +398,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.ReceiverCoName.Trim(),
                     ed.PaymtTypeCode.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -415,7 +415,7 @@ namespace NACHAParser
                     ed.ProcessControlField,
                     ed.ItemResearchNum,
                     ed.ItemTypeIndicator,
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -432,7 +432,7 @@ namespace NACHAParser
                     ed.ReceiverCoName.Trim(),
                     ed.Reserved.Trim(),
                     ed.ItemTypeIndicator,
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;
@@ -448,7 +448,7 @@ namespace NACHAParser
                     ed.IndivIdNum.Trim(),
                     ed.IndivName.Trim(),
                     ed.PaymtTypeCode.Trim(),
-                    (int)ed.aDRecIndicator,
+                    (int)ed.adRecIndicator,
                     ed.TraceNum
                     ));
                     break;

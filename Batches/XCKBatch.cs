@@ -44,7 +44,7 @@ namespace NACHAParser
                         ProcessControlField = line.Substring(54, 6).Trim(),
                         ItemResearchNum = line.Substring(60, 16).Trim(),
                         DiscretionaryData = line.Substring(76, 2).Trim(),
-                        aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                        adRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                         TraceNum = line.Substring(79, 15)
                     };
                     entry.ValidateEntryDetail(nextLine);

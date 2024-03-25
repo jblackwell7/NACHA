@@ -19,13 +19,13 @@ namespace NACHAParser
         [JsonProperty("transCode")]
         public TransactionCode TransCode { get; set; }
 
-        [JsonProperty("rDFIId")]
+        [JsonProperty("rdfiId")]
         public string RDFIId { get; set; } = string.Empty;
 
         [JsonProperty("checkDigit")]
         public string CheckDigit { get; set; }
 
-        [JsonProperty("dFIAcctNumber")]
+        [JsonProperty("dfiAcctNumber")]
         public string DFIAcctNum { get; set; } = string.Empty;
 
         [JsonProperty("amount")]
@@ -37,7 +37,7 @@ namespace NACHAParser
         [JsonProperty("indivIdNumber")]
         public string IndivIdNum { get; set; } = string.Empty;
 
-        [JsonProperty("numOfAddendaRecords")]
+        [JsonProperty("numberOfAddendaRecords")]
         public int NumOfAddendaRecords { get; set; }
 
         [JsonProperty("individualName")]
@@ -64,7 +64,7 @@ namespace NACHAParser
         [JsonProperty("documentReferenceNumber")]
         public string DocRefNum { get; set; } = string.Empty;
 
-        [JsonProperty("IndividualCardAcctNumber")]
+        [JsonProperty("individualCardAcctNumber")]
         public string IndivCardAcctNum { get; set; } = string.Empty;
 
         [JsonProperty("discretionaryData")]
@@ -77,7 +77,7 @@ namespace NACHAParser
         public string Reserved { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecordIndicator")]
-        public AddendaRecordIndicator aDRecIndicator { get; set; }
+        public AddendaRecordIndicator adRecIndicator { get; set; }
 
         [JsonProperty("traceNumber")]
         public string TraceNum { get; set; } = string.Empty;
@@ -94,7 +94,7 @@ namespace NACHAParser
         [JsonProperty("itemTypeIndicator")]
         public string ItemTypeIndicator { get; set; } = string.Empty;
 
-        [JsonProperty("addendaRecords")]
+        [JsonProperty("addendaRecord")]
         public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
 
         public StandardEntryClassCode SECCode { get; set; }
@@ -169,19 +169,19 @@ namespace NACHAParser
         {
             //TODO: Add logic for NoAddenda SEC Codes & ACK/ATX zero amount
             char recType = '7';
-            if (isMandatory is true && aDRecIndicator != AddendaRecordIndicator.Addenda)
+            if (isMandatory is true && adRecIndicator != AddendaRecordIndicator.Addenda)
             {
                 throw new Exception($"Addenda Record is mandatory for Standard Entry Class Code '{SECCode}'. Addenda Record Indicator should be '1'.");
             }
-            else if (aDRecIndicator == AddendaRecordIndicator.NoAddenda && nextLine.StartsWith(recType))
+            else if (adRecIndicator == AddendaRecordIndicator.NoAddenda && nextLine.StartsWith(recType))
             {
                 throw new Exception("Addenda Record should be '1'.");
             }
-            else if (aDRecIndicator == AddendaRecordIndicator.Addenda && !nextLine.StartsWith(recType))
+            else if (adRecIndicator == AddendaRecordIndicator.Addenda && !nextLine.StartsWith(recType))
             {
                 throw new Exception("Entry Detail is missing Addenda Record");
             }
-            else if (aDRecIndicator == AddendaRecordIndicator.Addenda && nextLine.StartsWith(recType))
+            else if (adRecIndicator == AddendaRecordIndicator.Addenda && nextLine.StartsWith(recType))
             {
                 if (isMandatory is true)
                 {
@@ -196,7 +196,7 @@ namespace NACHAParser
                 }
                 else if (AddendaCount() == 0)
                 {
-                    throw new Exception($"Addenda Record Indicator is '{aDRecIndicator}', but Addenda Record is missing.");
+                    throw new Exception($"Addenda Record Indicator is '{adRecIndicator}', but Addenda Record is missing.");
                 }
                 else if (SECCode == StandardEntryClassCode.CTX || SECCode == StandardEntryClassCode.ENR || SECCode == StandardEntryClassCode.TRX)
                 {

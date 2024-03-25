@@ -45,7 +45,7 @@ namespace NACHAParser
                         ReceiverCoName = line.Substring(58, 16).Trim(),
                         Reserved = line.Substring(74, 2).Trim(),
                         DiscretionaryData = line.Substring(76, 2).Trim(),
-                        aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                        adRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
                         TraceNum = line.Substring(79, 15)
                     };
                     entry.ValidateEntryDetail(nextLine);
@@ -70,7 +70,7 @@ namespace NACHAParser
                     var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry != null)
                     {
-                        if (lastEntry.aDRecIndicator == AddendaRecordIndicator.Addenda)
+                        if (lastEntry.adRecIndicator == AddendaRecordIndicator.Addenda)
                         {
                             var ad = new Addenda();
                             var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
