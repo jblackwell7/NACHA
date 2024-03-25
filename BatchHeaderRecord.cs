@@ -7,7 +7,7 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("bchHeaderId")]
+        [JsonProperty("batchHeaderId")]
         public string BchHeaderId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
@@ -16,23 +16,23 @@ namespace NACHAParser
         [JsonProperty("serviceClassCode")]
         public ServiceClassCode ServiceClassCode { get; set; }
 
-        [JsonProperty("coName")]
+        [JsonProperty("companyName")]
         public string CoName { get; set; } = string.Empty;
 
-        [JsonProperty("coDiscretionaryData")]
+        [JsonProperty("companyDiscretionaryData")]
         public string? CoDiscretionaryData { get; set; }
 
-        [JsonProperty("coId")]
+        [JsonProperty("companyId")]
         public string CoId { get; set; } = string.Empty;
 
         [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("SECCode")]
+        [JsonProperty("standardEntryClassCode")]
         public StandardEntryClassCode SECCode { get; set; }
 
-        [JsonProperty("coEntDescription")]
+        [JsonProperty("companyEntDescription")]
         public string? CoEntDescription { get; set; }
 
-        [JsonProperty("coDescriptiveDate")]
+        [JsonProperty("companyDescriptiveDate")]
         public string? CoDescriptiveDate { get; set; }
 
         [JsonProperty("effectiveEntDate")]
@@ -47,7 +47,7 @@ namespace NACHAParser
         [JsonProperty("originatingDFIId")]
         public string OriginatingDFIId { get; set; } = string.Empty;
 
-        [JsonProperty("bchNum")]
+        [JsonProperty("batchNumber")]
         public string BchNum { get; set; } = string.Empty;
 
         #endregion
