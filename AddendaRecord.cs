@@ -6,7 +6,7 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("addenda05Id")]
+        [JsonProperty("addendaId")]
         public string AddendaId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
@@ -23,24 +23,26 @@ namespace NACHAParser
 
         [JsonProperty("contestedDisHonorReturnReasonCode")]
         public ReturnCode ContestedDisHonorReturnReasonCode { get; set; }
+
         [JsonProperty("refusedCORCode")]
         public ChangeCode RefusedCORCode { get; set; }
 
         [JsonProperty("changeCode")]
         public ChangeCode ChangeCode { get; set; }
 
-        [JsonProperty("corTraceSeqNum")]
+        [JsonProperty("corTraceSeqNumber")]
         public string CorTraceSeqNum { get; set; } = string.Empty;
 
         [JsonProperty("paymtRelatedInfo")]
         public string? PaymtRelatedInfo { get; set; }
 
-        [JsonProperty("addendaSeqNum")]
+        [JsonProperty("addendaSeqNumber")]
         public string AddendaSeqNum { get; set; } = string.Empty;
-        [JsonProperty("entDetailSeqNum")]
+
+        [JsonProperty("entDetailSeqNumber")]
         public string EntDetailSeqNum { get; set; } = string.Empty;
 
-        [JsonProperty("dReturnReasonCode")]
+        [JsonProperty("dishonorReturnReasonCode")]
         public string DReturnReasonCode { get; set; } = string.Empty;
 
         [JsonProperty("contestedReturnCode")]
@@ -52,7 +54,7 @@ namespace NACHAParser
         [JsonProperty("originalSettlementDate")]
         public string OriginalSettlementDate { get; set; } = string.Empty;
 
-        [JsonProperty("disHonrorReturnTraceNum")]
+        [JsonProperty("disHonrorReturnTraceNumber")]
         public string DisHonrorReturnTraceNum { get; set; } = string.Empty;
 
         [JsonProperty("disHonrorReturnSettlementDate")]
@@ -121,7 +123,7 @@ namespace NACHAParser
         [JsonProperty("networkIdCode")]
         public string NetworkIdCode { get; set; } = string.Empty;
 
-        [JsonProperty("transactionTIme")]
+        [JsonProperty("transactionTime")]
         public string TransTime { get; set; } = string.Empty;
 
         #endregion
