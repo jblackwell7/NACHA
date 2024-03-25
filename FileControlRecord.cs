@@ -12,22 +12,22 @@ namespace NACHAParser
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
 
-        [JsonProperty("bchCnt")]
+        [JsonProperty("bchCount")]
         public string BchCnt { get; set; } = string.Empty;
 
-        [JsonProperty("blockCnt")]
+        [JsonProperty("blockCount")]
         public string BlockCnt { get; set; } = string.Empty;
 
-        [JsonProperty("entAddendaCnt")]
+        [JsonProperty("entryAddendaCount")]
         public string EntAddendaCnt { get; set; } = string.Empty;
 
-        [JsonProperty("entHash")]
+        [JsonProperty("entryHash")]
         public string EntHash { get; set; } = string.Empty;
 
-        [JsonProperty("totFileDrEntAmt")]
+        [JsonProperty("totalFileDebitEntryDollarAmount")]
         public string TotFileDrEntAmt { get; set; } = string.Empty;
 
-        [JsonProperty("totFileCrEntAmt")]
+        [JsonProperty("totalFileCreditEntryDollarAmount")]
         public string TotFileCrEntAmt { get; set; } = string.Empty;
 
         [JsonProperty("reserved")]
