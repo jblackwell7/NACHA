@@ -6,7 +6,7 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("bchId")]
+        [JsonProperty("batchId")]
         public string BchId { get; set; } = string.Empty;
 
         [JsonProperty("BatchHeader")]
