@@ -164,8 +164,10 @@ namespace NACHAParser
                     return true;
             }
         }
+
         public bool IsAddendaRecordIndicator(string nextLine, bool isMandatory)
         {
+            //TODO: Add logic for NoAddenda SEC Codes & ACK/ATX zero amount
             char recType = '7';
             if (isMandatory is true && aDRecIndicator != AddendaRecordIndicator.Addenda)
             {
