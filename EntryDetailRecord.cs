@@ -95,7 +95,7 @@ namespace NACHAParser
         public string ItemTypeIndicator { get; set; } = string.Empty;
 
         [JsonProperty("addendaRecord")]
-        public List<Addenda> AddendaRecord { get; set; } = new List<Addenda>();
+        public List<AddendaRecord> AddendaRecord { get; set; } = new List<AddendaRecord>();
 
         public StandardEntryClassCode SECCode { get; set; }
 

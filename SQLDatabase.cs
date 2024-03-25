@@ -130,7 +130,7 @@ namespace NACHAParser
             string procName = GetStoredProc(ed.RecType, achFile);
             ExecuteProc(connectionString, procName, parameters);
         }
-        private static void SQLInsertAddendaRecord(Addenda ad, ACHFile achFile, string connectionString)
+        private static void SQLInsertAddendaRecord(AddendaRecord ad, ACHFile achFile, string connectionString)
         {
             string procName = GetStoredProc(ad.RecType, achFile);
             SqlParameter[] parameters = GetAddendaParameters(ad, achFile, procName);
@@ -515,7 +515,7 @@ namespace NACHAParser
             }
             return parameters.ToArray();
         }
-        private static SqlParameter[] GetAddendaParameters(Addenda ad, ACHFile achFile, string procName)
+        private static SqlParameter[] GetAddendaParameters(AddendaRecord ad, ACHFile achFile, string procName)
         {
             //TODO: ACH-25 Returns, Add COR, Contested COR, Dishonor &  Contested Support
             List<SqlParameter> parameters = new List<SqlParameter>();

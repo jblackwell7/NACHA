@@ -69,8 +69,8 @@ namespace NACHAParser
                     var lastEntry = achFile.CurrentBatch.EntryRecord.LastOrDefault();
                     if (lastEntry != null)
                     {
-                        var ad = new Addenda();
-                        var typeCode = Addenda.ParseAddendaType(line.Substring(1, 2));
+                        var ad = new AddendaRecord();
+                        var typeCode = AddendaRecord.ParseAddendaType(line.Substring(1, 2));
                         switch (typeCode)
                         {
                             case AddendaTypeCode.Addenda99:
