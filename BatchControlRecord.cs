@@ -6,28 +6,28 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("bchControlId")]
+        [JsonProperty("batchControlId")]
         public string BchControlId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
         public RecordType RecType { get; set; }
 
-        [JsonProperty("serviceClass")]
+        [JsonProperty("serviceClassCode")]
         public ServiceClassCode ServiceClassCode { get; set; }
 
-        [JsonProperty("entAddendaCnt")]
+        [JsonProperty("entryAddendaCount")]
         public string EntAddendaCnt { get; set; } = string.Empty;
 
-        [JsonProperty("entHash")]
+        [JsonProperty("entryHash")]
         public string EntHash { get; set; } = string.Empty;
 
-        [JsonProperty("totBchDrEntAmt")]
+        [JsonProperty("totBatchDrEntAmt")]
         public string TotBchDrEntAmt { get; set; } = string.Empty;
 
-        [JsonProperty("totBchCrEntAmt")]
+        [JsonProperty("totBatchCrEntAmt")]
         public string TotBchCrEntAmt { get; set; } = string.Empty;
 
-        [JsonProperty("coId")]
+        [JsonProperty("companyId")]
         public string CoId { get; set; } = string.Empty;
 
         [JsonProperty("messageAuthCode")]
