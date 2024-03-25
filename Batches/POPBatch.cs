@@ -33,31 +33,23 @@ namespace NACHAParser
             {
                 if (achFile.CurrentBatch.EntryRecord != null)
                 {
-                    var adIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1));
-                    var typeCode = Addenda.ParseAddendaType(nextLine.Substring(1, 2));
-                    if ((adIndicator == AddendaRecordIndicator.NoAddenda && nextLine.Substring(0, 1) != "7") || (adIndicator == AddendaRecordIndicator.Addenda & nextLine.Substring(0, 1) == "7" && typeCode == AddendaTypeCode.Addenda99))
+                    EntryDetailRecord entry = new EntryDetailRecord()
                     {
-                        EntryDetailRecord entry = new EntryDetailRecord()
-                        {
-                            RecType = (RecordType)int.Parse(line.Substring(0, 1)),
-                            TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
-                            RDFIId = line.Substring(3, 8),
-                            CheckDigit = line.Substring(11, 1),
-                            DFIAcctNum = line.Substring(12, 17),
-                            Amt = int.Parse(line.Substring(29, 10)),
-                            CheckSerialNum = line.Substring(39, 9).Trim(),
-                            TerminalCity = line.Substring(48, 4).Trim(),
-                            TerminalState = line.Substring(52, 2),
-                            DiscretionaryData = line.Substring(76, 2).Trim(),
-                            aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
-                            TraceNum = line.Substring(79, 15)
-                        };
-                        achFile.CurrentBatch.EntryRecord.Add(entry);
-                    }
-                    else
-                    {
-                        throw new Exception($"POP does not support Addenda Record '{lineNumber}'");
-                    }
+                        RecType = (RecordType)int.Parse(line.Substring(0, 1)),
+                        TransCode = (TransactionCode)int.Parse(line.Substring(1, 2)),
+                        RDFIId = line.Substring(3, 8),
+                        CheckDigit = line.Substring(11, 1),
+                        DFIAcctNum = line.Substring(12, 17),
+                        Amt = int.Parse(line.Substring(29, 10)),
+                        CheckSerialNum = line.Substring(39, 9).Trim(),
+                        TerminalCity = line.Substring(48, 4).Trim(),
+                        TerminalState = line.Substring(52, 2),
+                        DiscretionaryData = line.Substring(76, 2).Trim(),
+                        aDRecIndicator = (AddendaRecordIndicator)int.Parse(line.Substring(78, 1)),
+                        TraceNum = line.Substring(79, 15)
+                    };
+                    entry.ValidateEntryDetail(nextLine);
+                    achFile.CurrentBatch.EntryRecord.Add(entry);
                 }
                 else
                 {
