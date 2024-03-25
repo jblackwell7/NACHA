@@ -63,16 +63,16 @@ namespace NACHAParser
         {
             var sb = new StringBuilder();
             var fh = root.FileContents.ACHFile.FileHeader;
-            CsvFHRecords(sb, fh);
+            CSVFHRecords(sb, fh);
             foreach (var batch in root.FileContents.ACHFile.Batches)
             {
-                CsvWriteBHRecords(sb, batch);
+                CSVWriteBHRecords(sb, batch);
                 foreach (var etR in batch.EntryRecord)
                 {
-                    CsvWriteEDRecords(sb, batch.BatchHeader, etR);
+                    CSVWriteEDRecords(sb, batch.BatchHeader, etR);
                     foreach (var addenda in etR.AddendaRecord)
                     {
-                        CsvADRecords(sb, addenda, batch.BatchHeader);
+                        CSVADRecords(sb, addenda, batch.BatchHeader);
                     }
                 }
                 CsvBCRecords(sb, batch.BatchControl);
@@ -80,7 +80,7 @@ namespace NACHAParser
             CsvWriteFCRecords(sb, root.FileContents.ACHFile.FileControl);
             File.WriteAllText(outputFile, sb.ToString());
         }
-        public static void CsvFHRecords(StringBuilder sb, FileHeaderRecord fh)
+        public static void CSVFHRecords(StringBuilder sb, FileHeaderRecord fh)
         {
             sb.AppendLine(FileHeader);
             sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}",
@@ -99,7 +99,7 @@ namespace NACHAParser
                 fh.RefCode
                 ));
         }
-        public static void CsvWriteBHRecords(StringBuilder sb, Batch b)
+        public static void CSVWriteBHRecords(StringBuilder sb, Batch b)
         {
             var bh = b.BatchHeader;
             sb.AppendLine(BatchHeader);
@@ -119,7 +119,7 @@ namespace NACHAParser
                 bh.BchNum
                 ));
         }
-        public static void CsvWriteEDRecords(StringBuilder sb, BatchHeaderRecord bh, EntryDetailRecord ed)
+        public static void CSVWriteEDRecords(StringBuilder sb, BatchHeaderRecord bh, EntryDetailRecord ed)
         {
             switch (bh.SECCode)
             {
@@ -473,7 +473,7 @@ namespace NACHAParser
                     throw new System.NotImplementedException($"Standard Entry Class Code '{bh.SECCode}' is not supported");
             }
         }
-        public static void CsvADRecords(StringBuilder sb, Addenda ad, BatchHeaderRecord bh)
+        public static void CSVADRecords(StringBuilder sb, Addenda ad, BatchHeaderRecord bh)
         {
             if (ad != null)
             {
@@ -592,7 +592,7 @@ namespace NACHAParser
                             throw new System.NotImplementedException($"Addenda Type Code '{ad.AdTypeCode}' is not supported");
                         }
                     case AddendaTypeCode.Addenda99:
-                        if (ad.ReturnReasonCode != ReturnCode.Unknown && ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
+                        if(Enum.IsDefined(typeof(ReturnCode), ad.ReturnReasonCode))
                         {
                             sb.AppendLine(ReturnAddendaHeader);
                             sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7}",
@@ -606,7 +606,7 @@ namespace NACHAParser
                                 ad.AdTraceNum
                                 ));
                         }
-                        else if (ad.DisHonorReturnReasonCode != ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown && ad.ReturnReasonCode == ReturnCode.Unknown)
+                        else if (Enum.IsDefined(typeof(ReturnCode), ad.DisHonorReturnReasonCode))
                         {
                             sb.AppendLine(DishonorReturnAddendaHeader);
                             sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
@@ -624,7 +624,7 @@ namespace NACHAParser
                             ad.AdTraceNum
                             ));
                         }
-                        else if (ad.ContestedDisHonorReturnReasonCode != ReturnCode.Unknown && ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ReturnReasonCode == ReturnCode.Unknown)
+                        else if (Enum.IsDefined(typeof(ReturnCode), ad.ContestedDisHonorReturnReasonCode))
                         {
                             sb.AppendLine(ContestedDishonorReturnAddendaHeader);
                             sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14}",
