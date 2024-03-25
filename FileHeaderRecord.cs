@@ -7,7 +7,7 @@ namespace NACHAParser
     {
         #region Properties
 
-        [JsonProperty("filehdrId")]
+        [JsonProperty("fileheaderId")]
         public string FileheaderId { get; set; } = string.Empty;
 
         [JsonProperty("recType")]
@@ -16,10 +16,10 @@ namespace NACHAParser
         [JsonProperty("priorityCode")]
         public string PriorityCode { get; set; } = string.Empty;
 
-        [JsonProperty("immedDestination")]
+        [JsonProperty("immediateDestination")]
         public string ImmedDestination { get; set; } = string.Empty;
 
-        [JsonProperty("immedOrigin")]
+        [JsonProperty("immediateOrigin")]
         public string ImmedOrigin { get; set; } = string.Empty;
 
         [JsonProperty("fileCreationDate")]
@@ -31,7 +31,7 @@ namespace NACHAParser
         [JsonProperty("fileIDModifier")]
         public char FileIDModifier { get; set; }
 
-        [JsonProperty("recSize")]
+        [JsonProperty("recordSize")]
         public string RecSize { get; set; } = string.Empty;
 
         [JsonProperty("blockingFactor")]
@@ -40,10 +40,10 @@ namespace NACHAParser
         [JsonProperty("formatCode")]
         public char FormatCode { get; set; }
 
-        [JsonProperty("immedDestinationName")]
+        [JsonProperty("immediateDestinationName")]
         public string ImmedDestinationName { get; set; } = string.Empty;
 
-        [JsonProperty("immedOriginName")]
+        [JsonProperty("immediateOriginName")]
         public string ImmedOriginName { get; set; } = string.Empty;
 
         [JsonProperty("refCode")]
