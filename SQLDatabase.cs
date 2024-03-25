@@ -802,15 +802,15 @@ namespace NACHAParser
                         }
                         else if (ad.AdTypeCode == AddendaTypeCode.Addenda99)
                         {
-                            if (ad.DisHonorReturnReasonCode == ReturnCode.Unknown && ad.ContestedDisHonorReturnReasonCode == ReturnCode.Unknown)
+                            if (Enum.IsDefined(typeof(ReturnCode),ad.ReturnReasonCode))
                             {
                                 return "sp_InsertAddendaRecord_Return";
                             }
-                            else if (ad.DisHonorReturnReasonCode != ReturnCode.Unknown)
+                            else if (Enum.IsDefined(typeof(ReturnCode),ad.DisHonorReturnReasonCode))
                             {
                                 return "sp_InsertAddendaRecord_Dishonor";
                             }
-                            else if (ad.ContestedDisHonorReturnReasonCode != ReturnCode.Unknown)
+                            else if (Enum.IsDefined(typeof(ReturnCode),ad.ContestedDisHonorReturnReasonCode))
                             {
                                 return "sp_InsertAddendaRecord_ContestedDishonor";
                             }
