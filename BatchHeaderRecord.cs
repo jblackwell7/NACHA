@@ -60,5 +60,64 @@ namespace NACHAParser
         }
 
         #endregion
+
+        #region Methods
+
+        public bool ValidateBatchHeader(string nextLine)
+        {
+            if (IsMandatoryField())
+            {
+                if (IsCompanyEntryDescription())
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Company Entry Description is missing.");
+                }
+            }
+            else
+            {
+                throw new Exception("Batch Header Record is missing required fields.");
+            }
+        }
+        public bool IsMandatoryField()
+        {
+            if (Enum.IsDefined(typeof(RecordType), RecType)
+            && Enum.IsDefined(typeof(ServiceClassCode), ServiceClassCode)
+            && !string.IsNullOrWhiteSpace(CoName)
+            && !string.IsNullOrWhiteSpace(CoId)
+            && !string.IsNullOrWhiteSpace(CoEntDescription)
+            && Enum.IsDefined(typeof(StandardEntryClassCode), SECCode)
+            && !string.IsNullOrWhiteSpace(EffectiveEntDate)
+            && Enum.IsDefined(typeof(OriginatorStatusCode), OriginatorStatusCode)
+            && !string.IsNullOrWhiteSpace(OriginatingDFIId))
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception("Batch Header Record is missing required fields.");
+            }
+        }
+        public bool IsCompanyEntryDescription()
+        {
+            if (SECCode == StandardEntryClassCode.ENR && CoEntDescription != "AUTOENROLL")
+            {
+                throw new Exception($"Company Entry Description must be 'AUTOENROLL' for Standard Entry Class Code '{SECCode}'.");
+            }
+            if (SECCode == StandardEntryClassCode.RCK && CoEntDescription != "REDEPCHECK")
+            {
+                throw new Exception($"Company Entry Description must be 'REDEPCHECK' for Standard Entry Class Code '{SECCode}'.");
+            }
+            if (SECCode == StandardEntryClassCode.XCK && CoEntDescription != "NO CHECK")
+            {
+                throw new Exception($"Company Entry Description must be 'NO CHECK' for Standard Entry Class Code '{SECCode}'.");
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }
