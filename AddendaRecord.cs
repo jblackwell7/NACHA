@@ -16,13 +16,13 @@ namespace NACHAParser
         public AddendaTypeCode AdTypeCode { get; set; }
 
         [JsonProperty("returnReasonCode")]
-        public ReturnCode ReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        public ReturnCode ReturnReasonCode { get; set; }
 
         [JsonProperty("disHonorReturnReasonCode")]
-        public ReturnCode DisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        public ReturnCode DisHonorReturnReasonCode { get; set; }
 
         [JsonProperty("contestedDisHonorReturnReasonCode")]
-        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; } = ReturnCode.Unknown;
+        public ReturnCode ContestedDisHonorReturnReasonCode { get; set; }
         [JsonProperty("refusedCORCode")]
         public ChangeCode RefusedCORCode { get; set; }
 
