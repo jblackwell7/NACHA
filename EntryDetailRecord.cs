@@ -135,7 +135,7 @@ namespace NACHAParser
         }
         public bool IsMandatoryField()
         {
-            if (Enum.IsDefined(typeof(TransactionCode), TransCode)
+            if (Enum.IsDefined(typeof(RecordType), RecType) && Enum.IsDefined(typeof(TransactionCode), TransCode)
             && !string.IsNullOrWhiteSpace(RDFIId)
             && !string.IsNullOrWhiteSpace(CheckDigit)
             && !string.IsNullOrWhiteSpace(DFIAcctNum)
